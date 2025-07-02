@@ -1,0 +1,53 @@
+<div class="project">
+  <div class="content my-container">
+    <div class="description">
+      <img src="{{ project.image }}" alt="Logo of sscovid19 website" />
+
+      <span class="description-title">Description</span>
+
+      <div class="who">
+        <span *ngFor="let who of project.who" [innerHtml]="who.message"></span>
+      </div>
+
+      <div class="why">
+        <span *ngFor="let why of project.why">{{ why.message }}</span>
+      </div>
+
+      <div class="requirements">
+        <span>{{ project.requirement_intro }}</span>
+        <ul>
+          <li *ngFor="let requirement of project.requirements">
+            {{ requirement.message }}
+          </li>
+        </ul>
+      </div>
+
+      <div class="estate">
+        <span>
+          <b>État : </b>
+        </span>
+        <span>{{ project.estate }}</span>
+      </div>
+
+      <button
+        *ngIf="project.estate == 'terminé'"
+        (click)="goOnSscovidWebsite(project.link)"
+      >
+        Visitez le site
+      </button>
+    </div>
+
+    <div class="technos-bloc">
+      <span class="title">Technologies utilisées</span>
+
+      <div class="technos">
+        <ng-template ngFor let-technology [ngForOf]="project.technologies">
+          <div class="techno">
+            <img src="{{ technology.image }}" alt="{{ technology.name }}" />
+            <span>{{ technology.name }}</span>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

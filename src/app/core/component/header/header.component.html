@@ -1,0 +1,47 @@
+<header (scroll)="onWindowScroll()">
+  <div class="content my-container">
+    <img class="logo" src="/img/logo-portfolio.png" alt="logo sm code" />
+
+    <div class="header-right">
+      <nav>
+        <ul>
+          <li>
+            <a (click)="setActiveLinkAndNavigate(1, 'accueil')">Accueil</a>
+          </li>
+          <li>
+            <a (click)="setActiveLinkAndNavigate(2, 'a-propos')">A Propos</a>
+          </li>
+          <li>
+            <a (click)="setActiveLinkAndNavigate(3, 'services')">Services</a>
+          </li>
+          <li>
+            <a (click)="setActiveLinkAndNavigate(4, 'projets')">Réalisations</a>
+          </li>
+          <li>
+            <a (click)="setActiveLinkAndNavigate(5, 'contact')"
+              >Contactez-moi</a
+            >
+          </li>
+        </ul>
+
+        <img
+          src="/img/triangle-off.png"
+          alt="just a design triangle yellow red"
+        />
+
+        <img
+          class="cross"
+          src="/img/cross.png"
+          alt="just a design cross pink olive green skyblue"
+        />
+      </nav>
+
+      <div class="burger" (click)="onBurgerMenu()">
+        <input type="checkbox" />
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+</header>
