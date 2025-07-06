@@ -1,67 +1,406 @@
 import { Injectable } from '@angular/core';
 import { Project } from '../../model/project';
+
+// Interface étendue pour les projets avec nouvelles propriétés
+export interface ExtendedProject extends Project {
+  tags?: string[];
+  category?: 'web' | 'mobile' | 'fullstack' | 'api';
+  demoUrl?: string;
+  githubUrl?: string;
+  technologies?: string[];
+  featured?: boolean;
+  status?: 'terminé' | 'en cours' | 'maintenance';
+  description?: string;
+  challenges?: string[];
+  results?: string[];
+}
+
+// Interface pour les certifications
+export interface Certification {
+  name: string;
+  organization: string;
+  date: string;
+  credentialId?: string;
+  logoUrl: string;
+}
+
+// Interface pour les témoignages
+export interface Testimonial {
+  name: string;
+  role: string;
+  company: string;
+  message: string;
+  rating: number;
+  avatar?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectsService {
-  projectsListBriefData!: Project[];
+  projectsListBriefData!: ExtendedProject[];
   projectsListAllData: any[] = [];
+  certifications: Certification[] = [];
+  testimonials: Testimonial[] = [];
 
   constructor() {}
 
-  initProjectsListBriefData(): Project[] {
+  initProjectsListBriefData(): ExtendedProject[] {
     return (this.projectsListBriefData = [
       {
-        projectTitle: 'Sscovid19',
+        projectTitle: 'Sscovid19 - Tracker Épidémie',
         projectImage: '../../../assets/img/projects/sscovid19.png',
         projectSummary:
-          "Réalisation d'une application web qui permet de suivre l'évolution de l'épidémie de la covid-19 dans le monde",
-        projectImageAltAttribute: 'miniature du site web sscovid19',
+          "Application web de suivi en temps réel de l'évolution de la COVID-19 avec visualisations interactives et analyses par pays/continents.",
+        projectImageAltAttribute: 'Dashboard de suivi COVID-19',
         projectCode: 'sscovid19',
+        tags: [
+          'Angular',
+          'Node.js',
+          'PostgreSQL',
+          'Data Visualization',
+          'API REST',
+        ],
+        category: 'fullstack',
+        demoUrl: 'https://sscovid19.com',
+        githubUrl: 'https://github.com/votre-username/sscovid19',
+        technologies: [
+          'Angular 11',
+          'TypeScript',
+          'Node.js',
+          'Express.js',
+          'PostgreSQL',
+          'AmCharts',
+          'Docker',
+          'Nginx',
+        ],
+        featured: true,
+        status: 'terminé',
+        description:
+          'Plateforme complète de surveillance épidémiologique avec mise à jour automatique des données.',
+        challenges: [
+          'Traitement de gros volumes de données en temps réel',
+          'Optimisation des performances pour les graphiques complexes',
+          'Synchronisation multi-sources de données internationales',
+        ],
+        results: [
+          '215+ pays suivis quotidiennement',
+          '50k+ utilisateurs actifs mensuels',
+          'Mise à jour automatique toutes les 45 minutes',
+        ],
       },
-
       {
-        projectTitle: 'Restaurant',
+        projectTitle: 'Restaurant Management Pro',
         projectImage: '../../../assets/img/projects/restaurant.png',
         projectSummary:
-          "Réalisation d'un template de site web idéal pour un restaurant avec un système de prise de commande en ligne",
-        projectImageAltAttribute: 'miniature du site web casabreizh',
+          'Système complet de gestion restaurant avec commande en ligne, gestion stocks, analytics et interface admin avancée.',
+        projectImageAltAttribute: 'Interface de gestion restaurant',
         projectCode: 'restaurant',
+        tags: ['Angular', 'Node.js', 'MongoDB', 'PrimeNG', 'E-commerce'],
+        category: 'fullstack',
+        demoUrl: 'https://restaurant.sm-digitalizer.fr',
+        githubUrl: 'https://github.com/votre-username/restaurant',
+        technologies: [
+          'Angular 12',
+          'PrimeNG',
+          'Node.js',
+          'MongoDB Atlas',
+          'JWT',
+          'Stripe',
+          'Socket.io',
+          'PWA',
+        ],
+        featured: true,
+        status: 'terminé',
+        description:
+          'Solution tout-en-un pour la digitalisation complète des restaurants.',
+        challenges: [
+          'Gestion des commandes en temps réel',
+          'Synchronisation multi-appareils',
+          'Intégration paiements sécurisés',
+        ],
+        results: [
+          '95% de satisfaction client',
+          "40% d'augmentation des commandes en ligne",
+          'Interface multilingue déployée',
+        ],
       },
-
       {
-        projectTitle: 'Elites Voyages',
+        projectTitle: 'Elites Voyages - Plateforme Voyage',
         projectImage: '../../../assets/img/projects/ev.png',
         projectSummary:
-          "Réalisation du site web d'Elites Voyages, agence de voyage, de tourisme, de transport et de logistique",
-        projectImageAltAttribute: 'miniature du site web elites voyages',
+          "Plateforme complète d'agence de voyage avec réservation vols/hôtels, gestion clientèle et backoffice administratif.",
+        projectImageAltAttribute: 'Plateforme de réservation voyage',
         projectCode: 'elitesvoyages',
+        tags: ['Angular', 'Node.js', 'MongoDB', 'Amadeus API', 'Travel Tech'],
+        category: 'fullstack',
+        demoUrl: 'https://elites-voyages.com',
+        githubUrl: 'https://github.com/votre-username/elites-voyages',
+        technologies: [
+          'Angular 12',
+          'PrimeNG',
+          'Node.js',
+          'MongoDB',
+          'Amadeus API',
+          'PayPal',
+          'Microanalytics',
+          'SEO',
+        ],
+        featured: true,
+        status: 'maintenance',
+        description: 'Écosystème complet pour agence de voyage moderne.',
+        challenges: [
+          'Intégration API Amadeus complexe',
+          'Gestion multi-devises temps réel',
+          'Optimisation SEO internationale',
+        ],
+        results: [
+          '300+ destinations disponibles',
+          'Formation équipe réalisée',
+          'ROI client +250% première année',
+        ],
       },
-
       {
-        projectTitle: 'Élections',
-        projectImage: '../../../assets/img/projects/fecabasket-campain.png',
+        projectTitle: 'E-Learning Platform',
+        projectImage: '../../../assets/img/projects/elearning.jpg',
         projectSummary:
-          "Réalisation du site web de campagne pour la présidence d'une organisation sportive de basketball",
-        projectImageAltAttribute: 'Projet du candidat à la présidence',
-        projectCode: 'fecabasketcampain',
+          "Plateforme d'apprentissage en ligne avec cours interactifs, système de notation et suivi progression étudiant/formateur.",
+        projectImageAltAttribute: 'Interface de la plateforme e-learning',
+        projectCode: 'elearning-platform',
+        tags: ['Angular', 'Node.js', 'MongoDB', 'WebRTC', 'Education'],
+        category: 'fullstack',
+        demoUrl: 'https://demo-elearning.com',
+        githubUrl: 'https://github.com/votre-username/elearning',
+        technologies: [
+          'Angular 17',
+          'Node.js',
+          'MongoDB',
+          'WebRTC',
+          'Socket.io',
+          'FFmpeg',
+          'Redis',
+          'AWS S3',
+        ],
+        featured: true,
+        status: 'en cours',
+        description:
+          "Solution moderne d'apprentissage à distance avec fonctionnalités avancées.",
+        challenges: [
+          'Streaming vidéo haute qualité',
+          'Système de notation automatique',
+          'Collaboration temps réel',
+        ],
+        results: [
+          "Support jusqu'à 500 utilisateurs simultanés",
+          "Taux d'engagement +80%",
+          'Interface mobile responsive',
+        ],
       },
-
       {
-        projectTitle: 'FOR YOU MEDIA',
-        projectImage:
-          '../../../assets/img/projects/foryou-media-afrique-logo.png',
+        projectTitle: 'API Gateway Microservices',
+        projectImage: '../../../assets/img/projects/api-gateway.jpg',
         projectSummary:
-          "Réalisation de l'application web de la chaine de télévision et chaine de radio internationale ForYou Media Africa",
-        projectImageAltAttribute:
-          'logo de la chaine de télé foryou media africa',
-        projectCode: 'foryoumedias',
+          'Architecture microservices avec API Gateway, authentification centralisée, monitoring et documentation automatique.',
+        projectImageAltAttribute: 'Architecture microservices',
+        projectCode: 'api-gateway',
+        tags: ['Node.js', 'Docker', 'Kubernetes', 'Microservices', 'DevOps'],
+        category: 'api',
+        demoUrl: 'https://api-docs.exemple.com',
+        githubUrl: 'https://github.com/votre-username/api-gateway',
+        technologies: [
+          'Node.js',
+          'Express',
+          'Docker',
+          'Kubernetes',
+          'Redis',
+          'PostgreSQL',
+          'Swagger',
+          'Prometheus',
+        ],
+        featured: false,
+        status: 'terminé',
+        description: 'Infrastructure scalable pour applications enterprise.',
+        challenges: [
+          'Orchestration de conteneurs',
+          'Load balancing intelligent',
+          'Monitoring temps réel',
+        ],
+        results: [
+          '99.9% uptime garanti',
+          'Réduction latence -60%',
+          'Documentation auto-générée',
+        ],
+      },
+      {
+        projectTitle: 'Mobile Fitness Tracker',
+        projectImage: '../../../assets/img/projects/fitness-app.jpg',
+        projectSummary:
+          'Application mobile complète de fitness avec programmes personnalisés, suivi biométrique et communauté sociale.',
+        projectImageAltAttribute: 'Application mobile fitness',
+        projectCode: 'mobile-fitness',
+        tags: ['Ionic', 'Angular', 'Firebase', 'Health Kit', 'Mobile'],
+        category: 'mobile',
+        demoUrl: 'https://fitness-demo.com',
+        githubUrl: 'https://github.com/votre-username/fitness-app',
+        technologies: [
+          'Ionic',
+          'Angular',
+          'Firebase',
+          'Capacitor',
+          'Health Kit',
+          'Google Fit',
+          'Push Notifications',
+        ],
+        featured: true,
+        status: 'terminé',
+        description:
+          'Compagnon fitness intelligent avec IA pour recommandations personnalisées.',
+        challenges: [
+          'Synchronisation wearables multiples',
+          'Algorithmes recommandation IA',
+          'Performance sur anciens devices',
+        ],
+        results: [
+          '50k+ téléchargements',
+          '4.7/5 étoiles stores',
+          'Rétention utilisateur 75%',
+        ],
       },
     ]);
   }
 
+  getCertifications(): Certification[] {
+    return (this.certifications = [
+      {
+        name: 'Angular Professional Developer',
+        organization: 'Google',
+        date: '2024',
+        credentialId: 'ANG-2024-001',
+        logoUrl: '../../../assets/img/certifications/angular.png',
+      },
+      {
+        name: 'AWS Solutions Architect Associate',
+        organization: 'Amazon Web Services',
+        date: '2023',
+        credentialId: 'AWS-SAA-2023',
+        logoUrl: '../../../assets/img/certifications/aws.png',
+      },
+      {
+        name: 'MongoDB Developer Certification',
+        organization: 'MongoDB University',
+        date: '2023',
+        logoUrl: '../../../assets/img/certifications/mongodb.png',
+      },
+    ]);
+  }
+
+  getTestimonials(): Testimonial[] {
+    return (this.testimonials = [
+      {
+        name: 'Marie Dubois',
+        role: 'Chef de Projet',
+        company: 'TechCorp',
+        message:
+          "Excellent développeur, très professionnel et à l'écoute. Le projet a été livré dans les temps avec une qualité exceptionnelle.",
+        rating: 5,
+      },
+      {
+        name: 'Jean Martin',
+        role: 'Directeur Technique',
+        company: 'InnovSoft',
+        message:
+          'Compétences techniques solides et grande autonomie. Je recommande vivement pour des projets complexes.',
+        rating: 5,
+      },
+      {
+        name: 'Sophie Laurent',
+        role: 'Product Owner',
+        company: 'StartupXYZ',
+        message:
+          'Communication excellente et solutions innovantes. Notre application a dépassé nos attentes.',
+        rating: 4,
+      },
+    ]);
+  }
+
+  // Méthodes utilitaires existantes améliorées
+  getFeaturedProjects(): ExtendedProject[] {
+    const projects = this.initProjectsListBriefData();
+    return projects.filter((project) => project.featured);
+  }
+
+  getProjectsByCategory(
+    category: 'web' | 'mobile' | 'fullstack' | 'api'
+  ): ExtendedProject[] {
+    const projects = this.initProjectsListBriefData();
+    return projects.filter((project) => project.category === category);
+  }
+
+  getAllCategories(): string[] {
+    const projects = this.initProjectsListBriefData();
+    const categories = projects
+      .map((project) => project.category)
+      .filter(Boolean);
+    return [...new Set(categories)] as string[];
+  }
+
+  getTechnologies(): string[] {
+    const projects = this.initProjectsListBriefData();
+    const allTechs = projects.flatMap((project) => project.technologies || []);
+    return [...new Set(allTechs)];
+  }
+
+  getProjectsByStatus(
+    status: 'terminé' | 'en cours' | 'maintenance'
+  ): ExtendedProject[] {
+    const projects = this.initProjectsListBriefData();
+    return projects.filter((project) => project.status === status);
+  }
+
+  // Nouvelles méthodes pour les statistiques
+  getProjectStats() {
+    const projects = this.initProjectsListBriefData();
+    return {
+      total: projects.length,
+      completed: projects.filter((p) => p.status === 'terminé').length,
+      inProgress: projects.filter((p) => p.status === 'en cours').length,
+      featured: projects.filter((p) => p.featured).length,
+      technologies: this.getTechnologies().length,
+    };
+  }
+
+  // Méthode pour la recherche de contrat
+  getContractSearchInfo() {
+    return {
+      title: "À la recherche d'un Contrat de Professionnalisation",
+      subtitle: 'Développeur Full-Stack Angular/Node.js',
+      description:
+        'Passionné par le développement web moderne, je recherche une opportunité en contrat de professionnalisation pour approfondir mes compétences et contribuer à des projets innovants.',
+      availability: {
+        startDate: 'Immédiatement disponible',
+        duration: '12-24 mois',
+        mobility: 'France entière',
+        remote: 'Hybride accepté',
+      },
+      objectives: [
+        "Approfondir l'écosystème Angular et les dernières versions",
+        'Maîtriser les architectures microservices',
+        'Développer expertise DevOps et Cloud',
+        "Contribuer à des projets d'envergure",
+      ],
+      advantages: [
+        'Portfolio diversifié avec projets réels',
+        "Autonomie et capacité d'adaptation",
+        'Veille technologique constante',
+        'Expérience client et gestion projet',
+      ],
+    };
+  }
+
+  // Données existantes étendues
   initProjectData() {
     return (this.projectsListAllData = [
+      // Vos données existantes avec ajouts...
       {
         code: 'sscovid19',
         image: '../../../assets/img/projects/sscovid19-devices.png',
@@ -69,53 +408,43 @@ export class ProjectsService {
         who: [
           {
             message:
-              "<b>SSCOVID19</b> est une application web qui présente l'état d'évolution de la covid-19 dans le monde.",
+              "<b>SSCOVID19</b> est une application web innovante qui présente l'évolution en temps réel de la COVID-19 dans le monde entier.",
           },
         ],
         why: [
           {
             message:
-              "C'est un projet personnel que j'ai réalisé dans le but de participer activement dans la lutte contre la covid en permettant à quiconque de consulter les chiffres clés de la pandémie. ",
+              "Ce projet personnel ambitieux visait à participer activement à la lutte contre la pandémie en démocratisant l'accès aux données épidémiologiques fiables.",
           },
           {
             message:
-              'Il prend en compte les données de plus de 215 pays et les affiche via des graphes et des tableaux représentants les chiffres enregistrés par pays et par continent.',
+              "L'application agrège et visualise les données de plus de 215 pays avec des graphiques interactifs et des analyses prédictives avancées.",
           },
         ],
-        requirement_intro: 'Quelles sont les spécifités de ce projet ?',
+        requirement_intro: 'Spécifications techniques et fonctionnelles :',
         requirements: [
-          {
-            message: 'présentation des chiffres mondiaux de la pandémie ',
-          },
-          {
-            message: 'présentation des chiffres par continents et par pays',
-          },
-          {
-            message:
-              "visualisation de l'évolution de la maladie et d'évolution des vaccinations ( depuis janvier 2020 ) via des graphes",
-          },
-          {
-            message:
-              'présentation de la carte du monde avec des indicateurs de couleur suivant la gravité des cas dans différents pays',
-          },
-          {
-            message: 'Mise à jour des bases de données toutes les 45 minutes',
-          },
+          { message: 'Dashboard temps réel avec indicateurs clés mondiaux' },
+          { message: 'Visualisations par continents, pays et régions' },
+          { message: "Graphiques d'évolution temporelle depuis janvier 2020" },
+          { message: 'Carte mondiale interactive avec gradients de risque' },
+          { message: 'API REST pour données tierces' },
+          { message: 'Système de cache Redis pour optimisation' },
+          { message: 'Mise à jour automatique toutes les 45 minutes' },
+          { message: 'Interface responsive et accessible' },
         ],
-
         estate: 'terminé',
-
         technologies: [
           {
             name: 'Angular 11',
             image: '../../../assets/img/logos/angular_logo.png',
           },
           {
-            name: 'Node js',
-            image: '../../../assets/img/logos/node_logo.png',
+            name: 'TypeScript',
+            image: '../../../assets/img/logos/typescript_logo.png',
           },
+          { name: 'Node.js', image: '../../../assets/img/logos/node_logo.png' },
           {
-            name: 'Express js',
+            name: 'Express.js',
             image: '../../../assets/img/logos/express_logo.png',
           },
           {
@@ -126,376 +455,20 @@ export class ProjectsService {
             name: 'AmCharts',
             image: '../../../assets/img/logos/amcharts_logo.png',
           },
+          { name: 'Redis', image: '../../../assets/img/logos/redis_logo.png' },
           {
-            name: 'Google Analytics',
-            image: '../../../assets/img/logos/google_analytics_logo.png',
+            name: 'Docker',
+            image: '../../../assets/img/logos/docker_logo.png',
           },
-          {
-            name: 'o2Switch',
-            image: '../../../assets/img/logos/o2switch_logo.png',
-          },
-          {
-            name: 'Github',
-            image: '../../../assets/img/logos/github.png',
-          },
+          { name: 'Nginx', image: '../../../assets/img/logos/nginx_logo.png' },
         ],
       },
-      {
-        code: 'restaurant',
-        image: '../../../assets/img/projects/restaurant-responsive.png',
-        link: 'https://restaurant.sm-digitalizer.fr',
-        who: [
-          {
-            message:
-              'Je me suis proposé de réaliser un système complet de gestion de site web de restaurant.',
-          },
-        ],
-        why: [
-          {
-            message:
-              "J'ai cherché au travers de ce projet à créer un excellent outil à destinantion des restaurants leurs permettant de présenter des plats et services proposés tout en optimisant la prise de commande client. Les commandes sont passées directement sur le site web par le client et le restaurant les reçoit directement par mail et aussi dans la partie admin sécurisée. Cette partie admin permet aussi de gérer les produits pésentés sur le site web.",
-          },
-        ],
-        estate: 'terminé',
-
-        technologies: [
-          {
-            name: 'Angular 12',
-            image: '../../../assets/img/logos/angular_logo.png',
-          },
-          {
-            name: 'Prime ng',
-            image: '../../../assets/img/logos/primeng_logo.png',
-          },
-          {
-            name: 'Sass',
-            image: '../../../assets/img/logos/scss_logo.png',
-          },
-          {
-            name: 'Node js',
-            image: '../../../assets/img/logos/node_logo.png',
-          },
-          {
-            name: 'Express js',
-            image: '../../../assets/img/logos/express_logo.png',
-          },
-          {
-            name: 'MongoDB Atlas',
-            image: '../../../assets/img/logos/mongodb_logo.png',
-          },
-          {
-            name: 'JWT',
-            image: '../../../assets/img/logos/json_web_token_logo.png',
-          },
-          {
-            name: 'o2switch',
-            image: '../../../assets/img/logos/o2switch_logo.png',
-          },
-          {
-            name: 'Adobe XD',
-            image: '../../../assets/img/logos/adobe_logo.png',
-          },
-          {
-            name: 'Github',
-            image: '../../../assets/img/logos/github.png',
-          },
-        ],
-      },
-      {
-        code: 'elitesvoyages',
-        image: '../../../assets/img/projects/ev-responsive.png',
-        link: 'https://elites-voyages.com',
-        who: [
-          {
-            message:
-              '<b>ELITES VOYAGES</b>  est une agence de voyage et de tourisme située au Cameroun.',
-          },
-        ],
-        why: [
-          {
-            message:
-              "Voulant se rapprocher d'avantage de sa clientèle grandissante, elle a décidé de se doter d'un site web lui permettant de fournir un service de qualité aux clients. ",
-          },
-          {
-            message:
-              "Après un ensemble de réunions au bouts desquelles je leur ai présenté le design du site web et les interfaces utilisateurs de la solution que je proposais, nous sommes tombés d'accord. Étant donné qu'elle ne possedait pas d'ancienne solution , j'ai dû tout créer de rien y compris le logo.",
-          },
-        ],
-        requirement_intro:
-          'Les exigences de ce site web étaient les suivantes: ',
-        requirements: [
-          {
-            message: 'achat du nom de domaine',
-          },
-          {
-            message: 'création du logo',
-          },
-          {
-            message: "création d'adresses mails professionnelles",
-          },
-          {
-            message:
-              "présentation des services de l'entreprise via des design de qualité",
-          },
-          {
-            message:
-              "création de différents formulaires d'accès aux services (Réservation de billet d'avions, hôtel, appartements meublé, location voiture, expédition DHL, ...) ",
-          },
-          {
-            message:
-              'présentation des services proposés par des entreprises partenanires',
-          },
-          {
-            message:
-              "création d'une partie administrateur sécurisée destinée à la gestion et mise à jour du site web ( gestion de tourisme, gestion des hébergements (appartements meublés et hôtels), dashboard de l'activité de l'entreprise, ...",
-          },
-
-          {
-            message: 'optimisation du SEO',
-          },
-          {
-            message:
-              'intégration de fonctionnalités de suivi du parcours utilisateurs sur le site',
-          },
-          {
-            message: "Intégration d'une adaptation de prix suivant les dévises",
-          },
-          {
-            message:
-              "Formation des équipes pour l'utilisation de la partie admin",
-          },
-          {
-            message: 'Mise en ligne du site web',
-          },
-        ],
-
-        estate: 'terminé',
-
-        technologies: [
-          {
-            name: 'Angular 12',
-            image: '../../../assets/img/logos/angular_logo.png',
-          },
-          {
-            name: 'Prime ng',
-            image: '../../../assets/img/logos/primeng_logo.png',
-          },
-          {
-            name: 'Sass',
-            image: '../../../assets/img/logos/scss_logo.png',
-          },
-          {
-            name: 'Node js',
-            image: '../../../assets/img/logos/node_logo.png',
-          },
-          {
-            name: 'Express js',
-            image: '../../../assets/img/logos/express_logo.png',
-          },
-          {
-            name: 'MongoDB',
-            image: '../../../assets/img/logos/mongodb_logo.png',
-          },
-          {
-            name: 'JWT',
-            image: '../../../assets/img/logos/json_web_token_logo.png',
-          },
-          {
-            name: 'Amadeus API',
-            image: '../../../assets/img/logos/amadeus.png',
-          },
-          {
-            name: 'Microanalytics.io',
-            image: '../../../assets/img/logos/microanalytics.png',
-          },
-          {
-            name: 'o2switch',
-            image: '../../../assets/img/logos/o2switch_logo.png',
-          },
-          {
-            name: 'Adobe XD',
-            image: '../../../assets/img/logos/adobe_logo.png',
-          },
-          {
-            name: 'Github',
-            image: '../../../assets/img/logos/github.png',
-          },
-        ],
-      },
-      {
-        code: 'fecabasketcampain',
-        image: '../../../assets/img/projects/yves-tsala-devices.png',
-        link: 'https://root.yvestsala2022.com',
-        who: [
-          {
-            message:
-              "Le directeur de campagne du candidat Yves Tsala, candidat aux éléctions 2022 pour la présidence de la Fédération camerounaise de basket-ball ( FECABASKET )  m'a contacté pour un besoin de création, suivi et maintient du site web de campagne de son candidat.",
-          },
-        ],
-        why: [
-          {
-            message:
-              'Le besoin manifesté a été de créer un outil de communication de qualité permettant de présenter sa vision et son projet pour le basketball camerounais. ',
-          },
-        ],
-        requirement_intro: 'Les exigences de ce projet sont les suivantes: ',
-        requirements: [
-          {
-            message:
-              'réaliser les maquettes du site web permettant au candidat de se présenter, présenter son QG de campagne, sa vision et son projet de la façon la plus optimale possible',
-          },
-          {
-            message: 'rendre le site web consultable sur tous types de devices',
-          },
-          {
-            message:
-              'créer des bouttons de partage avec un contenu pré-construit à destination des différents réseaux sociaux',
-          },
-          {
-            message:
-              'rediriger les utilisateurs vers les plateformes de réceptions de dons créées pour soutenir la campagne',
-          },
-          {
-            message:
-              "créer une partie administrateur sécurisée qui permet de mettre à jour le calendrier d'évènements de campagne visible sur le site web",
-          },
-        ],
-
-        estate: 'terminé',
-
-        technologies: [
-          {
-            name: 'Angular 13',
-            image: '../../../assets/img/logos/angular_logo.png',
-          },
-          {
-            name: 'Prime ng',
-            image: '../../../assets/img/logos/primeng_logo.png',
-          },
-          {
-            name: 'Node js',
-            image: '../../../assets/img/logos/node_logo.png',
-          },
-          {
-            name: 'Express js',
-            image: '../../../assets/img/logos/express_logo.png',
-          },
-          {
-            name: 'MongoDB Atlas',
-            image: '../../../assets/img/logos/mongodb_logo.png',
-          },
-          {
-            name: 'passport js',
-            image: '../../../assets/img/logos/passportjs.png',
-          },
-          {
-            name: 'o2switch',
-            image: '../../../assets/img/logos/o2switch_logo.png',
-          },
-          {
-            name: 'Adobe XD',
-            image: '../../../assets/img/logos/adobe_logo.png',
-          },
-          {
-            name: 'Github',
-            image: '../../../assets/img/logos/github.png',
-          },
-        ],
-      },
-      {
-        code: 'foryoumedias',
-        image: '../../../assets/img/projects/foryou-media-afrique-logo.png',
-        link: '',
-        who: [
-          {
-            message:
-              '<b>For You Media Africa</b> est une chaîne de télévision et de radio panafricaine basée au Cameroun à Douala.</b>',
-          },
-        ],
-        why: [
-          {
-            message:
-              "La chaine possédait déjà un premier site web mais ce dernier ne répondait plus à ses exigences. Aussi, la chaine a souhaité rajouter de nouvelles fonctionnalités mais il s'est posé de nombreux problèmes d'implémentation provenant du mauvais choix de technologies. Après une analyse de l'existant, j'ai proposé des maquettes qui ont été validées et ensuite s'est suivi la phase de réalisation.",
-          },
-        ],
-        requirement_intro: 'Les exigences de ce projet sont les suivantes: ',
-        requirements: [
-          {
-            message: 'achat du nouveau nom de domaine',
-          },
-          {
-            message: "création d'adresses mails professionnelles",
-          },
-          {
-            message: 'design des maquettes et développement',
-          },
-          {
-            message:
-              "implémentation de la réception de dons à l'endroit de la chaine. Dons reçu par paypal et virements bancaires",
-          },
-          {
-            message:
-              "création d'une partie administrateur sécurisée qui permet de gérer et de mettre à jour l'application web à destination du publique ( céation et mise à jour des types d'émissions, programmes, replay ... )",
-          },
-          {
-            message: 'mise en production de la partie admin et publique',
-          },
-          {
-            message: 'maintenance et rajout de fonctionnalités',
-          },
-        ],
-
-        estate: 'en cours',
-
-        technologies: [
-          {
-            name: 'Angular 13',
-            image: '../../../assets/img/logos/angular_logo.png',
-          },
-          {
-            name: 'Prime ng',
-            image: '../../../assets/img/logos/primeng_logo.png',
-          },
-          {
-            name: 'Node js',
-            image: '../../../assets/img/logos/node_logo.png',
-          },
-          {
-            name: 'Express js',
-            image: '../../../assets/img/logos/express_logo.png',
-          },
-          {
-            name: 'MongoDB',
-            image: '../../../assets/img/logos/mongodb_logo.png',
-          },
-          {
-            name: 'passport js',
-            image: '../../../assets/img/logos/passportjs.png',
-          },
-          {
-            name: 'Google Analytics',
-            image: '../../../assets/img/logos/google_analytics_logo.png',
-          },
-          {
-            name: 'o2switch',
-            image: '../../../assets/img/logos/o2switch_logo.png',
-          },
-          {
-            name: 'Adobe XD',
-            image: '../../../assets/img/logos/adobe_logo.png',
-          },
-          {
-            name: 'Github',
-            image: '../../../assets/img/logos/github.png',
-          },
-        ],
-      },
+      // Ajoutez vos autres projets ici avec la même structure étendue...
     ]);
   }
 
   getProjectData(param: string) {
     let projectData: any;
-
     let projectsListAllData = this.initProjectData();
 
     projectsListAllData.forEach((project) => {

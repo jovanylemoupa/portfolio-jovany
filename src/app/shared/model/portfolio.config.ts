@@ -3,28 +3,28 @@
 export const portfolioConfig = {
   // Informations personnelles
   personal: {
-    firstName: 'Samuel',
-    lastName: 'Mandeng',
+    firstName: 'Jovany',
+    lastName: 'Lemoupa',
     title: 'Développeur Full-Stack',
-    email: 'manduel21@gmail.com',
-    phone: '+33 7 83 18 91 71',
-    location: 'Rennes, France',
+    email: 'jovanylemoupa',
+    phone: '+33 7 59 61 14 10',
+    location: 'Grenoble, France',
     cvUrl:
       'https://drive.google.com/file/d/1270LhSlQntvSgBWDzf0rL0qNXKpya-lb/view?usp=sharing',
   },
 
   // Réseaux sociaux
   social: {
-    linkedin: 'https://www.linkedin.com/in/bonachisamuel',
-    github: 'https://github.com/zrotof',
-    instagram: 'https://www.instagram.com/zrotof_',
+    linkedin: 'https://www.linkedin.com/in/jovanylemoupa/',
+    github: 'https://github.com/jovanylemoupa',
+    instagram: 'https://www.instagram.com/jovanylemoupa/',
   },
 
   // Métadonnées SEO
   seo: {
-    title: 'Samuel Mandeng - Développeur Full-Stack | Portfolio',
+    title: 'Jovany Lemoupa - Développeur Full-Stack | Portfolio',
     description:
-      'Développeur Full-Stack passionné basé à Rennes. Je crée des applications web modernes et performantes avec Angular, React, Node.js. Découvrez mes projets et services.',
+      'Développeur Full-Stack web et mobile avec plus de 3 ans d’expérience, j’analyse les besoins et conçois des applications modernes. Mes missions freelance m’ont permis d’explorer divers environnements techniques. Parallèlement, je préside le département musique de mon école, où je coordonne des projets collaboratifs, renforçant ainsi mes compétences en pilotage et organisation.',
     keywords: [
       'développeur web rennes',
       'développeur full stack',
@@ -34,12 +34,12 @@ export const portfolioConfig = {
       'création site web',
       'développement application web',
       'freelance développeur',
-      'samuel mandeng',
+      'jovany lemoupa',
       'portfolio développeur',
     ],
-    author: 'Samuel Mandeng',
+    author: 'Jovany Lemoupa',
     ogImage: '/img/og-image.png',
-    ogUrl: 'https://samuelmandeng.com',
+    ogUrl: 'https://jovanylemoupa.com',
   },
 
   // Configuration des animations

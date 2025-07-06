@@ -1,43 +1,110 @@
-<header (scroll)="onWindowScroll()">
+<!-- Bannière d'alerte -->
+<div class="alert-banner" [class.hidden]="isBannerClosed">
+  <div class="banner-content">
+    <span class="icon">🚀</span>
+    <span class="text">
+      <strong>Recherche active :</strong> Je suis disponible pour un contrat de
+      professionnalisation en développement web - Mobile dans toute la France
+    </span>
+    <button
+      class="close-banner"
+      (click)="closeBanner()"
+      aria-label="Fermer la bannière"
+      type="button"
+    >
+      ×
+    </button>
+  </div>
+</div>
+
+<!-- Header principal -->
+<header
+  (scroll)="onWindowScroll()"
+  [class.banner-closed]="isBannerClosed"
+  [class.navbar-background-on-scroll]="hasScrollBackground"
+>
   <div class="content my-container">
-    <img class="logo" src="/img/logo-portfolio.png" alt="logo sm code" />
+    <img
+      class="logo"
+      src="/img/logo-portfolio.png"
+      alt="logo sm code"
+      (click)="navigateToAnchor('accueil')"
+    />
 
     <div class="header-right">
-      <nav>
+      <nav [class.toggle-nav]="isBurgerMenuClicked">
         <ul>
           <li>
-            <a (click)="setActiveLinkAndNavigate(1, 'accueil')">Accueil</a>
-          </li>
-          <li>
-            <a (click)="setActiveLinkAndNavigate(2, 'a-propos')">A Propos</a>
-          </li>
-          <li>
-            <a (click)="setActiveLinkAndNavigate(3, 'services')">Services</a>
-          </li>
-          <li>
-            <a (click)="setActiveLinkAndNavigate(4, 'projets')">Réalisations</a>
-          </li>
-          <li>
-            <a (click)="setActiveLinkAndNavigate(5, 'contact')"
-              >Contactez-moi</a
+            <a
+              (click)="setActiveLinkAndNavigate(1, 'accueil')"
+              [class.active-link]="currentLinkNumber === 1"
+              role="button"
+              tabindex="0"
             >
+              <span class="nav-icon">🏠</span>
+              Accueil
+            </a>
+          </li>
+          <li>
+            <a
+              (click)="setActiveLinkAndNavigate(2, 'a-propos')"
+              [class.active-link]="currentLinkNumber === 2"
+              role="button"
+              tabindex="0"
+            >
+              <span class="nav-icon">👤</span>
+              À Propos
+            </a>
+          </li>
+          <li>
+            <a
+              (click)="setActiveLinkAndNavigate(3, 'services')"
+              [class.active-link]="currentLinkNumber === 3"
+              role="button"
+              tabindex="0"
+            >
+              <span class="nav-icon">💻</span>
+              Services
+            </a>
+          </li>
+          <li>
+            <a
+              (click)="setActiveLinkAndNavigate(4, 'projets')"
+              [class.active-link]="currentLinkNumber === 4"
+              role="button"
+              tabindex="0"
+            >
+              <span class="nav-icon">🚀</span>
+              Réalisations
+            </a>
+          </li>
+          <li>
+            <a
+              (click)="setActiveLinkAndNavigate(5, 'contact')"
+              [class.active-link]="currentLinkNumber === 5"
+              role="button"
+              tabindex="0"
+            >
+              <span class="nav-icon">✉️</span>
+              Contactez-moi
+            </a>
           </li>
         </ul>
 
         <img
+          class="triangle-off"
           src="/img/triangle-off.png"
-          alt="just a design triangle yellow red"
+          alt="Design triangle"
         />
-
-        <img
-          class="cross"
-          src="/img/cross.png"
-          alt="just a design cross pink olive green skyblue"
-        />
+        <img class="cross" src="/img/cross.png" alt="Design cross" />
       </nav>
 
-      <div class="burger" (click)="onBurgerMenu()">
-        <input type="checkbox" />
+      <div
+        class="burger"
+        (click)="onBurgerMenu()"
+        [style.background]="isBurgerMenuClicked ? '#FFCC00' : 'inherit'"
+      >
+        <input type="checkbox" [checked]="isBurgerMenuClicked" />
         <span></span>
         <span></span>
         <span></span>

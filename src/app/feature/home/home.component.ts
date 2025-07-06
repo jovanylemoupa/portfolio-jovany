@@ -34,6 +34,7 @@ import {
 import { Project } from '../../shared/model/project';
 import { ProjectsService } from '../../shared/sercive/projects/projects.service';
 import { MailService } from '../../shared/sercive/mail/mail.service';
+import { portfolioConfig } from '../../shared/model/portfolio.config';
 
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -57,6 +58,12 @@ import {
   faArrowUp,
   faBars,
   faTimes,
+  faComments,
+  faFileAlt,
+  faLightbulb,
+  faBolt,
+  faGlobe,
+  faBullseye,
 } from '@fortawesome/free-solid-svg-icons';
 import { ProjectDetailComponent } from '../project-detail/project-detail.component';
 import { ToastModule } from 'primeng/toast';
@@ -157,6 +164,23 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   faArrowUp = faArrowUp;
   faBars = faBars;
   faTimes = faTimes;
+  faComments = faComments;
+  faLightbulb = faLightbulb;
+  faBolt = faBolt;
+  faGlobe = faGlobe;
+  faBullseye = faBullseye;
+  faFileAlt = faFileAlt;
+
+  activeProfileTab = 0;
+
+  // Configuration from portfolio.config.ts
+  config = portfolioConfig;
+  personalInfo = portfolioConfig.personal;
+  socialLinks = portfolioConfig.social;
+  skills = portfolioConfig.skills;
+  services = portfolioConfig.services;
+  education = portfolioConfig.education;
+  navigation = portfolioConfig.navigation;
 
   screenWidth: any;
   isBurgerMenuClicked: boolean = false;
@@ -187,12 +211,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private currentTextIndex = 0;
   private currentCharIndex = 0;
   private isDeleting = false;
-  private typewriterTexts = [
-    'Développeur Web',
-    'Web Designer',
-    'Développeur Full-Stack',
-    "Créateur d'expériences digitales",
-  ];
+  private typewriterTexts = portfolioConfig.animations.typewriterTexts;
 
   // Intersection Observer for animations
   private observer!: IntersectionObserver;
@@ -336,8 +355,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.messageService.add({
         severity: 'warn',
-        detail:
-          "Projet en phase d'initialisation. Veuillez réessayer plus tard.",
+        detail: this.config.messages.projectError,
       });
     }
   }
@@ -373,10 +391,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         this.currentCharIndex++;
       }
 
-      let typeSpeed = this.isDeleting ? 30 : 80;
+      let typeSpeed = this.isDeleting
+        ? this.config.animations.deleteSpeed
+        : this.config.animations.typeSpeed;
 
       if (!this.isDeleting && this.currentCharIndex === currentText.length) {
-        typeSpeed = 2000;
+        typeSpeed = this.config.animations.pauseDuration;
         this.isDeleting = true;
       } else if (this.isDeleting && this.currentCharIndex === 0) {
         this.isDeleting = false;
@@ -459,7 +479,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.messageService.add({
             severity: 'success',
             summary: 'Succès',
-            detail: 'Message envoyé avec succès!',
+            detail: this.config.messages.contactSuccess,
             life: 5000,
           });
           this.onReset();
@@ -467,7 +487,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
           this.messageService.add({
             severity: 'error',
             summary: 'Erreur',
-            detail: "Erreur lors de l'envoi du message. Veuillez réessayer.",
+            detail: this.config.messages.contactError,
             life: 5000,
           });
         }
@@ -489,19 +509,32 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openNetwork(param: string) {
-    let website;
-    if (param === 'linkedin') {
-      website = 'https://www.linkedin.com/in/bonachisamuel';
-    } else if (param === 'instagram') {
-      website = 'https://www.instagram.com/zrotof_';
-    } else if (param == 'github') {
-      website = 'https://github.com/zrotof';
+    const website = this.socialLinks[param as keyof typeof this.socialLinks];
+    if (website) {
+      window.open(website, '_blank');
     }
-
-    window.open(website, '_blank');
   }
 
   toggleMobileMenu() {
     this.isBurgerMenuClicked = !this.isBurgerMenuClicked;
+  }
+
+  // Helper method to get Object keys for template
+  objectKeys = Object.keys;
+
+  // Helper method to get icon by name
+  getServiceIcon(iconName: string): any {
+    const icons: any = {
+      faPalette: this.faPalette,
+      faCode: this.faCode,
+      faRocket: this.faRocket,
+      faChalkboardTeacher: this.faChalkboardTeacher,
+    };
+    return icons[iconName];
+  }
+
+  // Méthode pour forcer le type de la clé
+  getSkillCategoryKey(key: string): keyof typeof this.skills {
+    return key as keyof typeof this.skills;
   }
 }

@@ -5,29 +5,35 @@ $background: #f3f3f3;
 $colorYellow: #FFCC00;
 $colorGradient1: #ffebb8;
 $colorGradient2: #e3f2fd;
+$colorSuccess: #22c55e;
+$colorWarning: #f59e0b;
 
 // Mixins
 @mixin glassmorphism {
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-radius: 10px;
+    border-radius: 15px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
 @mixin button-style {
     border: none;
-    padding: 12px 30px;
+    padding: 14px 32px;
     border-radius: 50px;
     cursor: pointer;
     background: linear-gradient(135deg, $colorBlue 0%, lighten($colorBlue, 10%) 100%);
     color: white;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     
     &::before {
         content: '';
@@ -41,25 +47,34 @@ $colorGradient2: #e3f2fd;
     }
     
     &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
         
         &::before {
             left: 100%;
         }
+    }
+
+    &:focus {
+        outline: 2px solid $colorYellow;
+        outline-offset: 2px;
     }
 }
 
 // Global Styles
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    margin: 0;
-    padding: 0;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     scroll-behavior: smooth;
+    line-height: 1.6;
+    color: $colorBlue;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 // Animations
@@ -80,6 +95,26 @@ body {
     100% { background-position: 0% 50%; }
 }
 
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 // Animation utility classes
 .animate-on-scroll {
     opacity: 0;
@@ -89,6 +124,46 @@ body {
     &.animate-in {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+// Alert Banner for Contract Search
+.alert-banner {
+    background: linear-gradient(135deg, $colorSuccess 0%, lighten($colorSuccess, 10%) 100%);
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        animation: shine 3s ease-in-out infinite;
+    }
+    
+    .banner-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        max-width: 1200px;
+        margin: 0 auto;
+        
+        
+        .icon {
+            font-size: 1.2em;
+        }
+        
+        .text {
+            font-size: 0.95rem;
+        }
     }
 }
 
@@ -117,18 +192,18 @@ body {
     }
 }
 
-// Navigation mobile
+// Mobile Navigation
 .mobile-nav {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 60px;
+    height: 70px;
     background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
     
     .nav-content {
         display: flex;
@@ -136,29 +211,41 @@ body {
         align-items: center;
         height: 100%;
         padding: 0 20px;
+        max-width: 1200px;
+        margin: 0 auto;
         
         .logo {
-            font-weight: bold;
-            font-size: 1.5rem;
+            font-weight: 700;
+            font-size: 1.6rem;
             color: $colorBlue;
+            background: linear-gradient(135deg, $colorBlue 0%, $colorYellow 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .burger {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             cursor: pointer;
             color: $colorBlue;
+            padding: 8px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            
+            &:hover {
+                background: rgba($colorBlue, 0.1);
+            }
         }
     }
     
     .mobile-menu {
         position: fixed;
-        top: 60px;
+        top: 70px;
         left: 0;
         width: 100%;
         background: white;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
         transform: translateY(-100%);
-        transition: transform 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         
         &.active {
             transform: translateY(0);
@@ -166,15 +253,17 @@ body {
         
         a {
             display: block;
-            padding: 15px 20px;
+            padding: 18px 25px;
             color: $colorBlue;
             text-decoration: none;
             border-bottom: 1px solid #eee;
             transition: all 0.3s ease;
+            font-weight: 500;
             
-            &:hover {
+            &:hover, &.active {
                 background: $colorGradient2;
-                padding-left: 30px;
+                padding-left: 35px;
+                color: $colorBlue;
             }
         }
     }
@@ -185,7 +274,6 @@ body {
     background-color: white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     overflow-x: hidden;
 
     // Hero Section
@@ -201,6 +289,7 @@ body {
         animation: gradientShift 15s ease infinite;
         position: relative;
         overflow: hidden;
+        padding: 40px 0;
 
         // Animated background shapes
         &::before {
@@ -236,42 +325,44 @@ body {
 
         .content {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
             width: 100%;
             max-width: 1200px;
             padding: 0 50px;
             z-index: 2;
             position: relative;
+            gap: 60px;
+            margin-top: 90px;
 
             .text-network-content {
                 position: relative;
                 display: flex;
+                flex: 1;
 
                 .text-network {
                     @include glassmorphism;
                     display: flex;
                     flex-direction: column;
-                    padding: 40px;
-                    max-width: 500px;
+                    padding: 50px 40px;
+                    max-width: 550px;
                     z-index: 3;
-                    animation: fadeInUp 0.8s ease-out;
 
                     .greetings {
-                        font-size: 1.3rem;
+                        font-size: 1.4rem;
                         font-weight: 300;
-                        margin-bottom: 10px;
-                        opacity: 0.8;
+                        margin-bottom: 15px;
+                        opacity: 0.85;
                     }
 
                     .name {
                         font-weight: 700;
-                        font-size: 3rem;
-                        margin-bottom: 10px;
+                        font-size: 3.5rem;
+                        margin-bottom: 15px;
                         background: linear-gradient(135deg, $colorBlue 0%, $colorYellow 100%);
                         -webkit-background-clip: text;
                         -webkit-text-fill-color: transparent;
-                        background-clip: text;
+                        line-height: 1.1;
                         
                         .prenom, .nom {
                             display: inline-block;
@@ -280,47 +371,48 @@ body {
 
                     .work {
                         display: flex;
-                        font-size: 1.3rem;
-                        margin-top: 5px;
+                        font-size: 1.4rem;
+                        margin: 10px 0 20px 0;
                         font-weight: 300;
                         min-height: 2em;
+                        align-items: center;
 
                         #typewriter {
                             color: $colorYellow;
-                            margin-left: 5px;
-                            font-weight: 500;
-                            font-size: 1.5rem;
+                            margin-left: 8px;
+                            font-weight: 600;
+                            font-size: 1.6rem;
                             position: relative;
                             
                             &::after {
                                 content: '|';
                                 position: absolute;
-                                right: -10px;
+                                right: -12px;
                                 animation: blink 1s infinite;
                             }
                         }
                     }
 
-                    @keyframes blink {
-                        0%, 50% { opacity: 1; }
-                        51%, 100% { opacity: 0; }
-                    }
-
                     .i-do {
-                        margin: 20px 0;
-                        line-height: 1.6;
+                        margin: 25px 0;
+                        line-height: 1.7;
                         opacity: 0.9;
+                        font-size: 1.05rem;
                     }
 
-                    button {
-                        @include button-style;
-                        align-self: center;
-                        margin: 20px 0;
+                    .cta-buttons {
+                        display: flex;
+                        gap: 15px;
+                        margin: 30px 0;
+                        flex-wrap: wrap;
                         
-                        a {
-                            text-decoration: none;
-                            color: white;
-                            margin-right: 10px;
+                        button, .cta-button {
+                            @include button-style;
+                        }
+                        
+                        .secondary-btn {
+                            background: linear-gradient(135deg, $colorYellow 0%, lighten($colorYellow, 10%) 100%);
+                            color: $colorBlue;
                         }
                     }
 
@@ -328,31 +420,36 @@ body {
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        margin-top: 20px;
+                        margin-top: 25px;
+                        gap: 20px;
 
-                        .pi {
-                            font-size: 24px;
+                        .social-icon {
+                            font-size: 28px;
                             cursor: pointer;
-                            margin: 0 10px;
                             transition: all 0.3s ease;
+                            padding: 12px;
+                            border-radius: 12px;
                             
                             &:hover {
-                                transform: translateY(-3px) scale(1.1);
+                                transform: translateY(-5px) scale(1.1);
                             }
 
                             &.linkedin:hover {
                                 color: #0a66c2;
-                                filter: drop-shadow(0 4px 8px rgba(10, 102, 194, 0.3));
+                                background: rgba(10, 102, 194, 0.1);
+                                filter: drop-shadow(0 4px 12px rgba(10, 102, 194, 0.3));
                             }
 
                             &.github:hover {
                                 color: #333;
-                                filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+                                background: rgba(51, 51, 51, 0.1);
+                                filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
                             }
 
                             &.instagram:hover {
                                 color: #E4405F;
-                                filter: drop-shadow(0 4px 8px rgba(228, 64, 95, 0.3));
+                                background: rgba(228, 64, 95, 0.1);
+                                filter: drop-shadow(0 4px 12px rgba(228, 64, 95, 0.3));
                             }
                         }
                     }
@@ -360,11 +457,11 @@ body {
 
                 // Decorative elements
                 .circle-one {
-                    width: 100px;
-                    height: 100px;
+                    width: 120px;
+                    height: 120px;
                     position: absolute;
-                    top: -20px;
-                    right: -40px;
+                    top: -30px;
+                    right: -50px;
                     z-index: 2;
                     opacity: 0.8;
                     animation: float 4s ease-in-out infinite;
@@ -372,23 +469,172 @@ body {
 
                 .cross {
                     position: absolute;
-                    bottom: -80px;
-                    left: -70px;
+                    bottom: -100px;
+                    left: -80px;
                     z-index: 2;
-                    width: 200px;
-                    height: 200px;
+                    width: 220px;
+                    height: 220px;
                     animation: float 5s ease-in-out infinite reverse;
                 }
             }
 
             .hero-image {
-                width: 400px;
-                animation: fadeIn 1s ease-out 0.3s both;
-                filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.2));
+                width: 450px;
+                max-width: 45%;
+                filter: drop-shadow(0 25px 50px rgba(0, 0, 0, 0.2));
                 transition: transform 0.3s ease;
                 
                 &:hover {
                     transform: scale(1.05) rotate(2deg);
+                }
+            }
+        }
+    }
+
+    // Job Search Section
+    .job-search {
+        width: 100%;
+        padding: 80px 0;
+        background: linear-gradient(135deg, $colorBlue 0%, darken($colorBlue, 5%) 100%);
+        color: white;
+        position: relative;
+        overflow: hidden;
+        
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,204,0,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,204,0,0.1)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 50px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            
+            .job-search-header {
+                margin-bottom: 50px;
+                
+                .status-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 10px;
+                    background: rgba(34, 197, 94, 0.2);
+                    color: $colorSuccess;
+                    padding: 12px 24px;
+                    border-radius: 50px;
+                    font-weight: 600;
+                    font-size: 1rem;
+                    margin-bottom: 30px;
+                    border: 2px solid rgba(34, 197, 94, 0.3);
+                    
+                    .pulse-dot {
+                        width: 12px;
+                        height: 12px;
+                        background: $colorSuccess;
+                        border-radius: 50%;
+                        animation: pulse 2s infinite;
+                    }
+                }
+                
+                .title {
+                    font-size: 3rem;
+                    font-weight: 700;
+                    margin-bottom: 20px;
+                    background: linear-gradient(135deg, white 0%, $colorYellow 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+                
+                .subtitle {
+                    font-size: 1.3rem;
+                    opacity: 0.9;
+                    max-width: 700px;
+                    margin: 0 auto;
+                    line-height: 1.6;
+                }
+            }
+            
+            .job-search-content {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 40px;
+                margin: 60px 0;
+                
+                .search-card {
+                    @include glassmorphism;
+                    background: rgba(255, 255, 255, 0.1);
+                    padding: 40px 30px;
+                    text-align: center;
+                    transition: all 0.3s ease;
+                    border: 1px solid rgba(255, 255, 255, 0.2);
+                    
+                    &:hover {
+                        transform: translateY(-10px);
+                        background: rgba(255, 255, 255, 0.15);
+                    }
+                    
+                    .icon {
+                        font-size: 3em;
+                        color: $colorYellow;
+                        margin-bottom: 20px;
+                    }
+                    
+                    .card-title {
+                        font-size: 1.4rem;
+                        font-weight: 600;
+                        margin-bottom: 15px;
+                        color: white;
+                    }
+                    
+                    .card-description {
+                        font-size: 1rem;
+                        opacity: 0.9;
+                        line-height: 1.6;
+                    }
+                }
+            }
+            
+            .job-search-cta {
+                margin-top: 50px;
+                
+                .cta-text {
+                    font-size: 1.2rem;
+                    margin-bottom: 30px;
+                    opacity: 0.9;
+                }
+                
+                .cta-buttons {
+                    display: flex;
+                    justify-content: center;
+                    gap: 20px;
+                    flex-wrap: wrap;
+                    
+                    .cta-button {
+                        @include button-style;
+                        background: linear-gradient(135deg, $colorYellow 0%, lighten($colorYellow, 10%) 100%);
+                        color: $colorBlue;
+                        font-size: 1.1rem;
+                        padding: 16px 35px;
+                        
+                        &.secondary {
+                            background: transparent;
+                            color: white;
+                            border: 2px solid rgba(255, 255, 255, 0.3);
+                            
+                            &:hover {
+                                background: rgba(255, 255, 255, 0.1);
+                                border-color: white;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -402,7 +648,7 @@ body {
         justify-content: center;
         align-items: center;
         color: $colorBlue;
-        padding: 80px 0;
+        padding: 100px 0;
 
         .content {
             display: flex;
@@ -413,22 +659,22 @@ body {
             flex-direction: column;
 
             .title {
-                font-size: 2.5rem;
-                font-weight: bold;
+                font-size: 3rem;
+                font-weight: 700;
                 text-align: center;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
                 position: relative;
                 
                 &::after {
                     content: '';
                     position: absolute;
-                    bottom: -10px;
+                    bottom: -15px;
                     left: 50%;
                     transform: translateX(-50%);
-                    width: 60px;
-                    height: 4px;
+                    width: 80px;
+                    height: 5px;
                     background: $colorYellow;
-                    border-radius: 2px;
+                    border-radius: 3px;
                 }
             }
 
@@ -437,34 +683,34 @@ body {
                 width: 100%;
                 justify-content: space-between;
                 align-items: center;
-                margin: 80px 0;
-                gap: 60px;
+                margin: 100px 0;
+                gap: 80px;
 
                 .text {
                     display: flex;
                     flex-direction: column;
-                    font-size: 1.1em;
+                    font-size: 1.15rem;
                     position: relative;
                     flex: 1;
 
                     span {
                         text-align: justify;
-                        margin-bottom: 20px;
+                        margin-bottom: 25px;
                         line-height: 1.8;
                         opacity: 0.9;
                     }
                 }
 
                 img {
-                    width: 400px;
-                    height: 250px;
-                    border-radius: 10px;
-                    box-shadow: $colorYellow 15px 15px, $colorBlue 30px 30px;
+                    width: 450px;
+                    height: 280px;
+                    border-radius: 15px;
+                    box-shadow: $colorYellow 20px 20px, $colorBlue 40px 40px;
                     transition: all 0.3s ease;
                     
                     &:hover {
-                        transform: translate(-5px, -5px);
-                        box-shadow: $colorYellow 20px 20px, $colorBlue 35px 35px;
+                        transform: translate(-8px, -8px);
+                        box-shadow: $colorYellow 28px 28px, $colorBlue 48px 48px;
                     }
                 }
             }
@@ -472,7 +718,7 @@ body {
             .profil {
                 display: flex;
                 width: 100%;
-                margin: 80px 0;
+                margin: 100px 0;
                 justify-content: space-between;
                 flex-direction: column;
 
@@ -487,16 +733,17 @@ body {
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                        margin-bottom: 40px;
+                        margin-bottom: 50px;
+                        gap: 20px;
 
                         .profil-header {
-                            padding: 12px 30px;
+                            padding: 15px 35px;
                             border: 2px solid rgba(18, 154, 188, 0.2);
-                            margin: 0 10px;
                             border-radius: 50px;
                             text-align: center;
                             cursor: pointer;
-                            font-size: 1rem;
+                            font-size: 1.1rem;
+                            font-weight: 500;
                             transition: all 0.3s ease;
                             position: relative;
                             overflow: hidden;
@@ -542,12 +789,15 @@ body {
                         .profil-info {
                             display: none;
                             width: 100%;
-                            animation: fadeIn 0.5s ease-out;
+                            
+                            &.active {
+                                display: flex;
+                                animation: fadeIn 0.5s ease-out;
+                            }
                         }
 
                         .technos {
-                            display: flex;
-                            margin-top: 20px;
+                            margin-top: 30px;
                             width: 100%;
                             height: 100%;
                             justify-content: space-around;
@@ -555,7 +805,7 @@ body {
 
                             .profil-info-conteneur {
                                 display: flex;
-                                gap: 30px;
+                                gap: 40px;
                                 flex-wrap: wrap;
                                 justify-content: center;
 
@@ -566,9 +816,9 @@ body {
 
                                     .skills-title {
                                         font-weight: 600;
-                                        margin-bottom: 15px;
+                                        margin-bottom: 20px;
                                         text-align: center;
-                                        font-size: 1.2rem;
+                                        font-size: 1.3rem;
                                         color: $colorBlue;
                                     }
 
@@ -576,14 +826,14 @@ body {
                                         display: flex;
                                         flex-direction: column;
                                         background: linear-gradient(135deg, $colorYellow 0%, lighten($colorYellow, 10%) 100%);
-                                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-                                        border-radius: 15px;
-                                        padding: 20px;
+                                        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+                                        border-radius: 20px;
+                                        padding: 25px;
                                         transition: all 0.3s ease;
                                         
                                         &:hover {
-                                            transform: translateY(-5px);
-                                            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+                                            transform: translateY(-8px);
+                                            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
                                         }
 
                                         div {
@@ -591,7 +841,7 @@ body {
                                             flex-direction: column;
                                             justify-content: center;
                                             align-items: center;
-                                            margin: 10px;
+                                            margin: 12px;
                                             transition: all 0.3s ease;
                                             
                                             &:hover {
@@ -599,16 +849,128 @@ body {
                                             }
 
                                             img {
-                                                width: 45px;
-                                                height: 45px;
-                                                margin-bottom: 8px;
-                                                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+                                                width: 50px;
+                                                height: 50px;
+                                                margin-bottom: 10px;
+                                                filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.1));
                                             }
 
                                             span {
                                                 text-align: center;
-                                                font-size: 0.9em;
-                                                font-weight: 500;
+                                                font-size: 0.95rem;
+                                                font-weight: 600;
+                                                color: $colorBlue;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        .soft-skills {
+                            margin-top: 30px;
+                            width: 100%;
+                            height: 100%;
+                            justify-content: space-around;
+                            align-items: center;
+
+                            .profil-info-conteneur {
+                                display: flex;
+                                gap: 40px;
+                                flex-wrap: wrap;
+                                justify-content: center;
+
+                                .skills {
+                                    display: flex;
+                                    flex-direction: column;
+                                    height: fit-content;
+
+                                    .skills-title {
+                                        font-weight: 600;
+                                        margin-bottom: 20px;
+                                        text-align: center;
+                                        font-size: 1.3rem;
+                                        color: $colorBlue;
+                                    }
+
+                                    .images-logo {
+                                        display: flex;
+                                        flex-direction: column;
+                                        background: linear-gradient(135deg, lighten($colorBlue, 60%) 0%, lighten($colorBlue, 70%) 100%);
+                                        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+                                        border-radius: 20px;
+                                        padding: 25px;
+                                        transition: all 0.3s ease;
+                                        
+                                        &:hover {
+                                            transform: translateY(-8px);
+                                            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+                                        }
+
+                                        div {
+                                            display: flex;
+                                            flex-direction: column;
+                                            justify-content: center;
+                                            align-items: center;
+                                            margin: 12px;
+                                            transition: all 0.3s ease;
+                                            
+                                            &:hover {
+                                                transform: scale(1.1);
+                                            }
+
+                                            .soft-skill-icon {
+                                                width: 50px;
+                                                height: 50px;
+                                                border-radius: 50%;
+                                                display: flex;
+                                                align-items: center;
+                                                justify-content: center;
+                                                font-size: 24px;
+                                                margin-bottom: 10px;
+                                                filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.1));
+                                                
+                                                &.team-work {
+                                                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                                }
+                                                
+                                                &.analytical {
+                                                    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+                                                }
+                                                
+                                                &.motivation {
+                                                    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+                                                }
+                                                
+                                                &.mobility {
+                                                    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+                                                }
+                                                
+                                                &.speed {
+                                                    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+                                                }
+                                                
+                                                &.learning {
+                                                    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+                                                }
+                                                
+                                                &.communication {
+                                                    background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+                                                }
+                                                
+                                                &.problem-solving {
+                                                    background: linear-gradient(135deg, #fdbb2d 0%, #22c1c3 100%);
+                                                }
+                                                
+                                                &.creativity {
+                                                    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+                                                }
+                                            }
+
+                                            span {
+                                                text-align: center;
+                                                font-size: 0.95rem;
+                                                font-weight: 600;
                                                 color: $colorBlue;
                                             }
                                         }
@@ -620,14 +982,14 @@ body {
                         .formation {
                             width: 100%;
                             position: relative;
-                            margin-top: 20px;
+                            margin-top: 30px;
                             justify-content: center;
                             align-items: flex-start;
 
                             img {
-                                width: 100px;
-                                height: 100px;
-                                margin-right: 40px;
+                                width: 120px;
+                                height: 120px;
+                                margin-right: 50px;
                                 animation: float 3s ease-in-out infinite;
                             }
 
@@ -637,10 +999,10 @@ body {
                                 &::before {
                                     content: '';
                                     position: absolute;
-                                    left: 7px;
+                                    left: 10px;
                                     top: 0;
                                     bottom: 0;
-                                    width: 2px;
+                                    width: 3px;
                                     background: linear-gradient(to bottom, $colorYellow, $colorBlue);
                                 }
 
@@ -648,49 +1010,49 @@ body {
                                     display: flex;
                                     flex-direction: column;
                                     position: relative;
-                                    padding: 0px 40px;
-                                    margin: 0 0 30px 0;
+                                    padding: 0px 50px;
+                                    margin: 0 0 40px 0;
                                     transition: all 0.3s ease;
                                     
                                     &:hover {
-                                        transform: translateX(10px);
+                                        transform: translateX(15px);
                                     }
 
                                     span {
                                         fa-icon {
-                                            margin-right: 8px;
+                                            margin-right: 10px;
                                             color: $colorYellow;
                                         }
                                     }
 
                                     .formation-title {
-                                        font-weight: bold;
-                                        font-size: 1.1rem;
-                                        margin: 10px 0;
+                                        font-weight: 700;
+                                        font-size: 1.2rem;
+                                        margin: 15px 0;
                                     }
 
                                     .formation-description, .langue {
-                                        margin-top: 5px;
+                                        margin-top: 8px;
                                         opacity: 0.8;
-                                        line-height: 1.6;
+                                        line-height: 1.7;
                                     }
 
                                     &::after {
                                         content: '';
                                         position: absolute;
-                                        width: 16px;
-                                        height: 16px;
+                                        width: 20px;
+                                        height: 20px;
                                         left: 0;
                                         background-color: $colorYellow;
                                         top: 0;
                                         border-radius: 50%;
                                         z-index: 1;
                                         transition: all 0.3s ease;
-                                        box-shadow: 0 0 0 4px white, 0 0 0 6px $colorYellow;
+                                        box-shadow: 0 0 0 5px white, 0 0 0 8px $colorYellow;
                                     }
                                     
                                     &:hover::after {
-                                        transform: scale(1.2);
+                                        transform: scale(1.3);
                                     }
                                 }
                             }
@@ -712,7 +1074,7 @@ body {
         background-color: $colorBlue;
         overflow: hidden;
         position: relative;
-        padding: 100px 0;
+        padding: 120px 0;
         background-image: url("/img/services-bg.png");
         background-size: cover;
         background-attachment: fixed;
@@ -744,38 +1106,30 @@ body {
             position: relative;
 
             .title {
-                font-size: 2.5rem;
-                font-weight: bold;
+                font-size: 3rem;
+                font-weight: 700;
                 text-align: center;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
                 position: relative;
                 
                 &::after {
                     content: '';
                     position: absolute;
-                    bottom: -10px;
+                    bottom: -15px;
                     left: 50%;
                     transform: translateX(-50%);
-                    width: 60px;
-                    height: 4px;
+                    width: 80px;
+                    height: 5px;
                     background: $colorYellow;
-                    border-radius: 2px;
+                    border-radius: 3px;
                 }
-            }
-
-            .speach {
-                margin: 50px 0;
-                font-size: 1.2em;
-                text-align: center;
-                opacity: 0.9;
             }
 
             .intro-services {
                 display: flex;
                 justify-content: space-between;
-                margin: 60px 0;
-                padding-bottom: 50px;
-                gap: 60px;
+                margin: 80px 0;
+                gap: 80px;
 
                 .intro {
                     width: 40%;
@@ -783,18 +1137,18 @@ body {
                     flex-direction: column;
 
                     h3 {
-                        font-weight: bold;
-                        font-size: 2em;
+                        font-weight: 700;
+                        font-size: 2.2rem;
                         color: $colorYellow;
                         position: relative;
-                        margin-bottom: 25px;
+                        margin-bottom: 30px;
                         animation: pulse 2s ease-in-out infinite;
                     }
 
                     span {
-                        font-size: 1.1em;
-                        margin-bottom: 15px;
-                        line-height: 1.7;
+                        font-size: 1.15rem;
+                        margin-bottom: 20px;
+                        line-height: 1.8;
                         opacity: 0.9;
                     }
                 }
@@ -805,16 +1159,16 @@ body {
                     justify-content: center;
                     align-items: center;
                     width: 60%;
-                    gap: 30px;
+                    gap: 35px;
 
                     .service {
-                        width: 280px;
-                        min-height: 320px;
+                        width: 300px;
+                        min-height: 350px;
                         display: flex;
                         flex-direction: column;
                         align-items: center;
-                        border-radius: 20px;
-                        padding: 30px 20px;
+                        border-radius: 25px;
+                        padding: 40px 25px;
                         cursor: pointer;
                         @include glassmorphism;
                         text-align: center;
@@ -835,7 +1189,7 @@ body {
                         }
 
                         &:hover {
-                            transform: translateY(-10px) scale(1.02);
+                            transform: translateY(-15px) scale(1.03);
                             background: rgba(255, 255, 255, 0.9);
                             color: $colorBlue;
                             
@@ -843,7 +1197,7 @@ body {
                                 opacity: 1;
                             }
 
-                            fa-icon {
+                            .service-icon {
                                 transform: rotateY(360deg);
                                 color: $colorBlue;
                             }
@@ -853,23 +1207,23 @@ body {
                             }
                         }
 
-                        fa-icon {
-                            font-size: 3.5em;
+                        .service-icon {
+                            font-size: 4rem;
                             color: $colorYellow;
-                            margin-bottom: 20px;
+                            margin-bottom: 25px;
                             transition: all 0.6s ease;
                         }
 
                         .service-title {
-                            margin: 20px 0;
-                            font-weight: bold;
-                            font-size: 1.3em;
+                            margin: 25px 0;
+                            font-weight: 700;
+                            font-size: 1.4rem;
                         }
 
                         p {
                             color: rgba(255, 255, 255, 0.8);
-                            font-size: 0.98em;
-                            line-height: 1.6;
+                            font-size: 1rem;
+                            line-height: 1.7;
                         }
                     }
                 }
@@ -884,7 +1238,7 @@ body {
         justify-content: center;
         align-items: flex-start;
         color: $colorBlue;
-        padding: 80px 0;
+        padding: 100px 0;
 
         .content {
             width: 100%;
@@ -895,47 +1249,50 @@ body {
             flex-direction: column;
 
             .title {
-                font-size: 2.5rem;
-                font-weight: bold;
+                font-size: 3rem;
+                font-weight: 700;
                 text-align: center;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
                 position: relative;
                 
                 &::after {
                     content: '';
                     position: absolute;
-                    bottom: -10px;
+                    bottom: -15px;
                     left: 50%;
                     transform: translateX(-50%);
-                    width: 60px;
-                    height: 4px;
+                    width: 80px;
+                    height: 5px;
                     background: $colorYellow;
-                    border-radius: 2px;
+                    border-radius: 3px;
                 }
             }
 
             .summary {
-                margin: 30px 0;
+                margin: 40px 0;
                 text-align: center;
-                font-size: 1.1rem;
+                font-size: 1.2rem;
                 opacity: 0.8;
+                max-width: 600px;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .project-list {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
-                margin: 60px 0;
-                gap: 40px;
+                margin: 80px 0;
+                gap: 50px;
 
                 .project {
-                    width: 340px;
+                    width: 360px;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     background-color: white;
-                    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-                    border-radius: 20px;
+                    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+                    border-radius: 25px;
                     overflow: hidden;
                     cursor: pointer;
                     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -947,7 +1304,7 @@ body {
                         top: 0;
                         left: 0;
                         right: 0;
-                        height: 5px;
+                        height: 6px;
                         background: linear-gradient(90deg, $colorYellow, $colorBlue);
                         transform: scaleX(0);
                         transition: transform 0.3s ease;
@@ -956,7 +1313,7 @@ body {
 
                     .project-image {
                         width: 100%;
-                        height: 220px;
+                        height: 240px;
                         overflow: hidden;
                         position: relative;
                         
@@ -981,30 +1338,31 @@ body {
                     }
 
                     .project-title {
-                        font-weight: bold;
-                        font-size: 1.4em;
-                        margin: 25px 0 15px 0;
+                        font-weight: 700;
+                        font-size: 1.5rem;
+                        margin: 30px 0 20px 0;
                         color: $colorBlue;
+                        text-align: center;
                     }
 
                     .project-summary {
-                        margin: 0 20px 20px 20px;
+                        margin: 0 25px 25px 25px;
                         text-align: center;
-                        font-size: 0.95em;
-                        font-weight: 350;
-                        line-height: 1.6;
+                        font-size: 1rem;
+                        font-weight: 400;
+                        line-height: 1.7;
                         opacity: 0.8;
                     }
 
                     button {
                         @include button-style;
-                        margin: 10px 0 25px 0;
-                        font-size: 0.9em;
+                        margin: 15px 0 30px 0;
+                        font-size: 1rem;
                     }
 
                     &:hover {
-                        transform: translateY(-10px);
-                        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+                        transform: translateY(-12px);
+                        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
                         
                         &::before {
                             transform: scaleX(1);
@@ -1032,7 +1390,7 @@ body {
         justify-content: center;
         align-items: flex-start;
         color: $colorBlue;
-        padding: 80px 0;
+        padding: 100px 0;
         background: linear-gradient(135deg, lighten($colorGradient2, 5%) 0%, white 100%);
 
         .content {
@@ -1044,35 +1402,35 @@ body {
             flex-direction: column;
 
             .title {
-                font-size: 2.5rem;
-                font-weight: bold;
+                font-size: 3rem;
+                font-weight: 700;
                 text-align: center;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
                 position: relative;
                 
                 &::after {
                     content: '';
                     position: absolute;
-                    bottom: -10px;
+                    bottom: -15px;
                     left: 50%;
                     transform: translateX(-50%);
-                    width: 60px;
-                    height: 4px;
+                    width: 80px;
+                    height: 5px;
                     background: $colorYellow;
-                    border-radius: 2px;
+                    border-radius: 3px;
                 }
             }
 
             > span:nth-child(2) {
-                margin: 50px 0 5px 0;
-                font-size: 1.3em;
+                margin: 60px 0 10px 0;
+                font-size: 1.4rem;
                 font-weight: 600;
                 text-align: center;
             }
 
-            > span:nth-child(3) {
-                margin: 5px 0 50px 0;
-                font-size: 1.1em;
+            > span:nth-child(3), .speach {
+                margin: 10px 0 60px 0;
+                font-size: 1.15rem;
                 text-align: center;
                 opacity: 0.8;
             }
@@ -1082,28 +1440,28 @@ body {
                 justify-content: space-between;
                 align-items: flex-start;
                 width: 100%;
-                margin-bottom: 60px;
-                gap: 50px;
+                margin-bottom: 80px;
+                gap: 60px;
 
                 .personal-id {
                     display: flex;
                     flex-direction: column;
                     justify-content: space-around;
                     align-items: center;
-                    border-radius: 20px;
+                    border-radius: 25px;
                     @include glassmorphism;
-                    width: 30%;
-                    padding: 40px 20px;
+                    width: 35%;
+                    padding: 50px 25px;
                     
                     .tel, .mail {
                         display: flex;
                         flex-direction: column;
-                        margin: 20px 0;
+                        margin: 25px 0;
                         align-items: center;
                         transition: all 0.3s ease;
                         
                         &:hover {
-                            transform: translateY(-5px);
+                            transform: translateY(-8px);
                             
                             .img-bloc {
                                 transform: rotate(360deg);
@@ -1112,17 +1470,17 @@ body {
 
                         .img-bloc {
                             border-radius: 50%;
-                            width: 60px;
-                            height: 60px;
+                            width: 70px;
+                            height: 70px;
                             background: linear-gradient(135deg, $colorBlue 0%, lighten($colorBlue, 10%) 100%);
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             color: $colorYellow;
-                            font-size: 1.8em;
-                            margin: 0 0 15px 0;
+                            font-size: 2rem;
+                            margin: 0 0 20px 0;
                             transition: all 0.5s ease;
-                            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
                         }
 
                         .text-bloc {
@@ -1131,14 +1489,14 @@ body {
                             align-items: center;
 
                             .titles {
-                                font-size: 1.3em;
-                                margin: 0 0 5px 0;
+                                font-size: 1.4rem;
+                                margin: 0 0 8px 0;
                                 font-weight: 600;
                             }
 
                             .text {
                                 font-weight: 500;
-                                font-size: 0.95em;
+                                font-size: 1rem;
                                 opacity: 0.8;
                             }
                         }
@@ -1148,8 +1506,8 @@ body {
                 form {
                     width: 65%;
                     @include glassmorphism;
-                    padding: 50px 40px;
-                    border-radius: 20px;
+                    padding: 60px 50px;
+                    border-radius: 25px;
                     display: flex;
                     justify-content: center;
                     align-items: center;
@@ -1157,10 +1515,10 @@ body {
 
                     .invalid-feedback {
                         color: $colorRed;
-                        font-size: 0.85em;
+                        font-size: 0.9rem;
                         position: relative;
-                        left: 10px;
-                        margin: 5px 0;
+                        left: 15px;
+                        margin: 8px 0;
                     }
 
                     .name-email {
@@ -1168,104 +1526,107 @@ body {
                         justify-content: space-between;
                         align-items: flex-start;
                         width: 100%;
-                        gap: 30px;
+                        gap: 35px;
 
                         .name-bloc, .email-bloc {
                             width: 50%;
                             position: relative;
 
-                            #name-input, #email-input {
-                                height: 50px;
+                            input {
+                                height: 55px;
                                 width: 100%;
                                 border: 2px solid transparent;
                                 border-radius: 50px;
-                                padding: 0 25px;
+                                padding: 0 30px;
                                 outline: none;
                                 background: white;
                                 transition: all 0.3s ease;
                                 font-size: 1rem;
                                 
-                                &:focus {
+                                &:focus, &:not(:placeholder-shown) {
                                     border-color: $colorYellow;
                                     box-shadow: 0 0 0 4px rgba(255, 204, 0, 0.1);
                                 }
                             }
 
-                            #name-input:not(:placeholder-shown) + .label-id,
-                            #email-input:not(:placeholder-shown) + .label-id {
-                                transform: translate(0, -50%);
-                                opacity: 1;
-                                color: $colorBlue;
-                                background: white;
-                                padding: 0 10px;
-                            }
-
                             .label-id {
-                                left: 20px;
+                                left: 25px;
                                 position: absolute;
                                 top: 0;
                                 opacity: 0;
                                 transition: all 0.2s;
-                                font-size: 0.9rem;
-                                font-weight: 500;
+                                font-size: 0.95rem;
+                                font-weight: 600;
+                                color: $colorBlue;
+                                background: white;
+                                padding: 0 12px;
+                                transform: translateY(50%);
+                            }
+
+                            input:focus + .label-id,
+                            input:not(:placeholder-shown) + .label-id {
+                                transform: translateY(-50%);
+                                opacity: 1;
                             }
                         }
                     }
 
                     .objet-bloc {
                         width: 100%;
-                        height: 50px;
+                        height: 55px;
                         position: relative;
-                        margin-top: 25px;
+                        margin-top: 30px;
 
-                        #objet-input {
+                        input {
                             height: 100%;
                             width: 100%;
                             border: 2px solid transparent;
                             border-radius: 50px;
-                            padding: 0 25px;
+                            padding: 0 30px;
                             outline: none;
                             background: white;
                             transition: all 0.3s ease;
                             font-size: 1rem;
                             
-                            &:focus {
+                            &:focus, &:not(:placeholder-shown) {
                                 border-color: $colorYellow;
                                 box-shadow: 0 0 0 4px rgba(255, 204, 0, 0.1);
                             }
                         }
 
-                        #objet-input:not(:placeholder-shown) + .label-id {
-                            transform: translate(0, -50%);
-                            opacity: 1;
-                            color: $colorBlue;
-                            background: white;
-                            padding: 0 10px;
-                        }
-
                         .label-id {
-                            left: 20px;
+                            left: 25px;
                             position: absolute;
                             top: 0;
                             opacity: 0;
                             transition: all 0.2s;
-                            font-size: 0.9rem;
-                            font-weight: 500;
+                            font-size: 0.95rem;
+                            font-weight: 600;
+                            color: $colorBlue;
+                            background: white;
+                            padding: 0 12px;
+                            transform: translateY(50%);
+                        }
+
+                        input:focus + .label-id,
+                        input:not(:placeholder-shown) + .label-id {
+                            transform: translateY(-50%);
+                            opacity: 1;
                         }
                     }
 
                     .message-bloc {
                         width: 100%;
-                        height: 200px;
+                        height: 220px;
                         position: relative;
-                        margin-top: 25px;
+                        margin-top: 30px;
 
-                        #message-area {
+                        textarea {
                             height: 100%;
                             width: 100%;
                             border: 2px solid transparent;
-                            border-radius: 20px;
-                            padding: 15px 25px;
+                            border-radius: 25px;
+                            padding: 20px 30px;
                             outline: none;
                             resize: none;
                             background: white;
@@ -1273,36 +1634,38 @@ body {
                             font-size: 1rem;
                             font-family: inherit;
                             
-                            &:focus {
+                            &:focus, &:not(:placeholder-shown) {
                                 border-color: $colorYellow;
                                 box-shadow: 0 0 0 4px rgba(255, 204, 0, 0.1);
                             }
                         }
 
-                        #message-area:not(:placeholder-shown) + .label-id {
-                            transform: translate(0, -50%);
-                            opacity: 1;
-                            color: $colorBlue;
-                            background: white;
-                            padding: 0 10px;
-                        }
-
                         .label-id {
-                            left: 20px;
+                            left: 25px;
                             position: absolute;
                             top: 0;
                             opacity: 0;
                             transition: all 0.2s;
-                            font-size: 0.9rem;
-                            font-weight: 500;
+                            font-size: 0.95rem;
+                            font-weight: 600;
+                            color: $colorBlue;
+                            background: white;
+                            padding: 0 12px;
+                            transform: translateY(50%);
+                        }
+
+                        textarea:focus + .label-id,
+                        textarea:not(:placeholder-shown) + .label-id {
+                            transform: translateY(-50%);
+                            opacity: 1;
                         }
                     }
 
                     button {
                         @include button-style;
-                        margin-top: 40px;
-                        min-width: 150px;
-                        height: 50px;
+                        margin-top: 50px;
+                        min-width: 180px;
+                        height: 55px;
                         font-size: 1.1rem;
                         
                         p-progressSpinner {
@@ -1317,23 +1680,22 @@ body {
 }
 
 // Responsive Design
-@media all and (max-width: 1150px) {
+@media all and (max-width: 1200px) {
     .app {
-        .hero {
-            .content {
-                .text-network-content {
-                    .text-network {
-                        padding: 30px;
-                        
-                        .name {
-                            font-size: 2.5rem;
-                        }
-                    }
-                }
-                
-                .hero-image {
-                    width: 350px;
-                }
+        .hero .content {
+            gap: 40px;
+            
+            .hero-image {
+                width: 380px;
+            }
+        }
+        
+        .about .content .text-image {
+            gap: 60px;
+            
+            img {
+                width: 380px;
+                height: 240px;
             }
         }
     }
@@ -1364,75 +1726,193 @@ body {
 
 @media all and (max-width: 1024px) {
     .app {
-        .about {
-            .content {
-                .text-image {
-                    flex-direction: column;
-
-                    .text {
-                        margin-top: 40px;
-                    }
-
-                    img {
-                        margin-bottom: 40px;
-                    }
+        .hero .content {
+            flex-direction: column-reverse;
+            text-align: center;
+            gap: 50px;
+            
+            .text-network-content .text-network {
+                max-width: 100%;
+                
+                .name {
+                    font-size: 3rem;
                 }
+            }
+            
+            .hero-image {
+                width: 350px;
+                max-width: 90%;
+            }
+        }
+        
+        .job-search .content .job-search-content {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        .about .content .text-image {
+            flex-direction: column;
+            gap: 50px;
+            text-align: center;
+            
+            img {
+                width: 100%;
+                max-width: 400px;
+                height: auto;
+            }
+        }
+        
+        .contact .content .contact-info {
+            flex-direction: column;
+            gap: 40px;
+            
+            .personal-id {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 40px 30px;
+            }
+            
+            form {
+                width: 100%;
             }
         }
     }
 }
 
-@media all and (max-width: 880px) {
+@media all and (max-width: 768px) {
     .mobile-nav {
         display: block !important;
     }
-
+    
+    .alert-banner {
+        padding: 15px 20px;
+        
+        .banner-content {
+            flex-direction: column;
+            gap: 8px;
+            
+            .text {
+                font-size: 0.9rem;
+                text-align: center;
+            }
+        }
+    }
+    
     .app {
         .hero {
-            padding-top: 60px;
+            padding-top: 100px;
+            min-height: auto;
             
             .content {
-                flex-direction: column-reverse;
-                padding: 0 20px;
-
-                .text-network-content {
-                    margin: 40px 0;
-
-                    .text-network {
-                        .name {
-                            font-size: 2.2rem;
+                padding: 0 30px;
+                
+                .text-network-content .text-network {
+                    padding: 40px 30px;
+                    
+                    .name {
+                        font-size: 2.5rem;
+                    }
+                    
+                    .work {
+                        font-size: 1.2rem;
+                        
+                        #typewriter {
+                            font-size: 1.4rem;
+                        }
+                    }
+                    
+                    .cta-buttons {
+                        justify-content: center;
+                        gap: 12px;
+                        
+                        button, .cta-button {
+                            padding: 12px 24px;
+                            font-size: 0.95rem;
                         }
                     }
                 }
-
+                
                 .hero-image {
-                    width: 300px;
-                    margin-top: 40px;
+                    width: 280px;
                 }
             }
         }
-
-        .services {
-            .content {
-                padding: 0 20px;
+        
+        .job-search .content {
+            padding: 0 30px;
+            
+            .job-search-header {
+                .title {
+                    font-size: 2.5rem;
+                }
+                
+                .subtitle {
+                    font-size: 1.1rem;
+                }
+            }
+            
+            .job-search-content .search-card {
+                padding: 30px 25px;
+            }
+            
+            .job-search-cta .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+                
+                .cta-button {
+                    width: 100%;
+                    max-width: 300px;
+                }
             }
         }
-
-        .contact {
+        
+        .about, .services, .projects, .contact {
             .content {
-                padding: 0 20px;
+                padding: 0 30px;
                 
-                .contact-info {
+                .title {
+                    font-size: 2.5rem;
+                }
+            }
+        }
+        
+        .about .content .profil .profil-bloc .profil-nav {
+            flex-wrap: wrap;
+            gap: 15px;
+            
+            .profil-header {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+        }
+        
+        .services .content .intro-services .services-list .service {
+            width: 100%;
+            max-width: 350px;
+            min-height: 300px;
+        }
+        
+        .projects .content .project-list .project {
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .contact .content .contact-info {
+            .personal-id {
+                flex-direction: column;
+                padding: 30px 25px;
+            }
+            
+            form {
+                padding: 40px 30px;
+                
+                .name-email {
                     flex-direction: column;
-
-                    .personal-id {
-                        width: 100%;
-                        flex-direction: row;
-                        justify-content: space-around;
-                        padding: 30px 20px;
-                    }
-
-                    form {
+                    gap: 25px;
+                    
+                    .name-bloc, .email-bloc {
                         width: 100%;
                     }
                 }
@@ -1445,119 +1925,103 @@ body {
     .app {
         .hero {
             .content {
+                padding: 0 20px;
+                
                 .text-network-content {
                     .text-network {
-                        padding: 25px;
+                        padding: 30px 25px;
                         max-width: 100%;
 
                         .name {
-                            font-size: 1.8rem;
+                            font-size: 2rem;
                         }
 
                         .work {
                             font-size: 1.1rem;
 
                             #typewriter {
-                                font-size: 1.2rem;
+                                font-size: 1.3rem;
+                            }
+                        }
+                        
+                        .i-do {
+                            font-size: 1rem;
+                        }
+                        
+                        .networks {
+                            gap: 15px;
+                            
+                            .social-icon {
+                                font-size: 24px;
+                                padding: 10px;
                             }
                         }
                     }
                 }
 
                 .hero-image {
-                    width: 250px;
+                    width: 240px;
                 }
             }
         }
-
-        .about {
+        
+        .job-search .content {
+            padding: 0 20px;
+            
+            .job-search-header .title {
+                font-size: 2rem;
+            }
+        }
+        
+        .about, .services, .projects, .contact {
             .content {
                 padding: 0 20px;
-
-                .text-image {
-                    img {
-                        width: 100%;
-                        height: auto;
-                        max-width: 300px;
-                    }
+                
+                .title {
+                    font-size: 2rem;
                 }
-
-                .profil {
-                    .profil-bloc {
-                        .profil-content {
-                            .technos {
-                                .profil-info-conteneur {
-                                    flex-direction: column;
-
-                                    .skills {
-                                        margin: 20px 0;
-
-                                        .images-logo {
-                                            flex-direction: row;
-                                            flex-wrap: wrap;
-                                            justify-content: center;
-                                        }
-                                    }
-                                }
-                            }
-
-                            .formation {
-                                img {
-                                    display: none;
-                                }
-
-                                .formation-conteneur {
-                                    &::before {
-                                        display: none;
-                                    }
-
-                                    .formation-element {
-                                        padding: 0;
-                                        
-                                        &::after {
-                                            display: none;
-                                        }
-                                    }
-                                }
+            }
+        }
+        
+        .about .content .profil .profil-bloc .profil-content {
+            .technos, .soft-skills {
+                .profil-info-conteneur {
+                    flex-direction: column;
+                    gap: 25px;
+                    
+                    .skills .images-logo {
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        gap: 15px;
+                        
+                        div {
+                            margin: 8px;
+                            
+                            img, .soft-skill-icon {
+                                width: 40px;
+                                height: 40px;
                             }
                         }
                     }
                 }
             }
-        }
-
-        .projects {
-            .content {
-                padding: 0 20px;
-
-                .project-list {
-                    .project {
-                        width: 100%;
-                        max-width: 400px;
-                    }
+            
+            .formation {
+                img {
+                    display: none;
                 }
-            }
-        }
 
-        .contact {
-            .content {
-                .contact-info {
-                    .personal-id {
-                        flex-direction: column;
-                        background: none;
-                        box-shadow: none;
+                .formation-conteneur {
+                    &::before {
+                        display: none;
                     }
 
-                    form {
-                        padding: 30px 20px;
-
-                        .name-email {
-                            flex-direction: column;
-                            gap: 20px;
-
-                            .name-bloc, .email-bloc {
-                                width: 100%;
-                            }
+                    .formation-element {
+                        padding: 0;
+                        
+                        &::after {
+                            display: none;
                         }
                     }
                 }
@@ -1572,40 +2036,84 @@ body {
             .content {
                 .text-network-content {
                     .text-network {
-                        padding: 20px;
+                        padding: 25px 20px;
 
                         .name {
-                            font-size: 1.6rem;
+                            font-size: 1.8rem;
                         }
 
+                        .greetings, .work {
+                            font-size: 1rem;
+                        }
+                        
+                        .work #typewriter {
+                            font-size: 1.2rem;
+                        }
+                        
                         .i-do {
-                            font-size: 0.9em;
+                            font-size: 0.95rem;
                             text-align: justify;
                         }
                     }
                 }
             }
         }
+        
+        .job-search .content .job-search-header .title {
+            font-size: 1.8rem;
+        }
+        
+        .about, .services, .projects, .contact {
+            .content .title {
+                font-size: 1.8rem;
+            }
+        }
     }
 }
 
-@media all and (max-width: 330px) {
+@media all and (max-width: 360px) {
     .app {
-        .hero {
-            .content {
-                .text-network-content {
-                    .text-network {
-                        .name {
-                            font-size: 1.4rem;
-                        }
+        .hero .content .text-network-content .text-network {
+            .name {
+                font-size: 1.6rem;
+            }
+            
+            .work #typewriter {
+                font-size: 1.1rem;
+            }
+        }
+        
+        .job-search .content .job-search-header .title {
+            font-size: 1.6rem;
+        }
+        
+        .about, .services, .projects, .contact {
+            .content .title {
+                font-size: 1.6rem;
+            }
+        }
+    }
+}
 
-                        .work {
-                            #typewriter {
-                                font-size: 1rem;
-                            }
-                        }
-                    }
-                }
+@media all and (max-width: 320px) {
+    .alert-banner .banner-content .text {
+        font-size: 0.8rem;
+    }
+    
+    .app .hero .content .text-network-content .text-network {
+        padding: 20px 15px;
+        
+        .name {
+            font-size: 1.5rem;
+        }
+        
+        .cta-buttons {
+            flex-direction: column;
+            align-items: center;
+            
+            .cta-button {
+                width: 100%;
+                justify-content: center;
             }
         }
     }
@@ -1614,8 +2122,8 @@ body {
 // Custom Toast Styles
 :host ::ng-deep .p-toast {
     .p-toast-message {
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         
         &.p-toast-message-success {
             background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
@@ -1649,7 +2157,7 @@ body {
 // Project Dialog Styles
 :host ::ng-deep .project-dialog {
     .p-dialog-content {
-        border-radius: 20px;
+        border-radius: 25px;
     }
 }
 
@@ -1661,27 +2169,69 @@ body {
     padding: 0 20px;
 }
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 // Loading States
 .loading {
     opacity: 0.6;
     pointer-events: none;
+    position: relative;
+    
+    &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        border: 2px solid transparent;
+        border-top: 2px solid $colorYellow;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
 }
 
-// Focus Styles
-*:focus {
-    outline: 2px solid $colorYellow;
+// Focus Styles améliorés
+*:focus-visible {
+    outline: 3px solid $colorYellow;
     outline-offset: 2px;
+}
+
+button:focus,
+input:focus,
+textarea:focus,
+.profil-header:focus,
+.social-icon:focus {
+    outline: 3px solid $colorYellow;
+    outline-offset: 2px;
+}
+
+// Amélioration des boutons CTA
+.cta-button:active,
+button:active {
+    transform: translateY(-1px) scale(0.98);
 }
 
 // Selection Styles
 ::selection {
-    background: $colorYellow;
+    background: rgba($colorYellow, 0.3);
     color: $colorBlue;
 }
 
 // Scrollbar Styles
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 12px;
 }
 
 ::-webkit-scrollbar-track {
@@ -1690,9 +2240,142 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, $colorYellow 0%, $colorBlue 100%);
-    border-radius: 5px;
+    border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, darken($colorYellow, 10%) 0%, darken($colorBlue, 10%) 100%);
+}
+
+// Améliorations pour l'impression
+@media print {
+    .mobile-nav,
+    .alert-banner,
+    .networks,
+    .cta-buttons,
+    .scroll-to-top {
+        display: none !important;
+    }
+    
+    .hero,
+    .job-search,
+    .about,
+    .services,
+    .projects,
+    .contact {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    
+    body {
+        font-size: 12pt;
+        line-height: 1.4;
+        color: black;
+    }
+    
+    .title {
+        color: black !important;
+        font-size: 18pt !important;
+    }
+    
+    .hero, .job-search, .services {
+        background: white !important;
+        color: black !important;
+    }
+}
+
+// Thème sombre (optionnel)
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #1a1a1a;
+        --text-color: #ffffff;
+        --card-bg: rgba(255, 255, 255, 0.05);
+    }
+}
+
+// Réduction des animations pour les utilisateurs sensibles
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .animate-on-scroll {
+        opacity: 1;
+        transform: none;
+    }
+    
+    .hero::before,
+    .hero::after {
+        animation: none;
+    }
+}
+
+// États de survol pour les appareils tactiles
+@media (hover: none) {
+    .service:hover,
+    .project:hover,
+    .search-card:hover,
+    .skills .images-logo div:hover {
+        transform: none;
+    }
+    
+    .social-icon:hover {
+        transform: none;
+        background: none;
+        filter: none;
+    }
+}
+
+// Animation d'entrée pour les éléments de grille
+.job-search-content .search-card:nth-child(1) { animation-delay: 0.1s; }
+.job-search-content .search-card:nth-child(2) { animation-delay: 0.2s; }
+.job-search-content .search-card:nth-child(3) { animation-delay: 0.3s; }
+.job-search-content .search-card:nth-child(4) { animation-delay: 0.4s; }
+
+.services-list .service:nth-child(1) { animation-delay: 0.1s; }
+.services-list .service:nth-child(2) { animation-delay: 0.25s; }
+.services-list .service:nth-child(3) { animation-delay: 0.4s; }
+.services-list .service:nth-child(4) { animation-delay: 0.55s; }
+
+.project-list .project:nth-child(1) { animation-delay: 0.2s; }
+.project-list .project:nth-child(2) { animation-delay: 0.4s; }
+.project-list .project:nth-child(3) { animation-delay: 0.6s; }
+
+// Améliorations d'accessibilité
+@media (forced-colors: active) {
+    .glassmorphism {
+        background: Canvas;
+        border: 1px solid CanvasText;
+    }
+    
+    .cta-button,
+    button {
+        background: ButtonFace;
+        color: ButtonText;
+        border: 1px solid ButtonText;
+    }
+}
+
+// Support pour le mode contraste élevé
+@media (prefers-contrast: high) {
+    .text-network .name,
+    .job-search-header .title {
+        -webkit-text-fill-color: currentColor;
+        background: none;
+    }
+    
+    .alert-banner,
+    .job-search {
+        background: $colorBlue;
+    }
+    
+    .glassmorphism {
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid $colorBlue;
+    }
 }

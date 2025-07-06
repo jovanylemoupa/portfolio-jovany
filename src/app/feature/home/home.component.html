@@ -1,17 +1,52 @@
+<!-- Alert Banner pour la recherche de contrat -->
+
 <!-- Navigation Mobile -->
-<nav class="mobile-nav" *ngIf="screenWidth <= 880">
+<nav class="mobile-nav" *ngIf="screenWidth <= 768">
   <div class="nav-content">
-    <div class="logo">SM.</div>
+    <div class="logo">
+      {{ personalInfo.firstName[0] }}{{ personalInfo.lastName[0] }}.
+    </div>
     <div class="burger" (click)="toggleMobileMenu()">
       <fa-icon [icon]="isBurgerMenuClicked ? faTimes : faBars"></fa-icon>
     </div>
   </div>
   <div class="mobile-menu" [class.active]="isBurgerMenuClicked">
-    <a href="#accueil" (click)="toggleMobileMenu()">Accueil</a>
-    <a href="#a-propos" (click)="toggleMobileMenu()">À Propos</a>
-    <a href="#services" (click)="toggleMobileMenu()">Services</a>
-    <a href="#projets" (click)="toggleMobileMenu()">Projets</a>
-    <a href="#contact" (click)="toggleMobileMenu()">Contact</a>
+    <a
+      href="#accueil"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'accueil'"
+      >Accueil</a
+    >
+    <a
+      href="#recherche"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'recherche'"
+      >Recherche</a
+    >
+    <a
+      href="#a-propos"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'a-propos'"
+      >À Propos</a
+    >
+    <a
+      href="#services"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'services'"
+      >Services</a
+    >
+    <a
+      href="#projets"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'projets'"
+      >Projets</a
+    >
+    <a
+      href="#contact"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'contact'"
+      >Contact</a
+    >
   </div>
 </nav>
 
@@ -47,49 +82,56 @@
         d="M0,105L18.5,100C36.9,95,74,85,111,90C147.7,95,185,115,222,107.5C258.5,100,295,65,332,62.5C369.2,60,406,90,443,102.5C480,115,517,110,554,100C590.8,90,628,75,665,62.5C701.5,50,738,40,775,50C812.3,60,849,90,886,107.5C923.1,125,960,130,997,130C1033.8,130,1071,125,1108,117.5C1144.6,110,1182,100,1218,100C1255.4,100,1292,110,1329,112.5C1366.2,115,1403,110,1440,102.5C1476.9,95,1514,85,1551,90C1587.7,95,1625,115,1662,120C1698.5,125,1735,115,1772,107.5C1809.2,100,1846,95,1883,87.5C1920,80,1957,70,1994,57.5C2030.8,45,2068,30,2105,42.5C2141.5,55,2178,95,2215,92.5C2252.3,90,2289,45,2326,42.5C2363.1,40,2400,80,2437,95C2473.8,110,2511,100,2548,92.5C2584.6,85,2622,80,2640,77.5L2658.5,75L2658.5,150L2640,150C2621.5,150,2585,150,2548,150C2510.8,150,2474,150,2437,150C2400,150,2363,150,2326,150C2289.2,150,2252,150,2215,150C2178.5,150,2142,150,2105,150C2067.7,150,2031,150,1994,150C1956.9,150,1920,150,1883,150C1846.2,150,1809,150,1772,150C1735.4,150,1698,150,1662,150C1624.6,150,1588,150,1551,150C1513.8,150,1477,150,1440,150C1403.1,150,1366,150,1329,150C1292.3,150,1255,150,1218,150C1181.5,150,1145,150,1108,150C1070.8,150,1034,150,997,150C960,150,923,150,886,150C849.2,150,812,150,775,150C738.5,150,702,150,665,150C627.7,150,591,150,554,150C516.9,150,480,150,443,150C406.2,150,369,150,332,150C295.4,150,258,150,222,150C184.6,150,148,150,111,150C73.8,150,37,150,18,150L0,150Z"
       ></path>
     </svg>
+
     <div class="content my-container">
       <div class="text-network-content" @slideInLeft>
         <div class="text-network">
-          <span class="greetings">Salut, je m'appelle </span>
+          <span class="greetings">Salut, je m'appelle</span>
           <span class="name">
-            <span class="prenom">Samuel</span>
-            <span class="nom">Mandeng </span>
+            <span class="prenom">{{ personalInfo.firstName }}</span>
+            <span class="nom">{{ personalInfo.lastName }}</span>
           </span>
           <div class="work">
-            <span>je suis </span>
+            <span>Je suis</span>
             <span id="typewriter"></span>
           </div>
 
           <span class="i-do">
             Je conçois et développe des solutions web innovantes qui
             transforment vos idées en expériences digitales exceptionnelles.
+            Actuellement en recherche d'un contrat de professionnalisation.
           </span>
 
-          <button>
+          <div class="cta-buttons">
             <a
-              href="https://drive.google.com/file/d/1270LhSlQntvSgBWDzf0rL0qNXKpya-lb/view?usp=sharing"
+              [href]="personalInfo.cvUrl"
+              class="cta-button"
               aria-label="Télécharger mon CV"
               rel="noopener"
               target="_blank"
             >
-              Télécharger CV
+              <span>Télécharger CV</span>
+              <fa-icon [icon]="faDownload"></fa-icon>
             </a>
-            <fa-icon [icon]="faDownload"></fa-icon>
-          </button>
+            <a href="#recherche" class="cta-button secondary-btn">
+              <span>Ma recherche</span>
+              <fa-icon [icon]="faBullseye"></fa-icon>
+            </a>
+          </div>
 
           <div class="networks">
             <i
-              class="pi pi-linkedin linkedin"
+              class="pi pi-linkedin social-icon linkedin"
               (click)="openNetwork('linkedin')"
               title="LinkedIn"
             ></i>
             <i
-              class="pi pi-github github"
+              class="pi pi-github social-icon github"
               (click)="openNetwork('github')"
               title="GitHub"
             ></i>
             <i
-              class="pi pi-instagram instagram"
+              class="pi pi-instagram social-icon instagram"
               (click)="openNetwork('instagram')"
               title="Instagram"
             ></i>
@@ -107,12 +149,96 @@
           alt="Élément décoratif en croix"
         />
       </div>
+
       <img
         src="/img/moi-hero-banner.png"
-        alt="Photo de Samuel Mandeng"
+        [alt]="
+          'Photo de ' + personalInfo.firstName + ' ' + personalInfo.lastName
+        "
         class="hero-image"
         @slideInRight
       />
+    </div>
+  </section>
+
+  <!-- Job Search Section (Nouvelle section) -->
+  <section class="job-search" id="recherche">
+    <div class="content my-container">
+      <div class="job-search-header animate-on-scroll">
+        <div class="status-badge">
+          <div class="pulse-dot"></div>
+          <span>Disponible immédiatement</span>
+        </div>
+        <h2 class="title">Recherche de Contrat de Professionnalisation</h2>
+        <p class="subtitle">
+          Je recherche activement une entreprise pour un contrat de
+          professionnalisation en développement web. Mobile dans toute la
+          France, je suis prêt à m'investir pleinement dans votre équipe.
+        </p>
+      </div>
+
+      <div class="job-search-content animate-on-scroll" @staggerAnimation>
+        <div class="search-card">
+          <fa-icon [icon]="faBullseye" class="icon"></fa-icon>
+          <h3 class="card-title">Objectif Professionnel</h3>
+          <p class="card-description">
+            Intégrer une équipe de développement pour approfondir mes
+            compétences en situation réelle et contribuer à des projets
+            innovants tout en poursuivant ma formation.
+          </p>
+        </div>
+
+        <div class="search-card">
+          <fa-icon [icon]="faGlobe" class="icon"></fa-icon>
+          <h3 class="card-title">Mobilité Géographique</h3>
+          <p class="card-description">
+            Totalement mobile sur l'ensemble du territoire français. Prêt à
+            déménager pour la bonne opportunité et à m'adapter aux contraintes
+            géographiques de l'entreprise.
+          </p>
+        </div>
+
+        <div class="search-card">
+          <fa-icon [icon]="faBolt" class="icon"></fa-icon>
+          <h3 class="card-title">Disponibilité</h3>
+          <p class="card-description">
+            Disponible immédiatement pour commencer un contrat de
+            professionnalisation. Flexible sur les dates de début selon les
+            besoins de l'entreprise.
+          </p>
+        </div>
+
+        <div class="search-card">
+          <fa-icon [icon]="faLightbulb" class="icon"></fa-icon>
+          <h3 class="card-title">Apports & Motivation</h3>
+          <p class="card-description">
+            Passionné, curieux et motivé, j'apporte une perspective fraîche, une
+            grande capacité d'apprentissage et l'envie de contribuer activement
+            aux succès de l'équipe.
+          </p>
+        </div>
+      </div>
+
+      <div class="job-search-cta animate-on-scroll">
+        <p class="cta-text">
+          Votre entreprise recherche un développeur junior motivé ? Discutons de
+          cette opportunité !
+        </p>
+        <div class="cta-buttons">
+          <a href="#contact" class="cta-button">
+            <span>Me contacter</span>
+            <fa-icon [icon]="faComments"></fa-icon>
+          </a>
+          <a
+            [href]="personalInfo.cvUrl"
+            class="cta-button secondary"
+            target="_blank"
+          >
+            <span>Mon CV détaillé</span>
+            <fa-icon [icon]="faFileAlt"></fa-icon>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -120,6 +246,7 @@
   <section class="about" id="a-propos">
     <div class="content my-container">
       <h2 class="title animate-on-scroll">À Propos</h2>
+
       <div class="text-image">
         <img
           src="/img/desk.jpeg"
@@ -136,16 +263,17 @@
           </span>
 
           <span>
-            Que vous soyez un entrepreneur, une startup ambitieuse ou une
-            entreprise établie, je vous accompagne dans votre transformation
-            digitale avec des solutions sur mesure qui propulsent votre activité
-            vers de nouveaux horizons.
+            Actuellement en recherche d'un contrat de professionnalisation, je
+            souhaite intégrer une équipe dynamique pour continuer à développer
+            mes compétences tout en apportant ma motivation et ma fraîcheur
+            d'approche à vos projets.
           </span>
 
           <span>
             Autonome, rigoureux et toujours à l'affût des dernières innovations,
-            j'aime relever des défis techniques complexes. Collaborons ensemble
-            pour transformer vos idées en réalité digitale performante.
+            j'aime relever des défis techniques complexes. Ma mobilité sur toute
+            la France me permet de saisir les meilleures opportunités de
+            formation et de développement professionnel.
           </span>
         </div>
       </div>
@@ -154,148 +282,141 @@
         <div class="profil-bloc">
           <div class="profil-nav">
             <span
-              class="profil-header active-header"
+              class="profil-header"
+              [class.active-header]="activeProfileTab === 0"
               (click)="activeContent(0)"
+              >Compétences</span
             >
-              Compétences
-            </span>
-            <span class="profil-header" (click)="activeContent(1)">
-              Formation
-            </span>
+            <span
+              class="profil-header"
+              [class.active-header]="activeProfileTab === 1"
+              (click)="activeContent(1)"
+              >Formation</span
+            >
+            <span
+              class="profil-header"
+              [class.active-header]="activeProfileTab === 2"
+              (click)="activeContent(2)"
+              >Soft Skills</span
+            >
           </div>
 
           <div class="profil-content">
-            <div class="profil-info technos" @staggerAnimation>
+            <!-- Compétences techniques -->
+            <div
+              class="profil-info technos"
+              [class.active]="activeProfileTab === 0"
+              @staggerAnimation
+            >
               <div class="profil-info-conteneur">
-                <div class="skills">
-                  <span class="skills-title">Front-End</span>
+                <div
+                  class="skills"
+                  *ngFor="let skillCategory of objectKeys(skills)"
+                >
+                  <span class="skills-title">{{
+                    skills[getSkillCategoryKey(skillCategory)].title
+                  }}</span>
                   <div class="images-logo">
-                    <div>
-                      <img src="/img/logos/angular_logo.png" alt="Angular" />
-                      <span>Angular</span>
-                    </div>
-                    <div>
-                      <img src="/img/logos/react_logo.png" alt="React" />
-                      <span>React</span>
-                    </div>
-                    <div>
-                      <img
-                        src="/img/logos/typescript_logo.png"
-                        alt="TypeScript"
-                      />
-                      <span>TypeScript</span>
-                    </div>
-                    <div>
-                      <img src="/img/logos/scss_logo.png" alt="SCSS" />
-                      <span>Sass/SCSS</span>
-                    </div>
-                    <div>
-                      <img
-                        src="/img/logos/tailwind_logo.png"
-                        alt="Tailwind CSS"
-                      />
-                      <span>Tailwind</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="skills">
-                  <span class="skills-title">Back-End</span>
-                  <div class="images-logo">
-                    <div>
-                      <img src="/img/logos/node_logo.png" alt="Node.js" />
-                      <span>Node.js</span>
-                    </div>
-                    <div>
-                      <img src="/img/logos/express_logo.png" alt="Express.js" />
-                      <span>Express.js</span>
-                    </div>
-                    <div>
-                      <img src="/img/logos/nestjs_logo.png" alt="NestJS" />
-                      <span>NestJS</span>
-                    </div>
-                    <div>
-                      <img src="/img/logos/graphql_logo.png" alt="GraphQL" />
-                      <span>GraphQL</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="skills">
-                  <span class="skills-title">Base de données</span>
-                  <div class="images-logo">
-                    <div>
-                      <img src="/img/logos/mongodb_logo.png" alt="MongoDB" />
-                      <span>MongoDB</span>
-                    </div>
-                    <div>
-                      <img
-                        src="/img/logos/postgres_logo.png"
-                        alt="PostgreSQL"
-                      />
-                      <span>PostgreSQL</span>
-                    </div>
-                    <div>
-                      <img src="/img/logos/redis_logo.png" alt="Redis" />
-                      <span>Redis</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="skills">
-                  <span class="skills-title">DevOps & Outils</span>
-                  <div class="images-logo">
-                    <div>
-                      <img src="/img/logos/docker_logo.png" alt="Docker" />
-                      <span>Docker</span>
-                    </div>
-                    <div>
-                      <img src="/img/logos/git_logo.png" alt="Git" />
-                      <span>Git</span>
-                    </div>
-                    <div>
-                      <img src="/img/logos/figma_logo.png" alt="Figma" />
-                      <span>Figma</span>
+                    <div
+                      *ngFor="
+                        let skill of skills[getSkillCategoryKey(skillCategory)]
+                          .items
+                      "
+                    >
+                      <img [src]="skill.logo" [alt]="skill.name" />
+                      <span>{{ skill.name }}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="formation profil-info">
+            <!-- Formation -->
+            <div
+              class="formation profil-info"
+              [class.active]="activeProfileTab === 1"
+            >
               <img src="/img/hat.png" alt="Chapeau de diplômé" />
               <div class="formation-conteneur">
-                <div class="formation-element">
+                <div class="formation-element" *ngFor="let edu of education">
                   <span>
                     <fa-icon [icon]="faCalendarAlt"></fa-icon>
-                    <span>2016 - 2019</span>
+                    <span>{{ edu.period }}</span>
                   </span>
-                  <span class="formation-title">
-                    Ingénieur Informatique - 3iL Ingénieurs
-                  </span>
-                  <span class="formation-description">
-                    Spécialisation en conception et développement de systèmes
-                    d'information
-                  </span>
-                </div>
-
-                <div class="formation-element">
-                  <span>
-                    <fa-icon [icon]="faCalendarAlt"></fa-icon>
-                    <span>2014 - 2016</span>
-                  </span>
-                  <span class="formation-title">
-                    Classes Préparatoires Intégrées
-                  </span>
-                  <span class="formation-description">
-                    Informatique, Mathématiques et Physique
-                  </span>
+                  <span class="formation-title">{{ edu.title }}</span>
+                  <span class="formation-description">{{
+                    edu.description
+                  }}</span>
                 </div>
 
                 <div class="formation-element">
                   <span class="formation-title">Langues</span>
                   <span class="langue">Français (Langue maternelle)</span>
-                  <span class="langue">Anglais (Professionnel)</span>
+                  <span class="langue">Anglais (Niveau professionnel)</span>
+                  <span class="langue">Espagnol (Notions)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Soft Skills -->
+            <div
+              class="profil-info soft-skills"
+              [class.active]="activeProfileTab === 2"
+              @staggerAnimation
+            >
+              <div class="profil-info-conteneur">
+                <div class="skills">
+                  <span class="skills-title">Qualités Humaines</span>
+                  <div class="images-logo">
+                    <div>
+                      <div class="soft-skill-icon team-work">🤝</div>
+                      <span>Travail d'équipe</span>
+                    </div>
+                    <div>
+                      <div class="soft-skill-icon analytical">🧠</div>
+                      <span>Esprit analytique</span>
+                    </div>
+                    <div>
+                      <div class="soft-skill-icon motivation">🚀</div>
+                      <span>Motivation</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="skills">
+                  <span class="skills-title">Adaptabilité</span>
+                  <div class="images-logo">
+                    <div>
+                      <div class="soft-skill-icon mobility">🌍</div>
+                      <span>Mobilité</span>
+                    </div>
+                    <div>
+                      <div class="soft-skill-icon speed">⚡</div>
+                      <span>Rapidité</span>
+                    </div>
+                    <div>
+                      <div class="soft-skill-icon learning">📚</div>
+                      <span>Apprentissage</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="skills">
+                  <span class="skills-title">Aptitudes Pro</span>
+                  <div class="images-logo">
+                    <div>
+                      <div class="soft-skill-icon communication">💬</div>
+                      <span>Communication</span>
+                    </div>
+                    <div>
+                      <div class="soft-skill-icon problem-solving">🔧</div>
+                      <span>Résolution</span>
+                    </div>
+                    <div>
+                      <div class="soft-skill-icon creativity">🎨</div>
+                      <span>Créativité</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -315,79 +436,53 @@
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
+        <linearGradient id="sw-gradient-top" x1="0" x2="0" y1="1" y2="0">
           <stop stop-color="rgba(255, 255, 255, 1)" offset="0%"></stop>
           <stop stop-color="rgba(255, 255, 255, 1)" offset="100%"></stop>
         </linearGradient>
       </defs>
       <path
         style="transform: translate(0, 0px); opacity: 1"
-        fill="url(#sw-gradient-0)"
+        fill="url(#sw-gradient-top)"
         d="M0,105L18.5,100C36.9,95,74,85,111,90C147.7,95,185,115,222,107.5C258.5,100,295,65,332,62.5C369.2,60,406,90,443,102.5C480,115,517,110,554,100C590.8,90,628,75,665,62.5C701.5,50,738,40,775,50C812.3,60,849,90,886,107.5C923.1,125,960,130,997,130C1033.8,130,1071,125,1108,117.5C1144.6,110,1182,100,1218,100C1255.4,100,1292,110,1329,112.5C1366.2,115,1403,110,1440,102.5C1476.9,95,1514,85,1551,90C1587.7,95,1625,115,1662,120C1698.5,125,1735,115,1772,107.5C1809.2,100,1846,95,1883,87.5C1920,80,1957,70,1994,57.5C2030.8,45,2068,30,2105,42.5C2141.5,55,2178,95,2215,92.5C2252.3,90,2289,45,2326,42.5C2363.1,40,2400,80,2437,95C2473.8,110,2511,100,2548,92.5C2584.6,85,2622,80,2640,77.5L2658.5,75L2658.5,150L2640,150C2621.5,150,2585,150,2548,150C2510.8,150,2474,150,2437,150C2400,150,2363,150,2326,150C2289.2,150,2252,150,2215,150C2178.5,150,2142,150,2105,150C2067.7,150,2031,150,1994,150C1956.9,150,1920,150,1883,150C1846.2,150,1809,150,1772,150C1735.4,150,1698,150,1662,150C1624.6,150,1588,150,1551,150C1513.8,150,1477,150,1440,150C1403.1,150,1366,150,1329,150C1292.3,150,1255,150,1218,150C1181.5,150,1145,150,1108,150C1070.8,150,1034,150,997,150C960,150,923,150,886,150C849.2,150,812,150,775,150C738.5,150,702,150,665,150C627.7,150,591,150,554,150C516.9,150,480,150,443,150C406.2,150,369,150,332,150C295.4,150,258,150,222,150C184.6,150,148,150,111,150C73.8,150,37,150,18,150L0,150Z"
       ></path>
     </svg>
+
     <div class="content my-container">
       <h2 class="title animate-on-scroll">Services</h2>
 
       <div class="intro-services">
         <div class="intro animate-on-scroll">
-          <h3>Pourquoi travailler avec moi ?</h3>
+          <h3>Pourquoi me choisir ?</h3>
           <span>
             Je place votre réussite au cœur de chaque projet. Mon approche
             collaborative garantit que vos besoins sont parfaitement compris et
             réalisés.
           </span>
           <span>
-            Avec un suivi transparent et des échanges réguliers, vous restez
-            impliqué à chaque étape du développement. Cette méthode assure un
-            résultat final qui dépasse vos attentes.
+            En recherche d'un contrat de professionnalisation, j'apporte une
+            motivation exceptionnelle et une volonté d'apprendre qui bénéficiera
+            directement à vos projets.
           </span>
           <span>
-            Chaque projet commence par une analyse approfondie de vos objectifs,
-            suivie d'une stratégie personnalisée pour créer une solution
-            digitale qui propulse votre activité.
+            Ma mobilité géographique me permet de m'adapter parfaitement aux
+            besoins de votre entreprise, où qu'elle soit située en France.
           </span>
         </div>
 
         <div class="services-list animate-on-scroll" @staggerAnimation>
-          <div class="service">
-            <fa-icon [icon]="faPalette"></fa-icon>
-            <span class="service-title">Design UI/UX</span>
-            <p>
-              Création d'interfaces intuitives et esthétiques qui captivent vos
-              utilisateurs et optimisent leur expérience.
-            </p>
-          </div>
-
-          <div class="service">
-            <fa-icon [icon]="faCode"></fa-icon>
-            <span class="service-title">Développement Web</span>
-            <p>
-              Solutions web performantes et évolutives, développées avec les
-              dernières technologies pour garantir rapidité et fiabilité.
-            </p>
-          </div>
-
-          <div class="service">
-            <fa-icon [icon]="faRocket"></fa-icon>
-            <span class="service-title">Optimisation SEO</span>
-            <p>
-              Stratégies SEO avancées pour améliorer votre visibilité et attirer
-              plus de clients qualifiés vers votre site.
-            </p>
-          </div>
-
-          <div class="service">
-            <fa-icon [icon]="faChalkboardTeacher"></fa-icon>
-            <span class="service-title">Consulting & Formation</span>
-            <p>
-              Accompagnement personnalisé et formations pratiques en
-              développement web moderne (Angular, React, Node.js).
-            </p>
+          <div class="service" *ngFor="let service of services">
+            <fa-icon
+              [icon]="getServiceIcon(service.icon)"
+              class="service-icon"
+            ></fa-icon>
+            <span class="service-title">{{ service.title }}</span>
+            <p>{{ service.description }}</p>
           </div>
         </div>
       </div>
     </div>
+
     <svg
       id="wave-bottom"
       style="transform: rotate(0deg); transition: 0.3s"
@@ -396,14 +491,14 @@
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
+        <linearGradient id="sw-gradient-bottom" x1="0" x2="0" y1="1" y2="0">
           <stop stop-color="rgb(0, 1, 31)" offset="0%"></stop>
           <stop stop-color="rgb(0, 1, 31)" offset="100%"></stop>
         </linearGradient>
       </defs>
       <path
         style="transform: translate(0, 0px); opacity: 1"
-        fill="url(#sw-gradient-0)"
+        fill="url(#sw-gradient-bottom)"
         d="M0,105L18.5,100C36.9,95,74,85,111,90C147.7,95,185,115,222,107.5C258.5,100,295,65,332,62.5C369.2,60,406,90,443,102.5C480,115,517,110,554,100C590.8,90,628,75,665,62.5C701.5,50,738,40,775,50C812.3,60,849,90,886,107.5C923.1,125,960,130,997,130C1033.8,130,1071,125,1108,117.5C1144.6,110,1182,100,1218,100C1255.4,100,1292,110,1329,112.5C1366.2,115,1403,110,1440,102.5C1476.9,95,1514,85,1551,90C1587.7,95,1625,115,1662,120C1698.5,125,1735,115,1772,107.5C1809.2,100,1846,95,1883,87.5C1920,80,1957,70,1994,57.5C2030.8,45,2068,30,2105,42.5C2141.5,55,2178,95,2215,92.5C2252.3,90,2289,45,2326,42.5C2363.1,40,2400,80,2437,95C2473.8,110,2511,100,2548,92.5C2584.6,85,2622,80,2640,77.5L2658.5,75L2658.5,150L2640,150C2621.5,150,2585,150,2548,150C2510.8,150,2474,150,2437,150C2400,150,2363,150,2326,150C2289.2,150,2252,150,2215,150C2178.5,150,2142,150,2105,150C2067.7,150,2031,150,1994,150C1956.9,150,1920,150,1883,150C1846.2,150,1809,150,1772,150C1735.4,150,1698,150,1662,150C1624.6,150,1588,150,1551,150C1513.8,150,1477,150,1440,150C1403.1,150,1366,150,1329,150C1292.3,150,1255,150,1218,150C1181.5,150,1145,150,1108,150C1070.8,150,1034,150,997,150C960,150,923,150,886,150C849.2,150,812,150,775,150C738.5,150,702,150,665,150C627.7,150,591,150,554,150C516.9,150,480,150,443,150C406.2,150,369,150,332,150C295.4,150,258,150,222,150C184.6,150,148,150,111,150C73.8,150,37,150,18,150L0,150Z"
       ></path>
     </svg>
@@ -414,7 +509,8 @@
     <div class="content my-container">
       <h2 class="title animate-on-scroll">Mes Réalisations</h2>
       <span class="summary animate-on-scroll">
-        Découvrez quelques-uns de mes projets récents
+        Découvrez quelques-uns de mes projets récents qui démontrent mes
+        compétences et ma motivation
       </span>
 
       <div class="project-list" @staggerAnimation>
@@ -433,7 +529,6 @@
           </div>
           <span class="project-title">{{ project.projectTitle }}</span>
           <span class="project-summary">{{ project.projectSummary }}</span>
-
           <button>Voir le projet</button>
         </div>
       </div>
@@ -445,11 +540,12 @@
     <div class="content my-container">
       <h2 class="title animate-on-scroll">Contactez-moi</h2>
       <span class="animate-on-scroll">
-        Vous avez un projet ? Discutons de vos besoins !
+        Vous recherchez un développeur motivé en contrat de professionnalisation
+        ?
       </span>
       <span class="speach animate-on-scroll">
-        N'hésitez pas à me contacter pour toute demande de devis ou
-        d'information.
+        N'hésitez pas à me contacter pour discuter de vos besoins et de mes
+        disponibilités.
       </span>
 
       <div class="contact-info">
@@ -458,10 +554,9 @@
             <div class="img-bloc">
               <fa-icon [icon]="faPhone"></fa-icon>
             </div>
-
             <div class="text-bloc">
               <span class="titles">Téléphone</span>
-              <span class="text">+33 7 83 18 91 71</span>
+              <span class="text">{{ personalInfo.phone }}</span>
             </div>
           </div>
 
@@ -471,7 +566,7 @@
             </div>
             <div class="text-bloc">
               <span class="titles">Email</span>
-              <span class="text">manduel21&#64;gmail.com</span>
+              <span class="text">{{ personalInfo.email }}</span>
             </div>
           </div>
         </div>
@@ -562,7 +657,8 @@
               *ngIf="isContactFormSubmittedAndNotErrorOnClientSide"
               strokeWidth="3"
               [style]="{ width: '25px', height: '25px' }"
-            ></p-progressSpinner>
+            >
+            </p-progressSpinner>
           </button>
         </form>
       </div>
@@ -572,9 +668,8 @@
     <p-toast
       position="top-right"
       [baseZIndex]="10000"
-      [breakpoints]="{
-        '920px': { width: '100%', right: '0', left: '0' }
-      }"
-    ></p-toast>
+      [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+    >
+    </p-toast>
   </section>
 </div>
