@@ -6,11 +6,11 @@ export const portfolioConfig = {
     firstName: 'Jovany',
     lastName: 'Lemoupa',
     title: 'Développeur Full-Stack',
-    email: 'jovanylemoupa',
+    email: 'jovanylemoupa@gmail',
     phone: '+33 7 59 61 14 10',
     location: 'Grenoble, France',
     cvUrl:
-      'https://drive.google.com/file/d/1270LhSlQntvSgBWDzf0rL0qNXKpya-lb/view?usp=sharing',
+      'https://drive.google.com/file/d/1_7oi-RciI1lDvet8tKQw0W3ITm_i9iin/view?usp=drivesdk',
   },
 
   // Réseaux sociaux
@@ -26,7 +26,7 @@ export const portfolioConfig = {
     description:
       'Développeur Full-Stack web et mobile avec plus de 3 ans d’expérience, j’analyse les besoins et conçois des applications modernes. Mes missions freelance m’ont permis d’explorer divers environnements techniques. Parallèlement, je préside le département musique de mon école, où je coordonne des projets collaboratifs, renforçant ainsi mes compétences en pilotage et organisation.',
     keywords: [
-      'développeur web rennes',
+      'développeur web ',
       'développeur full stack',
       'développeur angular',
       'développeur react',
@@ -70,40 +70,41 @@ export const portfolioConfig = {
     frontend: {
       title: 'Front-End',
       items: [
-        { name: 'Angular', logo: '/img/logos/angular_logo.png', level: 95 },
-        { name: 'React', logo: '/img/logos/react_logo.png', level: 90 },
+        { name: 'Angular', logo: '/img/angular_logo.png', level: 95 },
+        { name: 'React', logo: '/img/react_logo.png', level: 90 },
         {
           name: 'TypeScript',
-          logo: '/img/logos/typescript_logo.png',
+          logo: '/img/typescript_logo.png',
           level: 95,
         },
-        { name: 'Sass/SCSS', logo: '/img/logos/scss_logo.png', level: 90 },
-        { name: 'Tailwind', logo: '/img/logos/tailwind_logo.png', level: 85 },
+        { name: 'Sass/SCSS', logo: '/img/scss_logo.png', level: 90 },
+        { name: 'Tailwind', logo: '/img/tailwind_logo.jpeg', level: 85 },
       ],
     },
     backend: {
       title: 'Back-End',
       items: [
-        { name: 'Node.js', logo: '/img/logos/node_logo.png', level: 90 },
-        { name: 'Express.js', logo: '/img/logos/express_logo.png', level: 90 },
-        { name: 'NestJS', logo: '/img/logos/nestjs_logo.png', level: 85 },
-        { name: 'GraphQL', logo: '/img/logos/graphql_logo.png', level: 80 },
+        { name: 'Python', logo: '/img/python_logo.jpeg', level: 90 },
+        { name: 'Node.js', logo: '/img/node_logo.png', level: 90 },
+        { name: 'Express.js', logo: '/img/express_logo.png', level: 90 },
+        { name: 'NestJS', logo: '/img/nestjs_logo.png', level: 85 },
+        { name: 'GraphQL', logo: '/img/graphql_logo.png', level: 80 },
       ],
     },
     database: {
       title: 'Base de données',
       items: [
-        { name: 'MongoDB', logo: '/img/logos/mongodb_logo.png', level: 85 },
-        { name: 'PostgreSQL', logo: '/img/logos/postgres_logo.png', level: 85 },
-        { name: 'Redis', logo: '/img/logos/redis_logo.png', level: 75 },
+        { name: 'MongoDB', logo: '/img/mongodb_logo.png', level: 85 },
+        { name: 'PostgreSQL', logo: '/img/postgres_logo.png', level: 85 },
+        { name: 'Redis', logo: '/img/redis_logo.jpeg', level: 75 },
       ],
     },
     tools: {
       title: 'DevOps & Outils',
       items: [
-        { name: 'Docker', logo: '/img/logos/docker_logo.png', level: 80 },
-        { name: 'Git', logo: '/img/logos/git_logo.png', level: 95 },
-        { name: 'Figma', logo: '/img/logos/figma_logo.png', level: 85 },
+        { name: 'Docker', logo: '/img/docker_logo.jpeg', level: 80 },
+        { name: 'Git', logo: '/img/git_logo.jpeg', level: 95 },
+        { name: 'Figma', logo: '/img/figma_logo.jpeg', level: 85 },
       ],
     },
   },
@@ -111,14 +112,14 @@ export const portfolioConfig = {
   // Formation
   education: [
     {
-      period: '2016 - 2019',
+      period: '2023 - Actuellement',
       title: 'Ingénieur Informatique - 3iL Ingénieurs',
       description:
         "Spécialisation en conception et développement de systèmes d'information",
       icon: 'faGraduationCap',
     },
     {
-      period: '2014 - 2016',
+      period: '2022',
       title: 'Classes Préparatoires Intégrées',
       description: 'Informatique, Mathématiques et Physique',
       icon: 'faBook',
@@ -185,7 +186,7 @@ export const portfolioConfig = {
       content:
         'Samuel a transformé notre vision en une application web exceptionnelle. Son professionnalisme et son expertise technique sont remarquables.',
       rating: 5,
-      image: '/img/testimonials/marie.jpg',
+      image: '/img/marie.jpg',
     },
     {
       name: 'Jean Martin',
@@ -193,7 +194,7 @@ export const portfolioConfig = {
       content:
         'Un développeur talentueux qui comprend parfaitement les besoins business. Notre site e-commerce a vu ses ventes augmenter de 40% après la refonte.',
       rating: 5,
-      image: '/img/testimonials/jean.jpg',
+      image: '/img/jean.jpg',
     },
   ],
 

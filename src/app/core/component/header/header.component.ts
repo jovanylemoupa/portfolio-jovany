@@ -7,7 +7,7 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import {
@@ -31,7 +31,7 @@ import {
 
 @Component({
   selector: 'app-header',
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -54,13 +54,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   faCode = faCode;
   faRocket = faRocket;
 
+  isBannerClosed: boolean = false; // Bannière visible par défaut
+  hasScrollBackground: boolean = false;
+
+  closeBanner(): void {
+    this.isBannerClosed = true;
+  }
+
   // Component state
   screenWidth: number = 1024; // Valeur par défaut pour SSR
   isBurgerMenuClicked: boolean = false;
   currentLinkNumber: number = 1;
   currentAnchorTag: string = 'accueil';
-  isBannerClosed: boolean = false;
-  hasScrollBackground: boolean = false;
   private isBrowser: boolean = false;
 
   // Sections configuration
@@ -101,22 +106,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     // Cleanup si nécessaire
-  }
-
-  /**
-   * Fermer la bannière d'alerte
-   */
-  closeBanner(): void {
-    this.isBannerClosed = true;
-
-    // Sauvegarder l'état dans le localStorage (optionnel)
-    if (this.isBrowser && typeof localStorage !== 'undefined') {
-      try {
-        localStorage.setItem('alert-banner-closed', 'true');
-      } catch (error) {
-        console.warn('localStorage not available');
-      }
-    }
   }
 
   /**
