@@ -49,7 +49,7 @@ export class ProjectsService {
     return (this.projectsListBriefData = [
       {
         projectTitle: 'Sscovid19 - Tracker Épidémie',
-        projectImage: '/img/sscovid19.png',
+        projectImage: 'img/sscovid19.png',
         projectSummary:
           "Application web de suivi en temps réel de l'évolution de la COVID-19 avec visualisations interactives et analyses par pays/continents.",
         projectImageAltAttribute: 'Dashboard de suivi COVID-19',
@@ -91,7 +91,7 @@ export class ProjectsService {
       },
       {
         projectTitle: 'Restaurant Management Pro',
-        projectImage: '/img/restaurant.png',
+        projectImage: 'img/restaurant.png',
         projectSummary:
           'Système complet de gestion restaurant avec commande en ligne, gestion stocks, analytics et interface admin avancée.',
         projectImageAltAttribute: 'Interface de gestion restaurant',
@@ -127,7 +127,7 @@ export class ProjectsService {
       },
       {
         projectTitle: 'Elites Voyages - Plateforme Voyage',
-        projectImage: '/img/ev.png',
+        projectImage: 'img/ev.png',
         projectSummary:
           "Plateforme complète d'agence de voyage avec réservation vols/hôtels, gestion clientèle et backoffice administratif.",
         projectImageAltAttribute: 'Plateforme de réservation voyage',
@@ -162,7 +162,7 @@ export class ProjectsService {
       },
       {
         projectTitle: 'E-Learning Platform',
-        projectImage: '/img/elearning.jpg',
+        projectImage: 'img/elearning.jpg',
         projectSummary:
           "Plateforme d'apprentissage en ligne avec cours interactifs, système de notation et suivi progression étudiant/formateur.",
         projectImageAltAttribute: 'Interface de la plateforme e-learning',
@@ -198,7 +198,7 @@ export class ProjectsService {
       },
       {
         projectTitle: 'API Gateway Microservices',
-        projectImage: '/img/api-gateway.jpg',
+        projectImage: 'img/api-gateway.jpg',
         projectSummary:
           'Architecture microservices avec API Gateway, authentification centralisée, monitoring et documentation automatique.',
         projectImageAltAttribute: 'Architecture microservices',
@@ -233,7 +233,7 @@ export class ProjectsService {
       },
       {
         projectTitle: 'Mobile Fitness Tracker',
-        projectImage: '/img/fitness-app.jpg',
+        projectImage: 'img/fitness-app.jpg',
         projectSummary:
           'Application mobile complète de fitness avec programmes personnalisés, suivi biométrique et communauté sociale.',
         projectImageAltAttribute: 'Application mobile fitness',
@@ -276,20 +276,20 @@ export class ProjectsService {
         organization: 'Google',
         date: '2024',
         credentialId: 'ANG-2024-001',
-        logoUrl: '/img/certifications/angular.png',
+        logoUrl: 'img/certifications/angular.png',
       },
       {
         name: 'AWS Solutions Architect Associate',
         organization: 'Amazon Web Services',
         date: '2023',
         credentialId: 'AWS-SAA-2023',
-        logoUrl: '/img/certifications/aws.png',
+        logoUrl: 'img/certifications/aws.png',
       },
       {
         name: 'MongoDB Developer Certification',
         organization: 'MongoDB University',
         date: '2023',
-        logoUrl: '/img/certifications/mongodb.png',
+        logoUrl: 'img/certifications/mongodb.png',
       },
     ]);
   }
@@ -403,7 +403,7 @@ export class ProjectsService {
       // Vos données existantes avec ajouts...
       {
         code: 'sscovid19',
-        image: '/img/projects/sscovid19-devices.png',
+        image: 'img/projects/sscovid19-devices.png',
         link: 'https://sscovid19.com',
         who: [
           {
@@ -436,35 +436,35 @@ export class ProjectsService {
         technologies: [
           {
             name: 'Angular 11',
-            image: '/img/angular_logo.png',
+            image: 'img/angular_logo.png',
           },
           {
             name: 'TypeScript',
-            image: '/img/typescript_logo.png',
+            image: 'img/typescript_logo.png',
           },
-          { name: 'Node.js', image: '/img//node_logo.png' },
+          { name: 'Node.js', image: 'img/node_logo.png' },
           {
             name: 'Express.js',
-            image: '/img/express_logo.png',
+            image: 'img/express_logo.png',
           },
           {
             name: 'Python',
-            image: '/img/python_logo.png',
+            image: 'img/python_logo.png',
           },
           {
             name: 'PostgreSQL',
-            image: '/img/postgres_logo.png',
+            image: 'img/postgres_logo.png',
           },
           {
             name: 'AmCharts',
-            image: '/img/amcharts_logo.png',
+            image: 'img/amcharts_logo.png',
           },
-          { name: 'Redis', image: '/img/redis_logo.png' },
+          { name: 'Redis', image: 'img/redis_logo.png' },
           {
             name: 'Docker',
-            image: '/img/docker_logo.png',
+            image: 'img/docker_logo.png',
           },
-          { name: 'Nginx', image: '/img/nginx_logo.png' },
+          { name: 'Nginx', image: 'img/nginx_logo.png' },
         ],
       },
       // Ajoutez vos autres projets ici avec la même structure étendue...

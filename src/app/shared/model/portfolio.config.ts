@@ -38,7 +38,7 @@ export const portfolioConfig = {
       'portfolio développeur',
     ],
     author: 'Jovany Lemoupa',
-    ogImage: '/img/og-image.png',
+    ogImage: 'img/og-image.png',
     ogUrl: 'https://jovanylemoupa.com',
   },
 
@@ -70,41 +70,41 @@ export const portfolioConfig = {
     frontend: {
       title: 'Front-End',
       items: [
-        { name: 'Angular', logo: '/img/angular_logo.png', level: 95 },
-        { name: 'React', logo: '/img/react_logo.png', level: 90 },
+        { name: 'Angular', logo: 'img/angular_logo.png', level: 95 },
+        { name: 'React', logo: 'img/react_logo.png', level: 90 },
         {
           name: 'TypeScript',
-          logo: '/img/typescript_logo.png',
+          logo: 'img/typescript_logo.png',
           level: 95,
         },
-        { name: 'Sass/SCSS', logo: '/img/scss_logo.png', level: 90 },
-        { name: 'Tailwind', logo: '/img/tailwind_logo.jpeg', level: 85 },
+        { name: 'Sass/SCSS', logo: 'img/scss_logo.png', level: 90 },
+        { name: 'Tailwind', logo: 'img/tailwind_logo.jpeg', level: 85 },
       ],
     },
     backend: {
       title: 'Back-End',
       items: [
-        { name: 'Python', logo: '/img/python_logo.jpeg', level: 90 },
-        { name: 'Node.js', logo: '/img/node_logo.png', level: 90 },
-        { name: 'Express.js', logo: '/img/express_logo.png', level: 90 },
-        { name: 'NestJS', logo: '/img/nestjs_logo.png', level: 85 },
-        { name: 'GraphQL', logo: '/img/graphql_logo.png', level: 80 },
+        { name: 'Python', logo: 'img/python_logo.jpeg', level: 90 },
+        { name: 'Node.js', logo: 'img/node_logo.png', level: 90 },
+        { name: 'Express.js', logo: 'img/express_logo.png', level: 90 },
+        { name: 'NestJS', logo: 'img/nestjs_logo.png', level: 85 },
+        { name: 'GraphQL', logo: 'img/graphql_logo.png', level: 80 },
       ],
     },
     database: {
       title: 'Base de données',
       items: [
-        { name: 'MongoDB', logo: '/img/mongodb_logo.png', level: 85 },
-        { name: 'PostgreSQL', logo: '/img/postgres_logo.png', level: 85 },
-        { name: 'Redis', logo: '/img/redis_logo.jpeg', level: 75 },
+        { name: 'MongoDB', logo: 'img/mongodb_logo.png', level: 85 },
+        { name: 'PostgreSQL', logo: 'img/postgres_logo.png', level: 85 },
+        { name: 'Redis', logo: 'img/redis_logo.jpeg', level: 75 },
       ],
     },
     tools: {
       title: 'DevOps & Outils',
       items: [
-        { name: 'Docker', logo: '/img/docker_logo.jpeg', level: 80 },
-        { name: 'Git', logo: '/img/git_logo.jpeg', level: 95 },
-        { name: 'Figma', logo: '/img/figma_logo.jpeg', level: 85 },
+        { name: 'Docker', logo: 'img/docker_logo.jpeg', level: 80 },
+        { name: 'Git', logo: 'img/git_logo.jpeg', level: 95 },
+        { name: 'Figma', logo: 'img/figma_logo.jpeg', level: 85 },
       ],
     },
   },
@@ -186,7 +186,7 @@ export const portfolioConfig = {
       content:
         'Samuel a transformé notre vision en une application web exceptionnelle. Son professionnalisme et son expertise technique sont remarquables.',
       rating: 5,
-      image: '/img/marie.jpg',
+      image: 'img/marie.jpg',
     },
     {
       name: 'Jean Martin',
@@ -194,7 +194,7 @@ export const portfolioConfig = {
       content:
         'Un développeur talentueux qui comprend parfaitement les besoins business. Notre site e-commerce a vu ses ventes augmenter de 40% après la refonte.',
       rating: 5,
-      image: '/img/jean.jpg',
+      image: 'img/jean.jpg',
     },
   ],
 
