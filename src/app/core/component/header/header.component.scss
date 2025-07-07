@@ -155,7 +155,6 @@ header {
   @include flex-center;
   width: 100%;
   position: fixed;
-  top: 56px; // Hauteur de la bannière (quand visible)
   height: 80px;
   z-index: 999;
   @include transition-smooth;
