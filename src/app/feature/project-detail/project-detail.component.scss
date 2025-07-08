@@ -1,182 +1,654 @@
-$colorBlue: #00011e ;
+// Variables
+$colorBlue: #00011e;
 $colorRed: #FF3100;
 $background: #f3f3f3;
+$cardBackground: #ffffff;
+$textLight: #6c757d;
+$shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+$shadowHover: 0 8px 15px -3px rgba(0, 0, 0, 0.2);
+$borderRadius: 12px;
 
+// Dialog global styles - styles pour PrimNG
 ::ng-deep {
-    .p-dialog {
-      max-height: 100%;
+  .p-dialog {
+    max-height: 100%;
+    
+    .p-dialog-header {
+      background: $colorBlue;
+      border-radius: $borderRadius $borderRadius 0 0;
       
-      .p-dialog-header {
-        background: $colorBlue;
-
-        .p-dialog-header-icons {
-            border-radius: 50%;
-            background: white;
-
-            span{
-                color: $colorRed;
-            }
+      .p-dialog-header-icons {
+        border-radius: 50%;
+        background: white;
+        
+        span {
+          color: $colorRed;
         }
       }
-      .p-dialog-content {
-        padding: 0;
     }
+    
+    .p-dialog-content {
+      padding: 0;
+      background: $background;
+      border-radius: 0 0 $borderRadius $borderRadius;
     }
+    
+    .p-dialog-mask {
+      backdrop-filter: blur(4px);
+    }
+  }
 }
 
-.project{
-    min-height: 100vh;
+// Main project container
+.project {
+  min-height: 100vh;
+  background: linear-gradient(135deg, $background 0%, darken($background, 3%) 100%);
+  color: $colorBlue;
+  position: relative;
+  padding: 2rem 0;
+  overflow-y: auto;
+  
+  // Close button - croix pour fermer
+  .close-button {
+  position: fixed; 
+  top: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  background: $cardBackground;
+  color: $colorBlue;
+  cursor: pointer;
+  box-shadow: $shadow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  z-index: 1000;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: $colorRed;
+    color: white;
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: $shadowHover;
+  }
+
+  &:active {
+    transform: scale(0.95) rotate(90deg);
+  }
+
+  i {
+    font-weight: bold;
+  }
+}
+
+  
+  // Main content container
+  .content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 55px;
+    height: 100%;
+    
+    // Project header
+    .project-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 3rem;
+      
+      .project-logo {
+        width: 300px;
+        height: auto;
+        max-height: 200px;
+        object-fit: contain;
+        border-radius: $borderRadius;
+        box-shadow: $shadow;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          transform: scale(1.05);
+          box-shadow: $shadowHover;
+        }
+      }
+    }
+    
+    // Main project content layout
+    .project-main {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+  }
+  
+  // Section titles
+  .section-title {
+    font-size: 1.6em;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: $colorBlue;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    
+    i {
+      color: $colorRed;
+      font-size: 1.4rem;
+    }
+  }
+  
+  // Description section
+  .description-section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    background-color: $background;
-    color: $colorBlue;
-    padding-top: 50px;
-    padding-bottom: 40px;
-
-    .content{
-        width: 100%;
-        padding: 0 55px;
-        height: 100%;
+    
+    .info-block {
+      background: $cardBackground;
+      border-radius: $borderRadius;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: $shadow;
+      transition: all 0.3s ease;
+      width: 100%;
+      
+      &:hover {
+        box-shadow: $shadowHover;
+        transform: translateY(-2px);
+      }
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 0 0 1rem 0;
+        color: $colorBlue;
+        border-bottom: 2px solid $colorRed;
+        padding-bottom: 0.5rem;
+        display: inline-block;
+      }
+      
+      .info-content {
+        line-height: 1.6;
+        
+        span {
+          display: block;
+          margin-bottom: 0.5rem;
+          width: 100%;
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+        
+        ul {
+          margin: 1rem 0 0 0;
+          padding: 15px 0 0 20px;
+          list-style-position: inside;
+          width: 100%;
+          
+          li {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+            
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+    
+    // Estate badge styling
+    .estate-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 25px;
+      font-weight: 600;
+      text-transform: capitalize;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      box-shadow: $shadow;
+      
+      i {
+        font-size: 1.1rem;
+      }
+      
+      &.estate-terminé {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+      }
+      
+      &.estate-en-cours {
+        background: linear-gradient(135deg, #ffc107, #fd7e14);
+        color: white;
+      }
+      
+      &.estate-planifié {
+        background: linear-gradient(135deg, #6f42c1, #e83e8c);
+        color: white;
+      }
+      
+      &.estate-en {
+        background: linear-gradient(135deg, #ffc107, #fd7e14);
+        color: white;
+      }
+    }
+    
+    // Action section
+    .action-section {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+      
+      .visit-button {
+        background: linear-gradient(135deg, $colorBlue, lighten($colorBlue, 10%));
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: $shadow;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        
+        &:hover {
+          background: linear-gradient(135deg, $colorRed, lighten($colorRed, 10%));
+          transform: translateY(-2px);
+          box-shadow: $shadowHover;
+        }
+        
+        &:active {
+          transform: translateY(0);
+        }
+        
+        i {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+  
+  // Technologies section
+  .technos-section {
+    .technos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 1.5rem;
+      justify-content: center;
+      
+      .techno-card {
+        background: $cardBackground;
+        border-radius: $borderRadius;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: $shadow;
+        transition: all 0.3s ease;
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: $shadowHover;
+          
+          .techno-icon img {
+            transform: scale(1.1);
+          }
+        }
+        
+        .techno-icon {
+          margin-bottom: 1rem;
+          
+          img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+          }
+        }
+        
+        .techno-name {
+          font-weight: 600;
+          color: $colorBlue;
+          font-size: 0.9rem;
+          display: block;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design - Media Queries
+
+// Large tablets and small desktops (max-width: 1024px)
+@media all and (max-width: 1024px) {
+  .project {
+    .content {
+      padding: 0 40px;
+      
+      .project-main {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .project-header .project-logo {
+        width: 250px;
+      }
+    }
     
+    .technos-section {
+      .technos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 1.25rem;
+      }
+    }
+  }
+}
 
+// Tablets (max-width: 768px)
+@media all and (max-width: 768px) {
+  .project {
+    padding: 1rem 0;
+    
+    .close-button {
+      top: 15px;
+      right: 15px;
+      width: 42px;
+      height: 42px;
+      font-size: 1.1rem;
+    }
+    
+    .content {
+      padding: 0 30px;
+      
+      .project-header {
+        margin-bottom: 2rem;
+        
+        .project-logo {
+          width: 200px;
+        }
+      }
+      
+      .project-main {
+        gap: 1.5rem;
+      }
+    }
+    
+    .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+    
+    .description-section {
+      .info-block {
+        padding: 1.25rem;
+        margin-bottom: 1.25rem;
+        
+        h3 {
+          font-size: 1.1rem;
+        }
+      }
+      
+      .action-section .visit-button {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+    }
+    
+    .technos-section {
+      .technos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 1rem;
+        
+        .techno-card {
+          padding: 1.25rem;
+          
+          .techno-icon img {
+            width: 50px;
+            height: 50px;
+          }
+          
+          .techno-name {
+            font-size: 0.85rem;
+          }
+        }
+      }
+    }
+  }
+}
 
-        .description{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+// Mobile devices - Ancienne breakpoint à 675px maintenant étendue
+@media all and (max-width: 675px) {
+  .project {
+    .close-button {
+      top: 10px;
+      right: 10px;
+      width: 38px;
+      height: 38px;
+      font-size: 1rem;
+    }
+    
+    .content {
+      padding: 0 23px;
+      
+      .project-header .project-logo {
+        width: 180px;
+      }
+    }
+    
+    .section-title {
+      font-size: 1.3rem;
+      flex-direction: column;
+      text-align: center;
+      gap: 0.5rem;
+      margin-bottom: 15px;
+    }
+    
+    .description-section {
+      .info-block {
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+      
+      .action-section .visit-button {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+      }
+    }
+    
+    .technos-section {
+      .technos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 0.8rem;
+        
+        .techno-card {
+          padding: 1rem;
+          
+          .techno-icon img {
+            width: 45px;
+            height: 45px;
+          }
+          
+          .techno-name {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+}
 
-            img{
-                width: 300px;
-                margin-bottom: 30px;
-            }
-
-            .description-title{
-                margin-bottom: 30px;
-                
-                font-weight: bold;
-                font-size: 1.6em;
-            }
-
-            .who{
-                width: 100%;
-            }
-
-            .why{
-                width: 100%;     
-                margin-top: 5px;           
-            }
-
-            .requirements{
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-                margin-top: 5px;
-
-                ul{
-                    padding: 15px 0 0 20px;
-                    list-style-position: inside;
-                    width: 100%;
-                }
-            }
-
-            .estate{
-                margin-top: 20px;
-                width: 100%;
-            }
-
-            span{
-                width: 100%;
-            }
-
+// Small mobile devices (max-width: 480px)
+@media all and (max-width: 480px) {
+  .project {
+    .close-button {
+      top: 8px;
+      right: 8px;
+      width: 35px;
+      height: 35px;
+      font-size: 0.9rem;
+    }
+    
+    .content {
+      padding: 0 15px;
+      
+      .project-header {
+        margin-bottom: 1.5rem;
+        
+        .project-logo {
+          width: 150px;
+        }
+      }
+    }
+    
+    .section-title {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+    
+    .description-section {
+      .info-block {
+        padding: 0.8rem;
+        margin-bottom: 0.8rem;
+        
+        h3 {
+          font-size: 1rem;
+        }
+      }
+      
+      .action-section .visit-button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        
+        i {
+          font-size: 0.85rem;
+        }
+      }
+    }
+    
+    .technos-section {
+      .technos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        gap: 0.6rem;
+        
+        .techno-card {
+          padding: 0.8rem;
+          
+          .techno-icon {
+            margin-bottom: 0.5rem;
             
-
-
-            button{
-
-                padding: 5px 25px;
-                border-radius: 100px;
-                margin: 50px 20px;
-                border: none;
-                cursor: pointer;
-                font-size: 1em;
-                background-color: white;
-                box-shadow: 4px 5px 6px -1px #363636;
-
-           
+            img {
+              width: 35px;
+              height: 35px;
             }
-
-            button:hover{
-                color: $colorRed;
-                background-color: $colorBlue ;
-                transition: all 0.5s ease 0s;
-                box-shadow: 4px 5px 6px -1px #129BBC;
-
-            }
+          }
+          
+          .techno-name {
+            font-size: 0.75rem;
+          }
         }
-
-        .technos-bloc{
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            .title{
-                margin-bottom: 30px;
-                font-weight: bold;
-                font-size: 1.6em;
-            }
-
-
-            .technos{
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-               
-                .techno{
-                    margin: 15px 15px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-direction: column;
-
-                    & img{
-                        width: 50px;
-                        height: 50px;
-                    }
-
-                }
-            }
-        }
-
+      }
     }
+  }
 }
 
-
-@media all and (max-width: 675px){
-    .project{
-        .content{
-
-            padding: 0 23px;
-
-            .back-button{
-                padding: 2px 15px;
-                font-size: 0.95em;
-            }
-
-            .description{
-
-                img{
-                    width:250px;
-                }
-
-                button{
-                    padding: 2px 15px;
-                    font-size: 0.95em;
-                }
-            }
-        }
+// Very small devices (max-width: 360px)
+@media all and (max-width: 360px) {
+  .project {
+    .close-button {
+      top: 5px;
+      right: 5px;
+      width: 32px;
+      height: 32px;
+      font-size: 0.8rem;
     }
-
+    
+    .content {
+      padding: 0 10px;
+      
+      .project-header .project-logo {
+        width: 120px;
+      }
+    }
+    
+    .section-title {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    
+    .description-section {
+      .info-block {
+        padding: 0.6rem;
+        
+        h3 {
+          font-size: 0.95rem;
+        }
+      }
+    }
+    
+    .technos-section {
+      .technos-grid {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+        gap: 0.5rem;
+        
+        .techno-card {
+          padding: 0.6rem;
+          
+          .techno-icon img {
+            width: 30px;
+            height: 30px;
+          }
+          
+          .techno-name {
+            font-size: 0.7rem;
+          }
+        }
+      }
+    }
+  }
 }
+
+// Animation d'entrée
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.project {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+// Animation pour les cards
+.info-block, .techno-card {
+  animation: fadeInUp 0.4s ease-out;
+  animation-fill-mode: both;
+}
+
+.info-block:nth-child(1) { animation-delay: 0.1s; }
+.info-block:nth-child(2) { animation-delay: 0.2s; }
+.info-block:nth-child(3) { animation-delay: 0.3s; }
+.info-block:nth-child(4) { animation-delay: 0.4s; }
+
+.techno-card:nth-child(odd) { animation-delay: 0.1s; }
+.techno-card:nth-child(even) { animation-delay: 0.2s; }

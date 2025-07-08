@@ -519,12 +519,13 @@
           "
           *ngFor="let project of projectList"
         >
-          <div class="project-image">
+          <div class="project-image" *ngIf="project.projectImage">
             <img
               [src]="project.projectImage"
-              [alt]="project.projectImageAltAttribute"
+              [alt]="project.projectImageAltAttribute || 'Image de projet'"
             />
           </div>
+
           <span class="project-title">{{ project.projectTitle }}</span>
           <span class="project-summary">{{ project.projectSummary }}</span>
           <button>Voir le projet</button>

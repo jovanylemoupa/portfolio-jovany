@@ -162,7 +162,6 @@ export class ProjectsService {
       },
       {
         projectTitle: 'E-Learning Platform',
-        projectImage: 'img/elearning.jpg',
         projectSummary:
           "Plateforme d'apprentissage en ligne avec cours interactifs, système de notation et suivi progression étudiant/formateur.",
         projectImageAltAttribute: 'Interface de la plateforme e-learning',
@@ -198,7 +197,6 @@ export class ProjectsService {
       },
       {
         projectTitle: 'API Gateway Microservices',
-        projectImage: 'img/api-gateway.jpg',
         projectSummary:
           'Architecture microservices avec API Gateway, authentification centralisée, monitoring et documentation automatique.',
         projectImageAltAttribute: 'Architecture microservices',
@@ -233,7 +231,6 @@ export class ProjectsService {
       },
       {
         projectTitle: 'Mobile Fitness Tracker',
-        projectImage: 'img/fitness-app.jpg',
         projectSummary:
           'Application mobile complète de fitness avec programmes personnalisés, suivi biométrique et communauté sociale.',
         projectImageAltAttribute: 'Application mobile fitness',
@@ -403,7 +400,7 @@ export class ProjectsService {
       // Vos données existantes avec ajouts...
       {
         code: 'sscovid19',
-        image: 'img/projects/sscovid19-devices.png',
+        image: 'img/sscovid19-devices.png',
         link: 'https://sscovid19.com',
         who: [
           {
@@ -449,7 +446,7 @@ export class ProjectsService {
           },
           {
             name: 'Python',
-            image: 'img/python_logo.png',
+            image: 'img/python_logo.jpeg',
           },
           {
             name: 'PostgreSQL',
@@ -459,10 +456,10 @@ export class ProjectsService {
             name: 'AmCharts',
             image: 'img/amcharts_logo.png',
           },
-          { name: 'Redis', image: 'img/redis_logo.png' },
+          { name: 'Redis', image: 'img/redis_logo.jpeg' },
           {
             name: 'Docker',
-            image: 'img/docker_logo.png',
+            image: 'img/docker_logo.jpeg',
           },
           { name: 'Nginx', image: 'img/nginx_logo.png' },
         ],

@@ -10,7 +10,7 @@ export const portfolioConfig = {
     phone: '+33 7 59 61 14 10',
     location: 'Grenoble, France',
     cvUrl:
-      'https://drive.google.com/file/d/1_7oi-RciI1lDvet8tKQw0W3ITm_i9iin/view?usp=drivesdk',
+      'https://drive.google.com/file/d/1sX35FUqe9CEz6K9F7Pk_CmuixpxMHXt-/view?usp=drivesdk',
   },
 
   // Réseaux sociaux

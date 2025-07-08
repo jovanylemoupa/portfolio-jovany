@@ -1,52 +1,116 @@
 <div class="project">
+  <!-- Bouton de fermeture - masqué du système de focus PrimNG -->
+  <button
+    class="close-button"
+    (click)="closeDialog()"
+    aria-label="Fermer"
+    tabindex="-1"
+    data-p-hidden-focusable="true"
+    data-p-hidden-accessible="true"
+    [attr.aria-hidden]="true"
+    type="button"
+  >
+    &times;
+  </button>
+
   <div class="content my-container">
-    <div class="description">
-      <img src="{{ project.image }}" alt="Logo of sscovid19 website" />
-
-      <span class="description-title">Description</span>
-
-      <div class="who">
-        <span *ngFor="let who of project.who" [innerHtml]="who.message"></span>
-      </div>
-
-      <div class="why">
-        <span *ngFor="let why of project.why">{{ why.message }}</span>
-      </div>
-
-      <div class="requirements">
-        <span>{{ project.requirement_intro }}</span>
-        <ul>
-          <li *ngFor="let requirement of project.requirements">
-            {{ requirement.message }}
-          </li>
-        </ul>
-      </div>
-
-      <div class="estate">
-        <span>
-          <b>État : </b>
-        </span>
-        <span>{{ project.estate }}</span>
-      </div>
-
-      <button
-        *ngIf="project.estate == 'terminé'"
-        (click)="goOnSscovidWebsite(project.link)"
-      >
-        Visitez le site
-      </button>
+    <!-- Header du projet -->
+    <div class="project-header">
+      <img
+        src="{{ project.image }}"
+        alt="Logo du projet"
+        class="project-logo"
+      />
     </div>
 
-    <div class="technos-bloc">
-      <span class="title">Technologies utilisées</span>
+    <div class="project-main">
+      <!-- Section description -->
+      <div class="description-section">
+        <h2 class="section-title">
+          <i class="pi pi-info-circle"></i>
+          Description
+        </h2>
 
-      <div class="technos">
-        <ng-template ngFor let-technology [ngForOf]="project.technologies">
-          <div class="techno">
-            <img src="{{ technology.image }}" alt="{{ technology.name }}" />
-            <span>{{ technology.name }}</span>
+        <div class="info-block who" *ngIf="project.who?.length">
+          <h3>Pour qui</h3>
+          <div class="info-content">
+            <span
+              *ngFor="let who of project.who"
+              [innerHtml]="who.message"
+            ></span>
           </div>
-        </ng-template>
+        </div>
+
+        <div class="info-block why" *ngIf="project.why?.length">
+          <h3>Pourquoi</h3>
+          <div class="info-content">
+            <span *ngFor="let why of project.why">{{ why.message }}</span>
+          </div>
+        </div>
+
+        <div
+          class="info-block requirements"
+          *ngIf="project.requirements?.length"
+        >
+          <h3>Exigences</h3>
+          <div class="info-content">
+            <span *ngIf="project.requirement_intro">{{
+              project.requirement_intro
+            }}</span>
+            <ul>
+              <li *ngFor="let requirement of project.requirements">
+                {{ requirement.message }}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="info-block estate">
+          <h3>État du projet</h3>
+          <div class="info-content">
+            <span
+              class="estate-badge"
+              [ngClass]="'estate-' + (project.estate?.toLowerCase() || '')"
+            >
+              <i [class]="getEstateIcon(project.estate)"></i>
+              {{ project.estate }}
+            </span>
+          </div>
+        </div>
+
+        <div
+          class="action-section"
+          *ngIf="project.estate === 'terminé' && project.link"
+        >
+          <button
+            class="visit-button"
+            (click)="goOnSscovidWebsite(project.link)"
+            type="button"
+          >
+            <i class="pi pi-external-link"></i>
+            Visitez le site
+          </button>
+        </div>
+      </div>
+
+      <!-- Section technologies -->
+      <div class="technos-section">
+        <h2 class="section-title">
+          <i class="pi pi-cog"></i>
+          Technologies utilisées
+        </h2>
+
+        <div class="technos-grid">
+          <div
+            class="techno-card"
+            *ngFor="let technology of project.technologies"
+          >
+            <div class="techno-icon">
+              <img src="{{ technology.image }}" alt="{{ technology.name }}" />
+            </div>
+            <span class="techno-name">{{ technology.name }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
