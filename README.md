@@ -8,7 +8,27 @@ To start a local development server, run:
 
 ```bash
 ng serve
+
+
 ```
+
+## pour deployer l'application procedure pas a pas:
+
+1. Rebuilds et déployez
+   ng build --configuration=production --base-href /portfolio-jovany/
+
+2. Allez dans le dossier browser
+   cd "dist\portfolio-app\browser"
+3. Nettoyez l'ancien git
+   Remove-Item .git -Recurse -Force -ErrorAction SilentlyContinue
+4. Initialisez et déployez
+   git init
+   git add .
+   git commit -m "Add Open Graph metadata for link previews"
+   git remote add origin https://github.com/jovanylemoupa/portfolio-jovany.git
+   git push -f origin HEAD:gh-pages
+5. Retournez au dossier principal
+   cd "..\..\.."
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
