@@ -57,3 +57,21 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+# Sur dev, après modifications :
+
+git add . && git commit -m "Vos modifications" && git push origin dev
+
+# Build et deploy :
+
+ng build --configuration=production --base-href /portfolio-jovany/
+cd "dist\portfolio-app\browser"
+Remove-Item .git -Recurse -Force -ErrorAction SilentlyContinue
+git init && git add . && git commit -m "Deploy update"
+git remote add origin https://github.com/jovanylemoupa/portfolio-jovany.git
+git push -f origin HEAD:gh-pages
+cd "..\..\.."
+
+# Testez après 2-3 minutes :
+
+# https://jovanylemoupa.github.io/portfolio-jovany/
