@@ -627,9 +627,15 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   showProject(param: string) {
-    console.log('Param reçu :', param);
+    console.log('🔍 Param reçu :', param);
+    console.log('📋 Liste des projets :', this.projectList);
+    console.log(
+      '🔍 Codes des projets :',
+      this.projectList.map((p) => p.projectCode)
+    );
 
     const projectData = this.projectsService.getProjectData(param);
+    console.log('📦 Données du projet récupérées :', projectData);
 
     if (typeof projectData !== 'undefined') {
       this.ref = this.dialogService.open(ProjectDetailComponent, {
@@ -642,6 +648,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         contentStyle: { 'max-height': '90vh', overflow: 'auto' },
       });
     } else {
+      console.error('❌ Aucune donnée trouvée pour le projet:', param);
       this.messageService.add({
         severity: 'warn',
         detail: this.config.messages.projectError,
