@@ -48,45 +48,38 @@ export class ProjectsService {
   initProjectsListBriefData(): ExtendedProject[] {
     return (this.projectsListBriefData = [
       {
-        projectTitle: 'Sscovid19 - Tracker Épidémie',
-        projectImage: 'img/sscovid19.png',
+        projectTitle: 'Gestion Fabrique Pro',
+        projectImage: 'img/gestion-fabrique.png',
         projectSummary:
-          "Application web de suivi en temps réel de l'évolution de la COVID-19 avec visualisations interactives et analyses par pays/continents.",
-        projectImageAltAttribute: 'Dashboard de suivi COVID-19',
-        projectCode: 'sscovid19',
-        tags: [
-          'Angular',
-          'Node.js',
-          'PostgreSQL',
-          'Data Visualization',
-          'API REST',
-        ],
+          "Application web complète pour la gestion d'une entreprise de production : gestion des stocks, production, commandes, personnel et tableau de bord interactif.",
+        projectImageAltAttribute:
+          "Interface de gestion d'une fabrique de construction",
+        projectCode: 'gestion-fabrique',
+        tags: ['PHP', 'JavaScript', 'MySQL', 'HTML/CSS', 'ERP', 'Fullstack'],
         category: 'fullstack',
-        demoUrl: 'https://sscovid19.com',
-        githubUrl: 'https://github.com/votre-username/sscovid19',
+        demoUrl: 'https://tonportfolio.com/gestion-fabrique', // À remplacer par ton lien réel
+        githubUrl: 'https://github.com/ton-username/gestion-fabrique', // Remplace aussi ici
         technologies: [
-          'Angular 11',
-          'TypeScript',
-          'Node.js',
-          'Express.js',
-          'PostgreSQL',
-          'AmCharts',
-          'Docker',
-          'Nginx',
+          'PHP',
+          'JavaScript',
+          'HTML5',
+          'CSS3',
+          'MySQL',
+          'Bootstrap',
         ],
         featured: true,
         status: 'terminé',
         description:
-          'Plateforme complète de surveillance épidémiologique avec mise à jour automatique des données.',
+          "Une solution conçue pour optimiser la gestion opérationnelle d'une entreprise industrielle, avec un tableau de bord de performance et une interface intuitive.",
         challenges: [
-          'Traitement de gros volumes de données en temps réel',
-          'Optimisation des performances pour les graphiques complexes',
-          'Synchronisation multi-sources de données internationales',
+          'Centralisation de toutes les données de production',
+          'Interface claire pour des utilisateurs non techniques',
+          'Gestion temps réel des stocks et du personnel',
         ],
         results: [
-          '215+ pays suivis quotidiennement',
-          '50k+ utilisateurs actifs mensuels',
-          'Mise à jour automatique toutes les 45 minutes',
+          'Gain de temps sur la planification de production',
+          'Amélioration du suivi des commandes clients',
+          'Vue d’ensemble claire des indicateurs de performance',
         ],
       },
       {
@@ -125,6 +118,7 @@ export class ProjectsService {
           'Interface multilingue déployée',
         ],
       },
+
       {
         projectTitle: 'Elites Voyages - Plateforme Voyage',
         projectImage: 'img/ev.png',
@@ -227,6 +221,48 @@ export class ProjectsService {
           '99.9% uptime garanti',
           'Réduction latence -60%',
           'Documentation auto-générée',
+        ],
+      },
+      {
+        projectTitle: 'Sscovid19 - Tracker Épidémie',
+        projectImage: 'img/sscovid19.png',
+        projectSummary:
+          "Application web de suivi en temps réel de l'évolution de la COVID-19 avec visualisations interactives et analyses par pays/continents.",
+        projectImageAltAttribute: 'Dashboard de suivi COVID-19',
+        projectCode: 'sscovid19',
+        tags: [
+          'Angular',
+          'Node.js',
+          'PostgreSQL',
+          'Data Visualization',
+          'API REST',
+        ],
+        category: 'fullstack',
+        demoUrl: 'https://sscovid19.com',
+        githubUrl: 'https://github.com/votre-username/sscovid19',
+        technologies: [
+          'Angular 11',
+          'TypeScript',
+          'Node.js',
+          'Express.js',
+          'PostgreSQL',
+          'AmCharts',
+          'Docker',
+          'Nginx',
+        ],
+        featured: true,
+        status: 'terminé',
+        description:
+          'Plateforme complète de surveillance épidémiologique avec mise à jour automatique des données.',
+        challenges: [
+          'Traitement de gros volumes de données en temps réel',
+          'Optimisation des performances pour les graphiques complexes',
+          'Synchronisation multi-sources de données internationales',
+        ],
+        results: [
+          '215+ pays suivis quotidiennement',
+          '50k+ utilisateurs actifs mensuels',
+          'Mise à jour automatique toutes les 45 minutes',
         ],
       },
       {
@@ -395,6 +431,47 @@ export class ProjectsService {
   // 🔥 CORRECTION CRITIQUE : Données complètes pour TOUS les projets
   initProjectData() {
     return (this.projectsListAllData = [
+      {
+        code: 'gestion-fabrique',
+        image: 'img/gestion-fabrique.png',
+        link: 'https://youtu.be/mwzygcyCOkM?si=UQPk8pcN14dSBSYG', // Remplace par ton vrai lien
+        who: [
+          {
+            message:
+              "<b>Application de gestion d’une fabrique</b> est une solution web conçue pour optimiser les opérations internes d'une entreprise industrielle.",
+          },
+        ],
+        why: [
+          {
+            message:
+              'Ce projet personnel a été développé pour répondre aux besoins concrets d’une structure de production : centraliser les données, automatiser les processus et offrir une visibilité claire sur les performances.',
+          },
+          {
+            message:
+              "L'application permet une gestion fluide des stocks, de la production, des commandes, du personnel et des indicateurs clés à travers un tableau de bord interactif.",
+          },
+        ],
+        requirement_intro: 'Spécifications techniques et fonctionnelles :',
+        requirements: [
+          { message: 'Gestion des stocks en temps réel' },
+          { message: 'Organisation des étapes de production' },
+          { message: 'Suivi client et gestion des commandes' },
+          { message: 'Gestion des rôles et du personnel' },
+          { message: 'Tableau de bord avec chiffre d’affaires et indicateurs' },
+          { message: 'Interface utilisateur claire et responsive' },
+          { message: 'Architecture PHP / MySQL côté serveur' },
+          { message: 'Technologies front-end : HTML, CSS, JavaScript' },
+        ],
+        estate: 'terminé',
+        technologies: [
+          { name: 'PHP', image: 'img/php_logo.png' },
+          { name: 'JavaScript', image: 'img/javascript_logo.png' },
+          { name: 'HTML5', image: 'img/html_logo.png' },
+          { name: 'CSS3', image: 'img/css_logo.jpeg' },
+          { name: 'MySQL', image: 'img/mysql_logo.png' },
+        ],
+      },
+
       // ✅ SSCOVID19 - Existant et fonctionnel
       {
         code: 'sscovid19',
