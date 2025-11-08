@@ -1,0 +1,17 @@
+$colorBlue: #00011f ;
+$colorYellow: #FFCC00;
+
+footer{
+    width: 100%;
+    background-color: $colorBlue;
+    display: flex;
+    justify-content: center;
+
+    .content{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 30px 0;
+        color: $colorYellow;
+    }
+}

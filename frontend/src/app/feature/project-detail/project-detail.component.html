@@ -1,0 +1,259 @@
+<div class="project" *ngIf="project; else noProject">
+  <!-- Bouton de fermeture optimisé -->
+  <button
+    class="close-button"
+    (click)="closeDialog()"
+    aria-label="Fermer le détail du projet"
+    tabindex="-1"
+    data-p-hidden-focusable="true"
+    data-p-hidden-accessible="true"
+    [attr.aria-hidden]="true"
+    type="button"
+    title="Fermer (Échap)"
+  >
+    &times;
+  </button>
+
+  <!-- Debug button (à supprimer en production) -->
+  <button
+    class="debug-button"
+    (click)="debugProject()"
+    style="
+      position: absolute;
+      top: 50px;
+      right: 20px;
+      z-index: 1001;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+    "
+    *ngIf="false"
+  >
+    🔍 Debug
+  </button>
+
+  <div class="content my-container">
+    <!-- Header du projet amélioré -->
+    <div class="project-header">
+      <div class="project-image-container">
+        <img
+          [src]="getProjectImage()"
+          [alt]="'Aperçu du projet ' + getProjectTitle()"
+          class="project-logo"
+          (error)="onImageError($event)"
+          loading="lazy"
+        />
+        <div class="project-overlay" *ngIf="project.estate">
+          <span
+            class="estate-badge header-badge"
+            [ngClass]="'estate-' + (project.estate?.toLowerCase() || '')"
+          >
+            <i [class]="getEstateIcon(project.estate)"></i>
+            {{ getFormattedEstate(project.estate) }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Titre principal -->
+      <div class="project-title-section">
+        <h1 class="project-main-title">{{ getProjectTitle() }}</h1>
+        <p class="project-subtitle" *ngIf="project.projectSummary">
+          {{ project.projectSummary }}
+        </p>
+      </div>
+    </div>
+
+    <div class="project-main">
+      <!-- Section description améliorée -->
+      <div class="description-section">
+        <h2 class="section-title">
+          <i class="pi pi-info-circle"></i>
+          Description du projet
+        </h2>
+
+        <!-- Pour qui -->
+        <div class="info-block who" *ngIf="hasWho()">
+          <h3>
+            <i class="pi pi-users"></i>
+            Présentation
+          </h3>
+          <div class="info-content">
+            <div
+              *ngFor="let who of project.who"
+              [innerHTML]="who.message"
+              class="content-paragraph"
+            ></div>
+          </div>
+        </div>
+
+        <!-- Pourquoi -->
+        <div class="info-block why" *ngIf="hasWhy()">
+          <h3>
+            <i class="pi pi-question-circle"></i>
+            Objectifs et contexte
+          </h3>
+          <div class="info-content">
+            <div *ngFor="let why of project.why" class="content-paragraph">
+              {{ why.message }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Exigences/Fonctionnalités -->
+        <div class="info-block requirements" *ngIf="hasRequirements()">
+          <h3>
+            <i class="pi pi-list"></i>
+            {{ project.requirement_intro || "Spécifications" }}
+          </h3>
+          <div class="info-content">
+            <p *ngIf="project.requirement_intro" class="requirements-intro">
+              {{ project.requirement_intro }}
+            </p>
+            <ul class="requirements-list">
+              <li
+                *ngFor="let requirement of project.requirements; let i = index"
+                class="requirement-item"
+                [attr.data-index]="i"
+              >
+                <i class="pi pi-check requirement-check"></i>
+                {{ requirement.message }}
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- État du projet avec plus de détails -->
+        <div class="info-block estate">
+          <h3>
+            <i class="pi pi-flag"></i>
+            État du projet
+          </h3>
+          <div class="info-content">
+            <div class="estate-detail">
+              <span
+                class="estate-badge main-badge"
+                [ngClass]="'estate-' + (project.estate?.toLowerCase() || '')"
+              >
+                <i [class]="getEstateIcon(project.estate)"></i>
+                {{ getFormattedEstate(project.estate) }}
+              </span>
+
+              <!-- Informations additionnelles selon l'état -->
+              <div
+                class="estate-info"
+                [ngSwitch]="project.estate?.toLowerCase()"
+              >
+                <p *ngSwitchCase="'terminé'" class="estate-description success">
+                  ✅ Ce projet est complètement finalisé et opérationnel.
+                </p>
+                <p
+                  *ngSwitchCase="'en cours'"
+                  class="estate-description progress"
+                >
+                  🚧 Projet actuellement en développement actif.
+                </p>
+                <p
+                  *ngSwitchCase="'maintenance'"
+                  class="estate-description maintenance"
+                >
+                  🔧 Projet en phase de maintenance et d'améliorations.
+                </p>
+                <p *ngSwitchDefault class="estate-description">
+                  📊 Statut du projet: {{ getFormattedEstate(project.estate) }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action section améliorée -->
+        <div class="action-section" *ngIf="project.link">
+          <div class="action-buttons">
+            <button
+              class="visit-button primary"
+              (click)="goOnSscovidWebsite(project.link)"
+              type="button"
+              [disabled]="!project.link"
+            >
+              <i class="pi pi-external-link"></i>
+              <span>{{
+                isProjectCompleted() ? "Visitez le site" : "Voir la démo"
+              }}</span>
+            </button>
+
+            <!-- Bouton GitHub si disponible -->
+            <button
+              *ngIf="project.githubUrl"
+              class="visit-button secondary"
+              (click)="goOnSscovidWebsite(project.githubUrl)"
+              type="button"
+            >
+              <i class="pi pi-github"></i>
+              <span>Code source</span>
+            </button>
+          </div>
+
+          <p class="action-note" *ngIf="!isProjectCompleted()">
+            <i class="pi pi-info-circle"></i>
+            Ce projet est encore en développement. La démo peut ne pas refléter
+            la version finale.
+          </p>
+        </div>
+      </div>
+
+      <!-- Section technologies améliorée -->
+      <div class="technos-section" *ngIf="hasTechnologies()">
+        <h2 class="section-title">
+          <i class="pi pi-cog"></i>
+          Technologies utilisées
+          <span class="tech-count">({{ project.technologies.length }})</span>
+        </h2>
+
+        <div class="technos-grid">
+          <div
+            class="techno-card"
+            *ngFor="let technology of project.technologies; let i = index"
+            [attr.data-tech]="technology.name"
+            [style.animation-delay]="i * 100 + 'ms'"
+          >
+            <div class="techno-icon">
+              <img
+                [src]="technology.image"
+                [alt]="'Logo ' + technology.name"
+                (error)="onImageError($event)"
+                loading="lazy"
+              />
+            </div>
+            <span class="techno-name" [title]="technology.name">
+              {{ technology.name }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Message si pas de technologies -->
+        <div class="no-tech-message" *ngIf="!hasTechnologies()">
+          <i class="pi pi-info-circle"></i>
+          <p>Informations techniques en cours de mise à jour.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Template de fallback si pas de données -->
+<ng-template #noProject>
+  <div class="no-project-data">
+    <div class="error-content">
+      <i class="pi pi-exclamation-triangle error-icon"></i>
+      <h2>Projet non trouvé</h2>
+      <p>Les données de ce projet ne sont pas disponibles actuellement.</p>
+      <button class="close-button-alt" (click)="closeDialog()" type="button">
+        <i class="pi pi-times"></i>
+        Fermer
+      </button>
+    </div>
+  </div>
+</ng-template>

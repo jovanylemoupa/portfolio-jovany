@@ -1,0 +1,629 @@
+// Variables
+$colorBlue: #00011f;
+$colorRed: #FF3100;
+$background: #f3f3f3;
+$colorYellow: #FFCC00;
+$colorGreen: #28a745;
+$shadow-light: rgba(0, 0, 0, 0.1);
+$shadow-medium: rgba(0, 0, 0, 0.16);
+$shadow-dark: rgba(0, 0, 0, 0.23);
+
+// Animations
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scrollText {
+  0% { 
+    transform: translateX(100%); 
+  }
+  100% { 
+    transform: translateX(-100%); 
+  }
+}
+
+// Animation alternative pour navigateurs qui ont des problèmes
+@keyframes scrollTextAlt {
+  from { 
+    transform: translate3d(100%, 0, 0); 
+  }
+  to { 
+    transform: translate3d(-100%, 0, 0); 
+  }
+}
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin transition-smooth($property: all, $duration: 0.3s) {
+  transition: $property $duration ease-in-out;
+}
+
+@mixin hover-lift($translate: -2px) {
+  &:hover {
+    transform: translateY($translate);
+  }
+}
+
+// Bannière d'alerte (visible par défaut, fermable)
+.alert-banner {
+  background: linear-gradient(135deg, $colorGreen, #20c997);
+  color: white;
+  padding: 12px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  box-shadow: 0 2px 8px $shadow-light;
+  overflow: hidden;
+  transform: translateY(0);
+  @include transition-smooth(transform);
+
+  &.hidden {
+    transform: translateY(-100%);
+  }
+
+  .banner-content {
+    @include flex-center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 60px 0 20px; // Espace pour le bouton de fermeture
+    position: relative;
+    gap: 15px;
+    height: 100%;
+
+    .icon {
+      font-size: 1.2em;
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+
+    .scrolling-text {
+      flex: 1;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+      width: 100%;
+      min-width: 0; // Important pour flexbox
+
+      .text {
+        display: inline-block;
+        font-size: 0.95em;
+        font-weight: 400;
+        line-height: 1.4;
+        white-space: nowrap;
+        animation: scrollText 25s linear infinite;
+        will-change: transform;
+        transform: translateX(100%); // Position de départ
+
+        strong {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  .close-banner {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    @include flex-center;
+    @include transition-smooth(background-color, 0.2s);
+    z-index: 3;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    &:focus {
+      outline: 2px solid $colorYellow;
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Header principal
+header {
+  @include flex-center;
+  width: 100%;
+  position: fixed;
+  height: 80px;
+  z-index: 999;
+  @include transition-smooth;
+  animation: slideDown 0.5s ease-out;
+
+  &.banner-closed {
+    top: 0; // Remonte en haut quand la bannière est fermée
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+  }
+
+  .logo {
+    height: 60px;
+    cursor: pointer;
+    @include transition-smooth(transform, 0.2s);
+    @include flex-center;
+
+    svg {
+      height: 100%;
+      width: auto;
+      max-width: 280px;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &:focus {
+      outline: 2px solid $colorYellow;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  }
+
+  .header-right {
+    @include flex-center;
+    color: $colorBlue;
+    font-weight: 450;
+
+    nav {
+      @include flex-center;
+
+      ul {
+        display: flex;
+        list-style: none;
+        @include flex-center;
+        margin: 0;
+        gap: 8px;
+
+        li {
+          a {
+            text-decoration: none;
+            padding: 10px 18px;
+            color: $colorBlue;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.95em;
+            @include transition-smooth;
+            position: relative;
+            overflow: hidden;
+            @include flex-center;
+            gap: 8px;
+
+            .nav-icon {
+              font-size: 0.9em;
+              opacity: 0.8;
+              @include transition-smooth(opacity, 0.2s);
+              // Optimisation pour les emojis
+              display: inline-block;
+              vertical-align: middle;
+              line-height: 1;
+            }
+
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: -100%;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.3), transparent);
+              @include transition-smooth(left, 0.5s);
+            }
+
+            &:hover {
+              color: $colorYellow;
+              font-weight: 600;
+              @include hover-lift;
+              box-shadow: 0 4px 12px $shadow-light;
+
+              &::before {
+                left: 100%;
+              }
+
+              .nav-icon {
+                opacity: 1;
+              }
+            }
+
+            &:focus {
+              outline: 2px solid $colorYellow;
+              outline-offset: 2px;
+            }
+
+            &.active-link {
+              background-color: $colorBlue;
+              color: $colorYellow;
+              box-shadow: 0 4px 15px $shadow-medium;
+
+              .nav-icon {
+                opacity: 1;
+              }
+
+              &:hover {
+                transform: translateY(-1px);
+              }
+            }
+          }
+        }
+      }
+
+      // Images décoratives cachées par défaut
+      img {
+        display: none;
+      }
+    }
+
+    .burger {
+      display: none;
+    }
+  }
+}
+
+// Background sur scroll
+.navbar-background-on-scroll {
+  background-color: $background;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px $shadow-medium;
+}
+
+// Responsive Tablet (1024px et moins)
+@media all and (max-width: 1024px) {
+  .alert-banner {
+    .banner-content {
+      padding: 0 50px 0 15px; // Espace pour le bouton
+
+      .scrolling-text .text {
+        font-size: 0.9em;
+      }
+    }
+  }
+
+  header {
+    height: 70px;
+
+    .logo {
+      height: 50px;
+
+      svg {
+        height: 100%;
+        max-width: 240px;
+      }
+    }
+
+    .header-right {
+      font-size: 0.9em;
+
+      nav ul li a {
+        padding: 8px 15px;
+        font-size: 0.9em;
+        gap: 6px;
+
+        .nav-icon {
+          font-size: 0.85em;
+        }
+      }
+    }
+  }
+}
+
+// Responsive Mobile (850px et moins)
+@media all and (max-width: 850px) {
+  .alert-banner {
+    .banner-content {
+      gap: 8px;
+      padding: 0 50px 0 15px; // Plus d'espace pour le bouton sur mobile
+
+      .icon {
+        font-size: 1.1em;
+      }
+
+      .scrolling-text .text {
+        font-size: 0.85em;
+      }
+    }
+
+    .close-banner {
+      right: 10px;
+      font-size: 18px;
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  header {
+    height: 65px;
+
+    .content {
+      position: relative;
+      padding: 0 15px;
+    }
+
+    .logo {
+      height: 45px;
+
+      svg {
+        height: 100%;
+        max-width: 200px;
+      }
+    }
+
+    .header-right {
+      nav {
+        overflow: hidden;
+        position: absolute;
+        margin: 0;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: flex-start;
+        top: 65px;
+        width: 100vw;
+        min-height: 100vh;
+        left: -15px;
+        padding: 30px 15px;
+        transform: translateX(100%);
+        background: $background;
+        backdrop-filter: blur(10px);
+        @include transition-smooth(transform);
+        box-shadow: -5px 0 15px $shadow-light;
+
+        ul {
+          flex-direction: column;
+          align-items: flex-end;
+          padding: 0;
+          gap: 15px;
+          margin-top: 20px;
+
+          li {
+            margin: 0;
+            width: 100%;
+            text-align: right;
+
+            a {
+              font-size: 1.1em;
+              padding: 12px 20px;
+              display: flex;
+              justify-content: flex-end;
+              border-radius: 15px;
+              background: rgba(255, 255, 255, 0.8);
+              backdrop-filter: blur(5px);
+              margin-bottom: 5px;
+              gap: 10px;
+
+              .nav-icon {
+                font-size: 1em;
+                display: inline-block;
+                vertical-align: middle;
+              }
+
+              &:hover {
+                background: $colorYellow;
+                color: $colorBlue;
+                transform: translateX(-5px);
+              }
+            }
+          }
+        }
+
+        &.toggle-nav {
+          transform: translateX(0);
+        }
+
+        .triangle-off,
+        .cross {
+          display: block;
+          position: absolute;
+          width: 100px;
+          height: 100px;
+          opacity: 0.3;
+        }
+
+        .triangle-off {
+          left: -20px;
+          bottom: 40%;
+        }
+
+        .cross {
+          right: -20px;
+          bottom: 20px;
+        }
+      }
+
+      .burger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        position: relative;
+        z-index: 10;
+        user-select: none;
+        height: 45px;
+        width: 45px;
+        padding: 8px;
+        border-radius: 50%;
+        @include transition-smooth;
+        cursor: pointer;
+
+        &:hover {
+          background-color: rgba(255, 204, 0, 0.1);
+        }
+
+        input {
+          display: block;
+          width: 40px;
+          height: 40px;
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          cursor: pointer;
+          opacity: 0;
+          z-index: 2;
+          user-select: none;
+
+          &:focus + span {
+            outline: 2px solid $colorYellow;
+            outline-offset: 2px;
+          }
+        }
+
+        span {
+          display: block;
+          width: 28px;
+          height: 3px;
+          position: relative;
+          background: $colorBlue;
+          border-radius: 2px;
+          z-index: 1;
+          transform-origin: 0% 50%;
+          transition: transform 0.3s cubic-bezier(0.77,0.2,0.05,1.0),
+                     opacity 0.3s ease,
+                     background-color 0.3s ease;
+        }
+
+        input:checked ~ span {
+          background: $colorRed;
+
+          &:nth-child(2) {
+            transform: rotate(45deg) translate(2px, 2px);
+          }
+
+          &:nth-child(3) {
+            opacity: 0;
+          }
+
+          &:nth-child(4) {
+            transform: rotate(-45deg) translate(2px, -2px);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Très petits écrans (480px et moins)
+@media all and (max-width: 480px) {
+  .alert-banner {
+    .banner-content {
+      padding: 0 45px 0 10px; // Ajustement pour très petits écrans
+
+      .scrolling-text .text {
+        font-size: 0.8em;
+      }
+    }
+
+    .close-banner {
+      right: 8px;
+      font-size: 16px;
+      width: 26px;
+      height: 26px;
+    }
+  }
+
+  header {
+    height: 60px;
+
+    .logo {
+      height: 40px;
+
+      svg {
+        height: 100%;
+        max-width: 180px;
+      }
+    }
+
+    .header-right {
+      nav {
+        top: 60px;
+        padding: 20px 10px;
+
+        ul li a {
+          font-size: 1em;
+          padding: 10px 15px;
+          gap: 8px;
+
+          .nav-icon {
+            font-size: 0.9em;
+            display: inline-block;
+            vertical-align: middle;
+          }
+        }
+      }
+
+      .burger {
+        height: 40px;
+        width: 40px;
+        padding: 6px;
+
+        input {
+          width: 35px;
+          height: 35px;
+        }
+
+        span {
+          width: 25px;
+          height: 2px;
+        }
+      }
+    }
+  }
+}
+
+// Amélioration de l'accessibilité
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Mode sombre (optionnel)
+@media (prefers-color-scheme: dark) {
+  .navbar-background-on-scroll {
+    background-color: rgba(0, 1, 31, 0.95);
+  }
+
+  .alert-banner {
+    .banner-content .text {
+      color: rgba(255, 255, 255, 0.95);
+    }
+  }
+}

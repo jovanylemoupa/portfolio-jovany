@@ -1,0 +1,673 @@
+<!-- Alert Banner pour la recherche de contrat -->
+
+<!-- Navigation Mobile -->
+<nav class="mobile-nav" *ngIf="screenWidth <= 768">
+  <div class="nav-content">
+    <div class="logo">
+      {{ personalInfo.firstName[0] }}{{ personalInfo.lastName[0] }}.
+    </div>
+    <div class="burger" (click)="toggleMobileMenu()">
+      <fa-icon [icon]="isBurgerMenuClicked ? faTimes : faBars"></fa-icon>
+    </div>
+  </div>
+  <div class="mobile-menu" [class.active]="isBurgerMenuClicked">
+    <a
+      href="#accueil"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'accueil'"
+      >Accueil</a
+    >
+    <a
+      href="#recherche"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'recherche'"
+      >Recherche</a
+    >
+    <a
+      href="#a-propos"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'a-propos'"
+      >À Propos</a
+    >
+    <a
+      href="#services"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'services'"
+      >Services</a
+    >
+    <a
+      href="#projets"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'projets'"
+      >Projets</a
+    >
+    <a
+      href="#contact"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'contact'"
+      >Contact</a
+    >
+  </div>
+</nav>
+
+<!-- Scroll to Top Button -->
+<div
+  class="scroll-to-top"
+  *ngIf="showScrollTop"
+  (click)="scrollToTop()"
+  @scaleIn
+>
+  <fa-icon [icon]="faArrowUp"></fa-icon>
+</div>
+
+<div class="app">
+  <!-- Hero Section -->
+  <section class="hero" id="accueil">
+    <svg
+      id="wave"
+      style="transform: rotate(0deg); transition: 0.3s"
+      viewBox="0 0 1440 150"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <linearGradient id="sw-gradient-0" x1="0" x2="0" y1="1" y2="0">
+          <stop stop-color="rgba(255, 255, 255, 1)" offset="0%"></stop>
+          <stop stop-color="rgba(255, 255, 255, 1)" offset="100%"></stop>
+        </linearGradient>
+      </defs>
+      <path
+        style="transform: translate(0, 0px); opacity: 1"
+        fill="url(#sw-gradient-0)"
+        d="M0,105L18.5,100C36.9,95,74,85,111,90C147.7,95,185,115,222,107.5C258.5,100,295,65,332,62.5C369.2,60,406,90,443,102.5C480,115,517,110,554,100C590.8,90,628,75,665,62.5C701.5,50,738,40,775,50C812.3,60,849,90,886,107.5C923.1,125,960,130,997,130C1033.8,130,1071,125,1108,117.5C1144.6,110,1182,100,1218,100C1255.4,100,1292,110,1329,112.5C1366.2,115,1403,110,1440,102.5C1476.9,95,1514,85,1551,90C1587.7,95,1625,115,1662,120C1698.5,125,1735,115,1772,107.5C1809.2,100,1846,95,1883,87.5C1920,80,1957,70,1994,57.5C2030.8,45,2068,30,2105,42.5C2141.5,55,2178,95,2215,92.5C2252.3,90,2289,45,2326,42.5C2363.1,40,2400,80,2437,95C2473.8,110,2511,100,2548,92.5C2584.6,85,2622,80,2640,77.5L2658.5,75L2658.5,150L2640,150C2621.5,150,2585,150,2548,150C2510.8,150,2474,150,2437,150C2400,150,2363,150,2326,150C2289.2,150,2252,150,2215,150C2178.5,150,2142,150,2105,150C2067.7,150,2031,150,1994,150C1956.9,150,1920,150,1883,150C1846.2,150,1809,150,1772,150C1735.4,150,1698,150,1662,150C1624.6,150,1588,150,1551,150C1513.8,150,1477,150,1440,150C1403.1,150,1366,150,1329,150C1292.3,150,1255,150,1218,150C1181.5,150,1145,150,1108,150C1070.8,150,1034,150,997,150C960,150,923,150,886,150C849.2,150,812,150,775,150C738.5,150,702,150,665,150C627.7,150,591,150,554,150C516.9,150,480,150,443,150C406.2,150,369,150,332,150C295.4,150,258,150,222,150C184.6,150,148,150,111,150C73.8,150,37,150,18,150L0,150Z"
+      ></path>
+    </svg>
+
+    <div class="content my-container">
+      <div class="text-network-content" @slideInLeft>
+        <div class="text-network">
+          <span class="greetings">Salut, je m'appelle</span>
+          <span class="name">
+            <span class="prenom">{{ personalInfo.firstName }}</span>
+            <span class="nom">{{ personalInfo.lastName }}</span>
+          </span>
+          <div class="work">
+            <span>Je suis</span>
+            <span id="typewriter"></span>
+          </div>
+
+          <span class="i-do">
+            Je conçois et développe des solutions web innovantes qui
+            transforment vos idées en expériences digitales exceptionnelles.
+            Actuellement en recherche d'une alternance.
+          </span>
+
+          <div class="cta-buttons">
+            <a
+              [href]="personalInfo.cvUrl"
+              class="cta-button"
+              aria-label="Télécharger mon CV"
+              rel="noopener"
+              target="_blank"
+            >
+              <span>Télécharger CV</span>
+              <fa-icon [icon]="faDownload"></fa-icon>
+            </a>
+            <a href="#recherche" class="cta-button secondary-btn">
+              <span>Ma recherche</span>
+              <fa-icon [icon]="faBullseye"></fa-icon>
+            </a>
+          </div>
+
+          <div class="networks">
+            <i
+              class="pi pi-linkedin social-icon linkedin"
+              (click)="openNetwork('linkedin')"
+              title="LinkedIn"
+            ></i>
+            <i
+              class="pi pi-github social-icon github"
+              (click)="openNetwork('github')"
+              title="GitHub"
+            ></i>
+            <i
+              class="pi pi-instagram social-icon instagram"
+              (click)="openNetwork('instagram')"
+              title="Instagram"
+            ></i>
+          </div>
+        </div>
+
+        <img
+          class="circle-one"
+          src="img/circle-one.png"
+          alt="Élément décoratif circulaire"
+        />
+        <img
+          class="cross"
+          src="img/cross.png"
+          alt="Élément décoratif en croix"
+        />
+      </div>
+
+      <img
+        src="img/photo-pro-Photoroom2.png"
+        [alt]="
+          'Photo de ' + personalInfo.firstName + ' ' + personalInfo.lastName
+        "
+        class="hero-image"
+        @slideInRight
+      />
+    </div>
+  </section>
+
+  <!-- Job Search Section (Nouvelle section) -->
+  <section class="job-search" id="recherche">
+    <div class="content my-container">
+      <div class="job-search-header animate-on-scroll">
+        <div class="status-badge">
+          <div class="pulse-dot"></div>
+          <span>Disponible à partir de septembre</span>
+        </div>
+        <h2 class="title">Recherche d'une alternance</h2>
+        <p class="subtitle">
+          Je recherche activement une entreprise pour une alternance en
+          développement web. Mobile dans toute la France, je suis prêt à
+          m'investir pleinement dans votre équipe.
+        </p>
+      </div>
+
+      <div class="job-search-content animate-on-scroll" @staggerAnimation>
+        <div class="search-card">
+          <fa-icon [icon]="faBullseye" class="icon"></fa-icon>
+          <h3 class="card-title">Objectif Professionnel</h3>
+          <p class="card-description">
+            Intégrer une équipe de développement pour approfondir mes
+            compétences en situation réelle et contribuer à des projets
+            innovants tout en poursuivant ma formation.
+          </p>
+        </div>
+
+        <div class="search-card">
+          <fa-icon [icon]="faGlobe" class="icon"></fa-icon>
+          <h3 class="card-title">Mobilité Géographique</h3>
+          <p class="card-description">
+            Totalement mobile sur l'ensemble du territoire français. Prêt à
+            déménager pour la bonne opportunité et à m'adapter aux contraintes
+            géographiques de l'entreprise.
+          </p>
+        </div>
+
+        <div class="search-card">
+          <fa-icon [icon]="faBolt" class="icon"></fa-icon>
+          <h3 class="card-title">Disponibilité</h3>
+          <p class="card-description">
+            Disponible à partir de septembre 2025 pour commencer une alternance.
+            Flexible sur les dates de début selon les besoins de l'entreprise.
+          </p>
+        </div>
+
+        <div class="search-card">
+          <fa-icon [icon]="faLightbulb" class="icon"></fa-icon>
+          <h3 class="card-title">Apports & Motivation</h3>
+          <p class="card-description">
+            Passionné, curieux et motivé, j'apporte une perspective fraîche, une
+            grande capacité d'apprentissage et l'envie de contribuer activement
+            aux succès de l'équipe.
+          </p>
+        </div>
+      </div>
+
+      <div class="job-search-cta animate-on-scroll">
+        <p class="cta-text">
+          Votre entreprise recherche un développeur motivé ? Discutons de cette
+          opportunité !
+        </p>
+        <div class="cta-buttons">
+          <a href="#contact" class="cta-button">
+            <span>Me contacter</span>
+            <fa-icon [icon]="faComments"></fa-icon>
+          </a>
+          <a
+            [href]="personalInfo.cvUrl"
+            class="cta-button secondary"
+            target="_blank"
+          >
+            <span>Mon CV détaillé</span>
+            <fa-icon [icon]="faFileAlt"></fa-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="a-propos">
+    <div class="content my-container">
+      <h2 class="title animate-on-scroll">À Propos</h2>
+
+      <div class="text-image">
+        <img
+          src="img/desk.jpeg"
+          alt="Espace de travail moderne avec ordinateur"
+          class="animate-on-scroll"
+        />
+
+        <div class="text animate-on-scroll">
+          <span>
+            Développeur fullstack passionné, je crée des expériences web
+            remarquables en alliant créativité et expertise technique. Mon
+            approche combine innovation et qualité pour donner vie à vos projets
+            digitaux.
+          </span>
+
+          <span>
+            Actuellement en recherche d'une alternance je souhaite intégrer une
+            équipe dynamique pour continuer à développer mes compétences tout en
+            apportant ma motivation et ma fraîcheur d'approche à vos projets.
+          </span>
+
+          <span>
+            Autonome, rigoureux et toujours à l'affût des dernières innovations,
+            j'aime relever des défis techniques complexes. Ma mobilité sur toute
+            la France me permet de saisir les meilleures opportunités de
+            formation et de développement professionnel.
+          </span>
+        </div>
+      </div>
+
+      <div class="profil animate-on-scroll">
+        <div class="profil-bloc">
+          <div class="profil-nav">
+            <span
+              class="profil-header"
+              [class.active-header]="activeProfileTab === 0"
+              (click)="activeContent(0)"
+              >Compétences</span
+            >
+            <span
+              class="profil-header"
+              [class.active-header]="activeProfileTab === 1"
+              (click)="activeContent(1)"
+              >Formation</span
+            >
+            <span
+              class="profil-header"
+              [class.active-header]="activeProfileTab === 2"
+              (click)="activeContent(2)"
+              >Soft Skills</span
+            >
+          </div>
+
+          <div class="profil-content">
+            <!-- Compétences techniques -->
+            <div
+              class="profil-info technos"
+              [class.active]="activeProfileTab === 0"
+              @staggerAnimation
+            >
+              <div class="profil-info-conteneur">
+                <div
+                  class="skills"
+                  *ngFor="let skillCategory of objectKeys(skills)"
+                >
+                  <span class="skills-title">{{
+                    skills[getSkillCategoryKey(skillCategory)].title
+                  }}</span>
+                  <div class="images-logo">
+                    <div
+                      *ngFor="
+                        let skill of skills[getSkillCategoryKey(skillCategory)]
+                          .items
+                      "
+                    >
+                      <img [src]="skill.logo" [alt]="skill.name" />
+                      <span>{{ skill.name }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Formation -->
+            <div
+              class="formation profil-info"
+              [class.active]="activeProfileTab === 1"
+            >
+              <img src="img/hat.png" alt="Chapeau de diplômé" />
+              <div class="formation-conteneur">
+                <div class="formation-element" *ngFor="let edu of education">
+                  <span>
+                    <fa-icon [icon]="faCalendarAlt"></fa-icon>
+                    <span>{{ edu.period }}</span>
+                  </span>
+                  <span class="formation-title">{{ edu.title }}</span>
+                  <span class="formation-description">{{
+                    edu.description
+                  }}</span>
+                </div>
+
+                <div class="formation-element">
+                  <span class="formation-title">Langues</span>
+                  <span class="langue">Français (Langue maternelle)</span>
+                  <span class="langue">Anglais (Niveau professionnel)</span>
+                  <span class="langue">Espagnol (Notions)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Soft Skills -->
+            <div
+              class="profil-info soft-skills"
+              [class.active]="activeProfileTab === 2"
+              @staggerAnimation
+            >
+              <div class="profil-info-conteneur">
+                <div class="skills">
+                  <span class="skills-title">Qualités Humaines</span>
+                  <div class="images-logo">
+                    <div>
+                      <div class="soft-skill-icon team-work">🤝</div>
+                      <span>Travail d'équipe</span>
+                    </div>
+                    <div>
+                      <div class="soft-skill-icon analytical">🧠</div>
+                      <span>Esprit analytique</span>
+                    </div>
+                    <div>
+                      <div class="soft-skill-icon motivation">🚀</div>
+                      <span>Motivation</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="skills">
+                  <span class="skills-title">Adaptabilité</span>
+                  <div class="images-logo">
+                    <div>
+                      <div class="soft-skill-icon mobility">🌍</div>
+                      <span>Mobilité</span>
+                    </div>
+                    <div>
+                      <div class="soft-skill-icon speed">⚡</div>
+                      <span>Rapidité</span>
+                    </div>
+                    <div>
+                      <div class="soft-skill-icon learning">📚</div>
+                      <span>Apprentissage</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="skills">
+                  <span class="skills-title">Aptitudes Pro</span>
+                  <div class="images-logo">
+                    <div>
+                      <div class="soft-skill-icon communication">💬</div>
+                      <span>Communication</span>
+                    </div>
+                    <div>
+                      <div class="soft-skill-icon problem-solving">🔧</div>
+                      <span>Résolution</span>
+                    </div>
+                    <div>
+                      <div class="soft-skill-icon creativity">🎨</div>
+                      <span>Créativité</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <svg
+      id="wave-top"
+      style="transform: rotate(180deg); transition: 0.3s"
+      viewBox="0 0 1440 150"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <linearGradient id="sw-gradient-top" x1="0" x2="0" y1="1" y2="0">
+          <stop stop-color="rgba(255, 255, 255, 1)" offset="0%"></stop>
+          <stop stop-color="rgba(255, 255, 255, 1)" offset="100%"></stop>
+        </linearGradient>
+      </defs>
+      <path
+        style="transform: translate(0, 0px); opacity: 1"
+        fill="url(#sw-gradient-top)"
+        d="M0,105L18.5,100C36.9,95,74,85,111,90C147.7,95,185,115,222,107.5C258.5,100,295,65,332,62.5C369.2,60,406,90,443,102.5C480,115,517,110,554,100C590.8,90,628,75,665,62.5C701.5,50,738,40,775,50C812.3,60,849,90,886,107.5C923.1,125,960,130,997,130C1033.8,130,1071,125,1108,117.5C1144.6,110,1182,100,1218,100C1255.4,100,1292,110,1329,112.5C1366.2,115,1403,110,1440,102.5C1476.9,95,1514,85,1551,90C1587.7,95,1625,115,1662,120C1698.5,125,1735,115,1772,107.5C1809.2,100,1846,95,1883,87.5C1920,80,1957,70,1994,57.5C2030.8,45,2068,30,2105,42.5C2141.5,55,2178,95,2215,92.5C2252.3,90,2289,45,2326,42.5C2363.1,40,2400,80,2437,95C2473.8,110,2511,100,2548,92.5C2584.6,85,2622,80,2640,77.5L2658.5,75L2658.5,150L2640,150C2621.5,150,2585,150,2548,150C2510.8,150,2474,150,2437,150C2400,150,2363,150,2326,150C2289.2,150,2252,150,2215,150C2178.5,150,2142,150,2105,150C2067.7,150,2031,150,1994,150C1956.9,150,1920,150,1883,150C1846.2,150,1809,150,1772,150C1735.4,150,1698,150,1662,150C1624.6,150,1588,150,1551,150C1513.8,150,1477,150,1440,150C1403.1,150,1366,150,1329,150C1292.3,150,1255,150,1218,150C1181.5,150,1145,150,1108,150C1070.8,150,1034,150,997,150C960,150,923,150,886,150C849.2,150,812,150,775,150C738.5,150,702,150,665,150C627.7,150,591,150,554,150C516.9,150,480,150,443,150C406.2,150,369,150,332,150C295.4,150,258,150,222,150C184.6,150,148,150,111,150C73.8,150,37,150,18,150L0,150Z"
+      ></path>
+    </svg>
+
+    <div class="content my-container">
+      <h2 class="title animate-on-scroll">Services</h2>
+
+      <div class="intro-services">
+        <div class="intro animate-on-scroll">
+          <h3>Pourquoi me choisir ?</h3>
+          <span>
+            Je place votre réussite au cœur de chaque projet. Mon approche
+            collaborative garantit que vos besoins sont parfaitement compris et
+            réalisés.
+          </span>
+          <span>
+            En recherche d'une alternance, j'apporte une motivation
+            exceptionnelle et une volonté d'apprendre qui bénéficiera
+            directement à vos projets.
+          </span>
+          <span>
+            Ma mobilité géographique me permet de m'adapter parfaitement aux
+            besoins de votre entreprise, où qu'elle soit située en France.
+          </span>
+        </div>
+
+        <div class="services-list animate-on-scroll" @staggerAnimation>
+          <div class="service" *ngFor="let service of services">
+            <fa-icon
+              [icon]="getServiceIcon(service.icon)"
+              class="service-icon"
+            ></fa-icon>
+            <span class="service-title">{{ service.title }}</span>
+            <p>{{ service.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <svg
+      id="wave-bottom"
+      style="transform: rotate(0deg); transition: 0.3s"
+      viewBox="0 0 1440 150"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <linearGradient id="sw-gradient-bottom" x1="0" x2="0" y1="1" y2="0">
+          <stop stop-color="rgb(0, 1, 31)" offset="0%"></stop>
+          <stop stop-color="rgb(0, 1, 31)" offset="100%"></stop>
+        </linearGradient>
+      </defs>
+      <path
+        style="transform: translate(0, 0px); opacity: 1"
+        fill="url(#sw-gradient-bottom)"
+        d="M0,105L18.5,100C36.9,95,74,85,111,90C147.7,95,185,115,222,107.5C258.5,100,295,65,332,62.5C369.2,60,406,90,443,102.5C480,115,517,110,554,100C590.8,90,628,75,665,62.5C701.5,50,738,40,775,50C812.3,60,849,90,886,107.5C923.1,125,960,130,997,130C1033.8,130,1071,125,1108,117.5C1144.6,110,1182,100,1218,100C1255.4,100,1292,110,1329,112.5C1366.2,115,1403,110,1440,102.5C1476.9,95,1514,85,1551,90C1587.7,95,1625,115,1662,120C1698.5,125,1735,115,1772,107.5C1809.2,100,1846,95,1883,87.5C1920,80,1957,70,1994,57.5C2030.8,45,2068,30,2105,42.5C2141.5,55,2178,95,2215,92.5C2252.3,90,2289,45,2326,42.5C2363.1,40,2400,80,2437,95C2473.8,110,2511,100,2548,92.5C2584.6,85,2622,80,2640,77.5L2658.5,75L2658.5,150L2640,150C2621.5,150,2585,150,2548,150C2510.8,150,2474,150,2437,150C2400,150,2363,150,2326,150C2289.2,150,2252,150,2215,150C2178.5,150,2142,150,2105,150C2067.7,150,2031,150,1994,150C1956.9,150,1920,150,1883,150C1846.2,150,1809,150,1772,150C1735.4,150,1698,150,1662,150C1624.6,150,1588,150,1551,150C1513.8,150,1477,150,1440,150C1403.1,150,1366,150,1329,150C1292.3,150,1255,150,1218,150C1181.5,150,1145,150,1108,150C1070.8,150,1034,150,997,150C960,150,923,150,886,150C849.2,150,812,150,775,150C738.5,150,702,150,665,150C627.7,150,591,150,554,150C516.9,150,480,150,443,150C406.2,150,369,150,332,150C295.4,150,258,150,222,150C184.6,150,148,150,111,150C73.8,150,37,150,18,150L0,150Z"
+      ></path>
+    </svg>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="projects" id="projets">
+    <div class="content my-container">
+      <h2 class="title animate-on-scroll">Mes Réalisations</h2>
+      <span class="summary animate-on-scroll">
+        Découvrez quelques-uns de mes projets récents qui démontrent mes
+        compétences et ma motivation
+      </span>
+
+      <div class="project-list" @staggerAnimation>
+        <div
+          class="project animate-on-scroll"
+          (click)="
+            project.projectCode ? showProject(project.projectCode) : null
+          "
+          *ngFor="let project of projectList"
+        >
+          <div class="project-image" *ngIf="project.projectImage">
+            <img
+              [src]="project.projectImage"
+              [alt]="project.projectImageAltAttribute || 'Image de projet'"
+            />
+          </div>
+
+          <span class="project-title">{{ project.projectTitle }}</span>
+          <span class="project-summary">{{ project.projectSummary }}</span>
+          <button>Voir le projet</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact" id="contact">
+    <div class="content my-container">
+      <h2 class="title animate-on-scroll">Contactez-moi</h2>
+      <span class="animate-on-scroll">
+        Vous recherchez un développeur motivé en alternance ?
+      </span>
+      <span class="speach animate-on-scroll">
+        N'hésitez pas à me contacter pour discuter de vos besoins et de mes
+        disponibilités.
+      </span>
+
+      <div class="contact-info">
+        <div class="personal-id animate-on-scroll" @fadeInUp>
+          <div class="tel">
+            <div class="img-bloc">
+              <fa-icon [icon]="faPhone"></fa-icon>
+            </div>
+            <div class="text-bloc">
+              <span class="titles">Téléphone</span>
+              <span class="text">{{ personalInfo.phone }}</span>
+            </div>
+          </div>
+
+          <div class="mail">
+            <div class="img-bloc">
+              <fa-icon [icon]="faEnvelope"></fa-icon>
+            </div>
+            <div class="text-bloc">
+              <span class="titles">Email</span>
+              <span class="text">{{ personalInfo.email }}</span>
+            </div>
+          </div>
+        </div>
+
+        <form
+          [formGroup]="contactForm"
+          (ngSubmit)="onSubmitContactForm()"
+          class="animate-on-scroll"
+          @fadeInUp
+        >
+          <div class="name-email">
+            <div class="name-bloc">
+              <input
+                formControlName="name"
+                id="name-input"
+                type="text"
+                placeholder="Votre nom"
+                [class.is-invalid]="isContactFormSubmitted && f.name.errors"
+              />
+              <label class="label-id" for="name-input">Nom</label>
+              <div
+                *ngIf="isContactFormSubmitted && f.name.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.name.errors['required']">Le nom est requis</div>
+              </div>
+            </div>
+
+            <div class="email-bloc">
+              <input
+                formControlName="email"
+                id="email-input"
+                type="email"
+                placeholder="Votre email"
+                [class.is-invalid]="isContactFormSubmitted && f.email.errors"
+              />
+              <label class="label-id" for="email-input">Email</label>
+              <div
+                *ngIf="isContactFormSubmitted && f.email.errors"
+                class="invalid-feedback"
+              >
+                <div *ngIf="f.email.errors['required']">L'email est requis</div>
+                <div *ngIf="f.email.errors['email']">Email invalide</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="objet-bloc">
+            <input
+              formControlName="subject"
+              id="objet-input"
+              type="text"
+              placeholder="Objet de votre message"
+            />
+            <label class="label-id" for="objet-input">Objet</label>
+          </div>
+
+          <div class="message-bloc">
+            <textarea
+              formControlName="message"
+              id="message-area"
+              placeholder="Votre message"
+              rows="8"
+              [class.is-invalid]="isContactFormSubmitted && f.message.errors"
+            ></textarea>
+            <label class="label-id" for="message-area">Message</label>
+            <div
+              *ngIf="isContactFormSubmitted && f.message.errors"
+              class="invalid-feedback"
+            >
+              <div *ngIf="f.message.errors['required']">
+                Le message est requis
+              </div>
+              <div *ngIf="f.message.errors['minlength']">
+                Le message doit contenir au moins 15 caractères
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            [disabled]="isContactFormSubmittedAndNotErrorOnClientSide"
+          >
+            <span *ngIf="!isContactFormSubmittedAndNotErrorOnClientSide">
+              Envoyer <fa-icon [icon]="faPaperPlane"></fa-icon>
+            </span>
+            <p-progressSpinner
+              *ngIf="isContactFormSubmittedAndNotErrorOnClientSide"
+              strokeWidth="3"
+              [style]="{ width: '25px', height: '25px' }"
+            >
+            </p-progressSpinner>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Toast Messages -->
+    <p-toast
+      position="top-right"
+      [baseZIndex]="10000"
+      [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"
+    >
+    </p-toast>
+  </section>
+</div>
