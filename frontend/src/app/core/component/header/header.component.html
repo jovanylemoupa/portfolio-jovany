@@ -1,133 +1,67 @@
-<!-- Bannière d'alerte
-<div class="alert-banner">
-  <div class="banner-content">
-    <span class="icon">🚀</span>
-    <span class="text">
-      <strong>Recherche active :</strong> Je suis disponible pour un contrat de
-      professionnalisation en développement web - Mobile dans toute la France
-    </span>
-    <button
-      class="close-banner"
-      (click)="closeBanner()"
-      aria-label="Fermer la bannière"
-      type="button"
-    >
-      ×
-    </button>
-  </div>
-</div>
- -->
-<!-- Header principal -->
 <header
   (scroll)="onWindowScroll()"
   [class.banner-closed]="isBannerClosed"
   [class.navbar-background-on-scroll]="hasScrollBackground"
 >
   <div class="content my-container">
-    <!-- Logo SVG remplaçant l'image -->
-    <div
-      class="logo"
-      (click)="navigateToAnchor('accueil')"
-      role="button"
-      tabindex="0"
-    >
-      <svg
-        width="200"
-        height="60"
-        viewBox="0 0 200 60"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <!-- Cercle bleu marine -->
-        <circle cx="30" cy="30" r="28" fill="#00011f" stroke="none" />
-
-        <!-- Texte SM dans le cercle -->
-        <text
-          x="30"
-          y="38"
-          text-anchor="middle"
-          fill="white"
-          font-family="Arial, sans-serif"
-          font-size="16"
-          font-weight="bold"
-        >
-          JL
-        </text>
-
-        <!-- Texte DIGITALIZER -->
-        <text
-          x="70"
-          y="38"
-          fill="#00011f"
-          font-family="Arial, sans-serif"
-          font-size="19"
-          font-weight="600"
-          letter-spacing="1px"
-        >
-          DIGITALIZE
-        </text>
-      </svg>
+    <div class="logo" (click)="navigateToAnchor('accueil')" role="button" tabindex="0">
+      <span class="logo-circle">JL</span>
+      <span class="logo-text">DIGITALIZER</span>
     </div>
 
     <div class="header-right">
       <nav [class.toggle-nav]="isBurgerMenuClicked">
         <ul>
           <li>
-            <a
-              (click)="setActiveLinkAndNavigate(1, 'accueil')"
-              [class.active-link]="currentLinkNumber === 1"
-              role="button"
-              tabindex="0"
-            >
-              <span class="nav-icon">Accueil</span>
+            <a (click)="setActiveLinkAndNavigate(1, 'accueil')" [class.active-link]="currentLinkNumber === 1" role="button" tabindex="0">
+              Accueil
             </a>
           </li>
           <li>
-            <a
-              (click)="setActiveLinkAndNavigate(2, 'a-propos')"
-              [class.active-link]="currentLinkNumber === 2"
-              role="button"
-              tabindex="0"
-            >
-              <span class="nav-icon">À Propos</span>
+            <a (click)="setActiveLinkAndNavigate(2, 'a-propos')" [class.active-link]="currentLinkNumber === 2" role="button" tabindex="0">
+              À Propos
             </a>
           </li>
           <li>
-            <a
-              (click)="setActiveLinkAndNavigate(3, 'services')"
-              [class.active-link]="currentLinkNumber === 3"
-              role="button"
-              tabindex="0"
-            >
-              <span class="nav-icon">Services</span>
+            <a (click)="setActiveLinkAndNavigate(3, 'services')" [class.active-link]="currentLinkNumber === 3" role="button" tabindex="0">
+              Services
             </a>
           </li>
           <li>
-            <a
-              (click)="setActiveLinkAndNavigate(4, 'projets')"
-              [class.active-link]="currentLinkNumber === 4"
-              role="button"
-              tabindex="0"
-            >
-              <span class="nav-icon">Réalisations</span>
+            <a (click)="setActiveLinkAndNavigate(4, 'projets')" [class.active-link]="currentLinkNumber === 4" role="button" tabindex="0">
+              Réalisations
             </a>
           </li>
           <li>
-            <a
-              (click)="setActiveLinkAndNavigate(5, 'contact')"
-              [class.active-link]="currentLinkNumber === 5"
-              role="button"
-              tabindex="0"
-            >
-              <span class="nav-icon">Contactez-moi</span>
+            <a (click)="setActiveLinkAndNavigate(5, 'contact')" [class.active-link]="currentLinkNumber === 5" role="button" tabindex="0">
+              Contactez-moi
+            </a>
+          </li>
+          <li class="nav-secondary">
+            <a (click)="setActiveLinkAndNavigate(5, 'contact')" [class.active-link]="currentLinkNumber === 5" role="button" tabindex="0">
+              Témoignages
+            </a>
+          </li>
+          <li class="nav-secondary">
+            <a (click)="setActiveLinkAndNavigate(5, 'contact')" [class.active-link]="currentLinkNumber === 5" role="button" tabindex="0">
+              Galerie
             </a>
           </li>
         </ul>
 
-        <img
-          class="triangle-off"
-          src="img/triangle-off.png"
-          alt="Design triangle"
-        />
+        <div class="social-links">
+          <a href="https://www.linkedin.com/in/jovany-lemoupa-767408330" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <i class="pi pi-linkedin"></i>
+          </a>
+          <a href="https://github.com/jovanylemoupa" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <i class="pi pi-github"></i>
+          </a>
+          <a href="https://www.youtube.com/@TechEntreNous-JL" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
+            <i class="pi pi-youtube"></i>
+          </a>
+        </div>
+
+        <img class="triangle-off" src="img/triangle-off.png" alt="Design triangle" />
         <img class="cross" src="img/cross.png" alt="Design cross" />
       </nav>
 
