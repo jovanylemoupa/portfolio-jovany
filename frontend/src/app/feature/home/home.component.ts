@@ -267,6 +267,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   showScrollTop: boolean = false;
   currentSection: string = 'accueil';
 
+  // Parallax mobile : cache pour éviter les recalculs à chaque scroll (tremblements)
+  private heroHeightCache = 0;
+  private parallaxRafPending = false;
+
   // Projects
   projectList!: Project[];
   projectData: any = [];
@@ -353,6 +357,21 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.initSmoothScroll();
       this.trackCurrentSection();
       this.initPerformanceMonitoring(); // 🆕 Monitoring des performances
+      this.cacheHeroHeight();
+    }
+  }
+
+  @HostListener('window:resize', [])
+  onWindowResize(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.cacheHeroHeight();
+    }
+  }
+
+  private cacheHeroHeight(): void {
+    const hero = this.document.querySelector('.hero') as HTMLElement;
+    if (hero) {
+      this.heroHeightCache = hero.offsetHeight;
     }
   }
 
@@ -551,20 +570,24 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       const scrolled = window.pageYOffset;
 
       if (window.innerWidth <= 768) {
-        // Mobile : l'image compense le scroll pour rester fixe visuellement
+        // Mobile : image fixée via rAF pour éviter les tremblements
         const hero = this.document.querySelector('.hero') as HTMLElement;
         if (hero) hero.style.transform = '';
 
-        const heroImage = this.document.querySelector(
-          '.hero .hero-image'
-        ) as HTMLElement;
-        if (hero && heroImage) {
-          // translateY(+scrolled) compense le scroll → image reste en haut du viewport
-          // On plafonne à (heroHeight - imageHeight) pour qu'elle reparte normalement après
-          const imageHeight = window.innerHeight * 0.55;
-          const maxTranslate = Math.max(0, hero.offsetHeight - imageHeight);
-          const translate = Math.min(scrolled, maxTranslate);
-          heroImage.style.transform = `translateY(${translate}px)`;
+        if (!this.parallaxRafPending) {
+          this.parallaxRafPending = true;
+          requestAnimationFrame(() => {
+            this.parallaxRafPending = false;
+            const heroImage = this.document.querySelector(
+              '.hero .hero-image'
+            ) as HTMLElement;
+            if (heroImage && this.heroHeightCache > 0) {
+              const imageHeight = window.innerHeight * 0.55;
+              const maxTranslate = Math.max(0, this.heroHeightCache - imageHeight);
+              const translate = Math.min(scrolled, maxTranslate);
+              heroImage.style.transform = `translateY(${translate}px)`;
+            }
+          });
         }
       } else {
         // Desktop : réinitialiser le transform de l'image, parallax sur toute la section

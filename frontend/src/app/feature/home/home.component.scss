@@ -2830,7 +2830,7 @@ button:active {
 
 // =================================================================
 // PARALLAX MOBILE — Hero Section (≤768px)
-// Image en haut visible (JS compense le scroll), texte monte par-dessus
+// Texte en haut, image en bas (JS la fixe pendant le scroll du texte)
 // =================================================================
 @media all and (max-width: 768px) {
     .app .hero {
@@ -2843,15 +2843,23 @@ button:active {
         }
 
         .content {
-            flex-direction: column;
+            flex-direction: column;  // texte (1er dans le DOM) en haut, image en bas
             max-width: 100%;
             padding: 0;
             gap: 0;
             margin-top: 0;
 
-            // Image : dans le flux normal, JS applique translateY pour la fixer
+            // Texte : en haut, fond opaque, scroll normal
+            .text-network-content {
+                position: relative;
+                z-index: 2;
+                width: 100%;
+                background: linear-gradient(135deg, $colorGradient1 0%, $colorGradient2 100%);
+                padding: 0 0 60px;
+            }
+
+            // Image : en bas du texte, JS applique translateY pour la fixer en viewport
             .hero-image {
-                order: -1;
                 display: block;
                 width: 100%;
                 height: 55vh;
@@ -2863,16 +2871,6 @@ button:active {
                 position: relative;
                 z-index: 1;
                 will-change: transform;
-            }
-
-            // Texte : fond opaque pour couvrir l'image quand il monte par-dessus
-            .text-network-content {
-                order: 0;
-                position: relative;
-                z-index: 2;
-                width: 100%;
-                background: linear-gradient(135deg, $colorGradient1 0%, $colorGradient2 100%);
-                padding: 0 0 60px;
             }
         }
     }
