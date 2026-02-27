@@ -2829,13 +2829,14 @@ button:active {
 }
 
 // =================================================================
-// PARALLAX MOBILE — Hero Section (≤768px)
-// Texte en haut, image en bas (JS la fixe pendant le scroll du texte)
+// HERO MOBILE (≤768px) — Image fixée en bas via position:fixed
+// Le navigateur gère le "fixed", pas du JS transform
 // =================================================================
 @media all and (max-width: 768px) {
     .app .hero {
         overflow: visible;
         min-height: auto;
+        padding-bottom: 55vh; // réserve l'espace que l'image fixée occupe visuellement
 
         &::before,
         &::after {
@@ -2843,24 +2844,26 @@ button:active {
         }
 
         .content {
-            flex-direction: column;  // texte (1er dans le DOM) en haut, image en bas
+            flex-direction: column;
             max-width: 100%;
             padding: 0;
             gap: 0;
             margin-top: 0;
 
-            // Texte : en haut, fond opaque, scroll normal
+            // Texte en haut, scroll normal, fond opaque
             .text-network-content {
                 position: relative;
-                z-index: 2;
+                z-index: 101;
                 width: 100%;
                 background: linear-gradient(135deg, $colorGradient1 0%, $colorGradient2 100%);
                 padding: 0 0 60px;
             }
 
-            // Image : en bas du texte, JS applique translateY pour la fixer en viewport
+            // Image : position:fixed = vraiment fixée par le navigateur (zéro JS transform)
             .hero-image {
-                display: block;
+                position: fixed;
+                bottom: 0;
+                left: 0;
                 width: 100%;
                 height: 55vh;
                 object-fit: cover;
@@ -2868,10 +2871,21 @@ button:active {
                 max-width: none;
                 filter: none;
                 transition: none;
-                position: relative;
-                z-index: 1;
-                will-change: transform;
+                z-index: 100;
             }
         }
+    }
+
+    // Les sections suivantes (fond opaque + z-index élevé) recouvrent l'image fixée
+    .app .job-search,
+    .app .about,
+    .app .services,
+    .app .projects,
+    .app .galerie,
+    .app .temoignages,
+    .app .certifications,
+    .app .contact {
+        position: relative;
+        z-index: 102;
     }
 }

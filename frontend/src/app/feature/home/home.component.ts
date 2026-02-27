@@ -570,24 +570,17 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       const scrolled = window.pageYOffset;
 
       if (window.innerWidth <= 768) {
-        // Mobile : image fixée via rAF pour éviter les tremblements
+        // Mobile : l'image est position:fixed (CSS), le navigateur la fixe nativement.
+        // JS gère uniquement la visibilité : cacher l'image quand le hero est hors écran.
         const hero = this.document.querySelector('.hero') as HTMLElement;
         if (hero) hero.style.transform = '';
 
-        if (!this.parallaxRafPending) {
-          this.parallaxRafPending = true;
-          requestAnimationFrame(() => {
-            this.parallaxRafPending = false;
-            const heroImage = this.document.querySelector(
-              '.hero .hero-image'
-            ) as HTMLElement;
-            if (heroImage && this.heroHeightCache > 0) {
-              const imageHeight = window.innerHeight * 0.55;
-              const maxTranslate = Math.max(0, this.heroHeightCache - imageHeight);
-              const translate = Math.min(scrolled, maxTranslate);
-              heroImage.style.transform = `translateY(${translate}px)`;
-            }
-          });
+        const heroImage = this.document.querySelector(
+          '.hero .hero-image'
+        ) as HTMLElement;
+        if (hero && heroImage) {
+          const heroBounds = hero.getBoundingClientRect();
+          heroImage.style.visibility = heroBounds.bottom <= 0 ? 'hidden' : 'visible';
         }
       } else {
         // Desktop : réinitialiser le transform de l'image, parallax sur toute la section
