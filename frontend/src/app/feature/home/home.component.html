@@ -1,5 +1,3 @@
-<!-- Alert Banner pour la recherche de contrat -->
-
 <!-- Navigation Mobile -->
 <nav class="mobile-nav" *ngIf="screenWidth <= 768">
   <div class="nav-content">
@@ -10,42 +8,55 @@
       <fa-icon [icon]="isBurgerMenuClicked ? faTimes : faBars"></fa-icon>
     </div>
   </div>
+  y
   <div class="mobile-menu" [class.active]="isBurgerMenuClicked">
     <a
       href="#accueil"
       (click)="toggleMobileMenu()"
       [class.active]="currentSection === 'accueil'"
-      >Accueil</a
+      >{{ "MOBILE_NAV.HOME" | translate }}</a
     >
     <a
       href="#recherche"
       (click)="toggleMobileMenu()"
       [class.active]="currentSection === 'recherche'"
-      >Recherche</a
+      >{{ "MOBILE_NAV.SEARCH" | translate }}</a
     >
     <a
       href="#a-propos"
       (click)="toggleMobileMenu()"
       [class.active]="currentSection === 'a-propos'"
-      >À Propos</a
+      >{{ "MOBILE_NAV.ABOUT" | translate }}</a
     >
     <a
       href="#services"
       (click)="toggleMobileMenu()"
       [class.active]="currentSection === 'services'"
-      >Services</a
+      >{{ "MOBILE_NAV.SERVICES" | translate }}</a
     >
     <a
       href="#projets"
       (click)="toggleMobileMenu()"
       [class.active]="currentSection === 'projets'"
-      >Projets</a
+      >{{ "MOBILE_NAV.PROJECTS" | translate }}</a
+    >
+    <a
+      href="#galerie"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'galerie'"
+      >{{ "MOBILE_NAV.GALLERY" | translate }}</a
+    >
+    <a
+      href="#temoignages"
+      (click)="toggleMobileMenu()"
+      [class.active]="currentSection === 'temoignages'"
+      >{{ "MOBILE_NAV.TESTIMONIALS" | translate }}</a
     >
     <a
       href="#contact"
       (click)="toggleMobileMenu()"
       [class.active]="currentSection === 'contact'"
-      >Contact</a
+      >{{ "MOBILE_NAV.CONTACT" | translate }}</a
     >
   </div>
 </nav>
@@ -86,35 +97,33 @@
     <div class="content my-container">
       <div class="text-network-content" @slideInLeft>
         <div class="text-network">
-          <span class="greetings">Salut, je m'appelle</span>
+          <span class="greetings">{{ "HERO.GREETING" | translate }}</span>
           <span class="name">
             <span class="prenom">{{ personalInfo.firstName }}</span>
             <span class="nom">{{ personalInfo.lastName }}</span>
           </span>
           <div class="work">
-            <span>Je suis</span>
+            <span>{{ "HERO.I_AM" | translate }}</span>
             <span id="typewriter"></span>
           </div>
 
           <span class="i-do">
-            Je conçois et développe des solutions web innovantes qui
-            transforment vos idées en expériences digitales exceptionnelles.
-            Actuellement en recherche d'une alternance.
+            {{ "HERO.DESCRIPTION" | translate }}
           </span>
 
           <div class="cta-buttons">
             <a
               [href]="personalInfo.cvUrl"
               class="cta-button"
-              aria-label="Télécharger mon CV"
+              [attr.aria-label]="'HERO.DOWNLOAD_CV_ARIA' | translate"
               rel="noopener"
               target="_blank"
             >
-              <span>Télécharger CV</span>
+              <span>{{ "HERO.DOWNLOAD_CV" | translate }}</span>
               <fa-icon [icon]="faDownload"></fa-icon>
             </a>
             <a href="#recherche" class="cta-button secondary-btn">
-              <span>Ma recherche</span>
+              <span>{{ "HERO.MY_SEARCH" | translate }}</span>
               <fa-icon [icon]="faBullseye"></fa-icon>
             </a>
           </div>
@@ -161,71 +170,67 @@
     </div>
   </section>
 
-  <!-- Job Search Section (Nouvelle section) -->
+  <!-- Job Search Section -->
   <section class="job-search" id="recherche">
     <div class="content my-container">
       <div class="job-search-header animate-on-scroll">
         <div class="status-badge">
           <div class="pulse-dot"></div>
-          <span>Disponible à partir de septembre</span>
+          <span>{{ "JOB_SEARCH.AVAILABLE" | translate }}</span>
         </div>
-        <h2 class="title">Recherche d'une alternance</h2>
+        <h2 class="title">{{ "JOB_SEARCH.TITLE" | translate }}</h2>
         <p class="subtitle">
-          Je recherche activement une entreprise pour une alternance en
-          développement web. Mobile dans toute la France, je suis prêt à
-          m'investir pleinement dans votre équipe.
+          {{ "JOB_SEARCH.SUBTITLE" | translate }}
         </p>
       </div>
 
       <div class="job-search-content animate-on-scroll" @staggerAnimation>
         <div class="search-card">
           <fa-icon [icon]="faBullseye" class="icon"></fa-icon>
-          <h3 class="card-title">Objectif Professionnel</h3>
+          <h3 class="card-title">{{ "JOB_SEARCH.GOAL_TITLE" | translate }}</h3>
           <p class="card-description">
-            Intégrer une équipe de développement pour approfondir mes
-            compétences en situation réelle et contribuer à des projets
-            innovants tout en poursuivant ma formation.
+            {{ "JOB_SEARCH.GOAL_DESC" | translate }}
           </p>
         </div>
 
         <div class="search-card">
           <fa-icon [icon]="faGlobe" class="icon"></fa-icon>
-          <h3 class="card-title">Mobilité Géographique</h3>
+          <h3 class="card-title">
+            {{ "JOB_SEARCH.MOBILITY_TITLE" | translate }}
+          </h3>
           <p class="card-description">
-            Totalement mobile sur l'ensemble du territoire français. Prêt à
-            déménager pour la bonne opportunité et à m'adapter aux contraintes
-            géographiques de l'entreprise.
+            {{ "JOB_SEARCH.MOBILITY_DESC" | translate }}
           </p>
         </div>
 
         <div class="search-card">
           <fa-icon [icon]="faBolt" class="icon"></fa-icon>
-          <h3 class="card-title">Disponibilité</h3>
+          <h3 class="card-title">
+            {{ "JOB_SEARCH.AVAILABILITY_TITLE" | translate }}
+          </h3>
           <p class="card-description">
-            Disponible à partir de septembre 2025 pour commencer une alternance.
-            Flexible sur les dates de début selon les besoins de l'entreprise.
+            {{ "JOB_SEARCH.AVAILABILITY_DESC" | translate }}
           </p>
         </div>
 
         <div class="search-card">
           <fa-icon [icon]="faLightbulb" class="icon"></fa-icon>
-          <h3 class="card-title">Apports & Motivation</h3>
+          <h3 class="card-title">
+            {{ "JOB_SEARCH.MOTIVATION_TITLE" | translate }}
+          </h3>
           <p class="card-description">
-            Passionné, curieux et motivé, j'apporte une perspective fraîche, une
-            grande capacité d'apprentissage et l'envie de contribuer activement
-            aux succès de l'équipe.
+            {{ "JOB_SEARCH.MOTIVATION_DESC" | translate }}
           </p>
         </div>
       </div>
 
       <div class="job-search-cta animate-on-scroll">
         <p class="cta-text">
-          Votre entreprise recherche un développeur motivé ? Discutons de cette
-          opportunité !
+          {{ "JOB_SEARCH.CTA_TEXT" | translate }}
         </p>
         <div class="cta-buttons">
           <a href="#contact" class="cta-button">
-            <span>Me contacter</span>
+            <span>{{ "JOB_SEARCH.CONTACT_ME" | translate }}</span>
             <fa-icon [icon]="faComments"></fa-icon>
           </a>
           <a
@@ -233,7 +238,7 @@
             class="cta-button secondary"
             target="_blank"
           >
-            <span>Mon CV détaillé</span>
+            <span>{{ "JOB_SEARCH.MY_CV" | translate }}</span>
             <fa-icon [icon]="faFileAlt"></fa-icon>
           </a>
         </div>
@@ -244,7 +249,7 @@
   <!-- About Section -->
   <section class="about" id="a-propos">
     <div class="content my-container">
-      <h2 class="title animate-on-scroll">À Propos</h2>
+      <h2 class="title animate-on-scroll">{{ "ABOUT.TITLE" | translate }}</h2>
 
       <div class="text-image">
         <img
@@ -254,25 +259,9 @@
         />
 
         <div class="text animate-on-scroll">
-          <span>
-            Développeur fullstack passionné, je crée des expériences web
-            remarquables en alliant créativité et expertise technique. Mon
-            approche combine innovation et qualité pour donner vie à vos projets
-            digitaux.
-          </span>
-
-          <span>
-            Actuellement en recherche d'une alternance je souhaite intégrer une
-            équipe dynamique pour continuer à développer mes compétences tout en
-            apportant ma motivation et ma fraîcheur d'approche à vos projets.
-          </span>
-
-          <span>
-            Autonome, rigoureux et toujours à l'affût des dernières innovations,
-            j'aime relever des défis techniques complexes. Ma mobilité sur toute
-            la France me permet de saisir les meilleures opportunités de
-            formation et de développement professionnel.
-          </span>
+          <span>{{ "ABOUT.PARA1" | translate }}</span>
+          <span>{{ "ABOUT.PARA2" | translate }}</span>
+          <span>{{ "ABOUT.PARA3" | translate }}</span>
         </div>
       </div>
 
@@ -283,19 +272,19 @@
               class="profil-header"
               [class.active-header]="activeProfileTab === 0"
               (click)="activeContent(0)"
-              >Compétences</span
+              >{{ "ABOUT.TAB_SKILLS" | translate }}</span
             >
             <span
               class="profil-header"
               [class.active-header]="activeProfileTab === 1"
               (click)="activeContent(1)"
-              >Formation</span
+              >{{ "ABOUT.TAB_EDUCATION" | translate }}</span
             >
             <span
               class="profil-header"
               [class.active-header]="activeProfileTab === 2"
               (click)="activeContent(2)"
-              >Soft Skills</span
+              >{{ "ABOUT.TAB_SOFT" | translate }}</span
             >
           </div>
 
@@ -348,10 +337,12 @@
                 </div>
 
                 <div class="formation-element">
-                  <span class="formation-title">Langues</span>
-                  <span class="langue">Français (Langue maternelle)</span>
-                  <span class="langue">Anglais (Niveau professionnel)</span>
-                  <span class="langue">Espagnol (Notions)</span>
+                  <span class="formation-title">{{
+                    "ABOUT.LANGUAGES" | translate
+                  }}</span>
+                  <span class="langue">{{ "ABOUT.LANG_FR" | translate }}</span>
+                  <span class="langue">{{ "ABOUT.LANG_EN" | translate }}</span>
+                  <span class="langue">{{ "ABOUT.LANG_ES" | translate }}</span>
                 </div>
               </div>
             </div>
@@ -364,55 +355,63 @@
             >
               <div class="profil-info-conteneur">
                 <div class="skills">
-                  <span class="skills-title">Qualités Humaines</span>
+                  <span class="skills-title">{{
+                    "ABOUT.SOFT_HUMAN" | translate
+                  }}</span>
                   <div class="images-logo">
                     <div>
                       <div class="soft-skill-icon team-work">🤝</div>
-                      <span>Travail d'équipe</span>
+                      <span>{{ "ABOUT.SOFT_TEAMWORK" | translate }}</span>
                     </div>
                     <div>
                       <div class="soft-skill-icon analytical">🧠</div>
-                      <span>Esprit analytique</span>
+                      <span>{{ "ABOUT.SOFT_ANALYTICAL" | translate }}</span>
                     </div>
                     <div>
                       <div class="soft-skill-icon motivation">🚀</div>
-                      <span>Motivation</span>
+                      <span>{{ "ABOUT.SOFT_MOTIVATION" | translate }}</span>
                     </div>
                   </div>
                 </div>
 
                 <div class="skills">
-                  <span class="skills-title">Adaptabilité</span>
+                  <span class="skills-title">{{
+                    "ABOUT.SOFT_ADAPTABILITY" | translate
+                  }}</span>
                   <div class="images-logo">
                     <div>
                       <div class="soft-skill-icon mobility">🌍</div>
-                      <span>Mobilité</span>
+                      <span>{{ "ABOUT.SOFT_MOBILITY" | translate }}</span>
                     </div>
                     <div>
                       <div class="soft-skill-icon speed">⚡</div>
-                      <span>Rapidité</span>
+                      <span>{{ "ABOUT.SOFT_SPEED" | translate }}</span>
                     </div>
                     <div>
                       <div class="soft-skill-icon learning">📚</div>
-                      <span>Apprentissage</span>
+                      <span>{{ "ABOUT.SOFT_LEARNING" | translate }}</span>
                     </div>
                   </div>
                 </div>
 
                 <div class="skills">
-                  <span class="skills-title">Aptitudes Pro</span>
+                  <span class="skills-title">{{
+                    "ABOUT.SOFT_PRO" | translate
+                  }}</span>
                   <div class="images-logo">
                     <div>
                       <div class="soft-skill-icon communication">💬</div>
-                      <span>Communication</span>
+                      <span>{{ "ABOUT.SOFT_COMMUNICATION" | translate }}</span>
                     </div>
                     <div>
                       <div class="soft-skill-icon problem-solving">🔧</div>
-                      <span>Résolution</span>
+                      <span>{{
+                        "ABOUT.SOFT_PROBLEM_SOLVING" | translate
+                      }}</span>
                     </div>
                     <div>
                       <div class="soft-skill-icon creativity">🎨</div>
-                      <span>Créativité</span>
+                      <span>{{ "ABOUT.SOFT_CREATIVITY" | translate }}</span>
                     </div>
                   </div>
                 </div>
@@ -447,25 +446,16 @@
     </svg>
 
     <div class="content my-container">
-      <h2 class="title animate-on-scroll">Services</h2>
+      <h2 class="title animate-on-scroll">
+        {{ "SERVICES.TITLE" | translate }}
+      </h2>
 
       <div class="intro-services">
         <div class="intro animate-on-scroll">
-          <h3>Pourquoi me choisir ?</h3>
-          <span>
-            Je place votre réussite au cœur de chaque projet. Mon approche
-            collaborative garantit que vos besoins sont parfaitement compris et
-            réalisés.
-          </span>
-          <span>
-            En recherche d'une alternance, j'apporte une motivation
-            exceptionnelle et une volonté d'apprendre qui bénéficiera
-            directement à vos projets.
-          </span>
-          <span>
-            Ma mobilité géographique me permet de m'adapter parfaitement aux
-            besoins de votre entreprise, où qu'elle soit située en France.
-          </span>
+          <h3>{{ "SERVICES.WHY_ME" | translate }}</h3>
+          <span>{{ "SERVICES.INTRO1" | translate }}</span>
+          <span>{{ "SERVICES.INTRO2" | translate }}</span>
+          <span>{{ "SERVICES.INTRO3" | translate }}</span>
         </div>
 
         <div class="services-list animate-on-scroll" @staggerAnimation>
@@ -505,10 +495,11 @@
   <!-- Projects Section -->
   <section class="projects" id="projets">
     <div class="content my-container">
-      <h2 class="title animate-on-scroll">Mes Réalisations</h2>
+      <h2 class="title animate-on-scroll">
+        {{ "PROJECTS.TITLE" | translate }}
+      </h2>
       <span class="summary animate-on-scroll">
-        Découvrez quelques-uns de mes projets récents qui démontrent mes
-        compétences et ma motivation
+        {{ "PROJECTS.SUBTITLE" | translate }}
       </span>
 
       <div class="project-list" @staggerAnimation>
@@ -528,7 +519,122 @@
 
           <span class="project-title">{{ project.projectTitle }}</span>
           <span class="project-summary">{{ project.projectSummary }}</span>
-          <button>Voir le projet</button>
+          <button>{{ "PROJECTS.VIEW_PROJECT" | translate }}</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section class="galerie certifications" id="certifications">
+    <div class="content my-container">
+      <h2 class="title animate-on-scroll">{{ 'CERTIF.TITLE' | translate }}</h2>
+      <span class="summary animate-on-scroll">{{ 'CERTIF.SUBTITLE' | translate }}</span>
+
+      <div class="galerie-grid">
+        <div
+          class="galerie-item animate-on-scroll"
+          *ngFor="let item of certificationItems"
+          (click)="openGalleryItem(item)"
+        >
+          <div class="galerie-image">
+            <img [src]="item.image" [alt]="item.title" loading="lazy" />
+            <div class="galerie-overlay">
+              <fa-icon [icon]="faImages" class="overlay-icon"></fa-icon>
+              <span>{{ 'GALLERY.VIEW' | translate }}</span>
+            </div>
+          </div>
+          <div class="galerie-info">
+            <span class="galerie-category">{{ item.category }}</span>
+            <h3 class="galerie-title">{{ item.title }}</h3>
+            <p class="galerie-description">{{ item.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galerie Section -->
+  <section class="galerie" id="galerie">
+    <div class="content my-container">
+      <h2 class="title animate-on-scroll">{{ "GALLERY.TITLE" | translate }}</h2>
+      <span class="summary animate-on-scroll">
+        {{ "GALLERY.SUBTITLE" | translate }}
+      </span>
+
+      <!-- Filtres : affiché uniquement si plusieurs catégories -->
+      <div class="galerie-filters animate-on-scroll" *ngIf="galleryCategories.length > 1">
+        <button
+          *ngFor="let cat of galleryCategories"
+          class="filter-btn"
+          [class.active]="activeGalleryCategory === cat"
+          (click)="filterGallery(cat)"
+        >
+          {{ cat }}
+        </button>
+      </div>
+
+      <!-- Grille -->
+      <div class="galerie-grid">
+        <div
+          class="galerie-item"
+          *ngFor="let item of filteredGallery"
+          (click)="openGalleryItem(item)"
+        >
+          <div class="galerie-image">
+            <img [src]="item.image" [alt]="item.title" />
+            <div class="galerie-overlay">
+              <fa-icon [icon]="faImages" class="overlay-icon"></fa-icon>
+              <span>{{ "GALLERY.VIEW" | translate }}</span>
+            </div>
+          </div>
+          <div class="galerie-info">
+            <span class="galerie-category">{{ item.category }}</span>
+            <h3 class="galerie-title">{{ item.title }}</h3>
+            <p class="galerie-description">{{ item.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Témoignages Section -->
+  <section class="temoignages" id="temoignages">
+    <div class="content my-container">
+      <h2 class="title animate-on-scroll">
+        {{ "TESTIMONIALS.TITLE" | translate }}
+      </h2>
+      <span class="summary animate-on-scroll">
+        {{ "TESTIMONIALS.SUBTITLE" | translate }}
+      </span>
+
+      <div class="temoignages-grid" @staggerAnimation>
+        <div
+          class="temoignage-card animate-on-scroll"
+          *ngFor="let temoignage of testimonials"
+        >
+          <div class="quote-icon">
+            <fa-icon [icon]="faQuoteLeft"></fa-icon>
+          </div>
+
+          <p class="temoignage-content">{{ temoignage.content }}</p>
+
+          <div class="stars">
+            <fa-icon
+              *ngFor="let star of getStars(temoignage.rating)"
+              [icon]="faStar"
+              class="star-icon"
+            ></fa-icon>
+          </div>
+
+          <div class="temoignage-author">
+            <div class="author-avatar">{{ temoignage.avatar }}</div>
+            <div class="author-info">
+              <span class="author-name">{{ temoignage.name }}</span>
+              <span class="author-role">{{ temoignage.role }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -537,13 +643,12 @@
   <!-- Contact Section -->
   <section class="contact" id="contact">
     <div class="content my-container">
-      <h2 class="title animate-on-scroll">Contactez-moi</h2>
+      <h2 class="title animate-on-scroll">{{ "CONTACT.TITLE" | translate }}</h2>
       <span class="animate-on-scroll">
-        Vous recherchez un développeur motivé en alternance ?
+        {{ "CONTACT.SUBTITLE" | translate }}
       </span>
       <span class="speach animate-on-scroll">
-        N'hésitez pas à me contacter pour discuter de vos besoins et de mes
-        disponibilités.
+        {{ "CONTACT.SPEECH" | translate }}
       </span>
 
       <div class="contact-info">
@@ -553,7 +658,7 @@
               <fa-icon [icon]="faPhone"></fa-icon>
             </div>
             <div class="text-bloc">
-              <span class="titles">Téléphone</span>
+              <span class="titles">{{ "CONTACT.PHONE" | translate }}</span>
               <span class="text">{{ personalInfo.phone }}</span>
             </div>
           </div>
@@ -563,7 +668,7 @@
               <fa-icon [icon]="faEnvelope"></fa-icon>
             </div>
             <div class="text-bloc">
-              <span class="titles">Email</span>
+              <span class="titles">{{ "CONTACT.EMAIL" | translate }}</span>
               <span class="text">{{ personalInfo.email }}</span>
             </div>
           </div>
@@ -581,15 +686,19 @@
                 formControlName="name"
                 id="name-input"
                 type="text"
-                placeholder="Votre nom"
+                [placeholder]="'CONTACT.FORM_NAME' | translate"
                 [class.is-invalid]="isContactFormSubmitted && f.name.errors"
               />
-              <label class="label-id" for="name-input">Nom</label>
+              <label class="label-id" for="name-input">{{
+                "CONTACT.FORM_NAME_LABEL" | translate
+              }}</label>
               <div
                 *ngIf="isContactFormSubmitted && f.name.errors"
                 class="invalid-feedback"
               >
-                <div *ngIf="f.name.errors['required']">Le nom est requis</div>
+                <div *ngIf="f.name.errors['required']">
+                  {{ "CONTACT.ERROR_NAME_REQUIRED" | translate }}
+                </div>
               </div>
             </div>
 
@@ -598,16 +707,22 @@
                 formControlName="email"
                 id="email-input"
                 type="email"
-                placeholder="Votre email"
+                [placeholder]="'CONTACT.FORM_EMAIL' | translate"
                 [class.is-invalid]="isContactFormSubmitted && f.email.errors"
               />
-              <label class="label-id" for="email-input">Email</label>
+              <label class="label-id" for="email-input">{{
+                "CONTACT.FORM_EMAIL_LABEL" | translate
+              }}</label>
               <div
                 *ngIf="isContactFormSubmitted && f.email.errors"
                 class="invalid-feedback"
               >
-                <div *ngIf="f.email.errors['required']">L'email est requis</div>
-                <div *ngIf="f.email.errors['email']">Email invalide</div>
+                <div *ngIf="f.email.errors['required']">
+                  {{ "CONTACT.ERROR_EMAIL_REQUIRED" | translate }}
+                </div>
+                <div *ngIf="f.email.errors['email']">
+                  {{ "CONTACT.ERROR_EMAIL_INVALID" | translate }}
+                </div>
               </div>
             </div>
           </div>
@@ -617,29 +732,33 @@
               formControlName="subject"
               id="objet-input"
               type="text"
-              placeholder="Objet de votre message"
+              [placeholder]="'CONTACT.FORM_SUBJECT' | translate"
             />
-            <label class="label-id" for="objet-input">Objet</label>
+            <label class="label-id" for="objet-input">{{
+              "CONTACT.FORM_SUBJECT_LABEL" | translate
+            }}</label>
           </div>
 
           <div class="message-bloc">
             <textarea
               formControlName="message"
               id="message-area"
-              placeholder="Votre message"
+              [placeholder]="'CONTACT.FORM_MESSAGE' | translate"
               rows="8"
               [class.is-invalid]="isContactFormSubmitted && f.message.errors"
             ></textarea>
-            <label class="label-id" for="message-area">Message</label>
+            <label class="label-id" for="message-area">{{
+              "CONTACT.FORM_MESSAGE_LABEL" | translate
+            }}</label>
             <div
               *ngIf="isContactFormSubmitted && f.message.errors"
               class="invalid-feedback"
             >
               <div *ngIf="f.message.errors['required']">
-                Le message est requis
+                {{ "CONTACT.ERROR_MESSAGE_REQUIRED" | translate }}
               </div>
               <div *ngIf="f.message.errors['minlength']">
-                Le message doit contenir au moins 15 caractères
+                {{ "CONTACT.ERROR_MESSAGE_MIN" | translate }}
               </div>
             </div>
           </div>
@@ -649,7 +768,8 @@
             [disabled]="isContactFormSubmittedAndNotErrorOnClientSide"
           >
             <span *ngIf="!isContactFormSubmittedAndNotErrorOnClientSide">
-              Envoyer <fa-icon [icon]="faPaperPlane"></fa-icon>
+              {{ "CONTACT.SEND" | translate }}
+              <fa-icon [icon]="faPaperPlane"></fa-icon>
             </span>
             <p-progressSpinner
               *ngIf="isContactFormSubmittedAndNotErrorOnClientSide"
@@ -670,4 +790,26 @@
     >
     </p-toast>
   </section>
+
+  <!-- Lightbox partagée (Certifications + Galerie) -->
+  <div
+    class="galerie-lightbox"
+    *ngIf="selectedGalleryItem"
+    (click)="closeGalleryItem()"
+  >
+    <button class="lightbox-close" (click)="closeGalleryItem()">
+      <fa-icon [icon]="faTimes"></fa-icon>
+    </button>
+    <div class="lightbox-content" (click)="$event.stopPropagation()">
+      <img
+        [src]="selectedGalleryItem.image"
+        [alt]="selectedGalleryItem.title"
+      />
+      <div class="lightbox-info">
+        <span class="galerie-category">{{ selectedGalleryItem.category }}</span>
+        <h3>{{ selectedGalleryItem.title }}</h3>
+        <p>{{ selectedGalleryItem.description }}</p>
+      </div>
+    </div>
+  </div>
 </div>

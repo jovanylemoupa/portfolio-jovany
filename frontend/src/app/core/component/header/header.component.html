@@ -14,37 +14,82 @@
         <ul>
           <li>
             <a (click)="setActiveLinkAndNavigate(1, 'accueil')" [class.active-link]="currentLinkNumber === 1" role="button" tabindex="0">
-              Accueil
+              {{ 'NAV.HOME' | translate }}
             </a>
           </li>
           <li>
             <a (click)="setActiveLinkAndNavigate(2, 'a-propos')" [class.active-link]="currentLinkNumber === 2" role="button" tabindex="0">
-              À Propos
+              {{ 'NAV.ABOUT' | translate }}
             </a>
           </li>
           <li>
             <a (click)="setActiveLinkAndNavigate(3, 'services')" [class.active-link]="currentLinkNumber === 3" role="button" tabindex="0">
-              Services
+              {{ 'NAV.SERVICES' | translate }}
             </a>
           </li>
           <li>
             <a (click)="setActiveLinkAndNavigate(4, 'projets')" [class.active-link]="currentLinkNumber === 4" role="button" tabindex="0">
-              Réalisations
+              {{ 'NAV.PROJECTS' | translate }}
             </a>
           </li>
+          <!-- Desktop : dropdown "Références ▼" (caché sur mobile via CSS) -->
+          <li class="nav-dropdown"
+              (mouseenter)="openRefsDropdown()"
+              (mouseleave)="closeRefsDropdown()">
+            <span class="nav-dropdown-trigger"
+                  role="button"
+                  tabindex="0"
+                  [attr.aria-haspopup]="true"
+                  [attr.aria-expanded]="isRefsDropdownOpen"
+                  [class.active-link]="currentLinkNumber === 6 || currentLinkNumber === 7 || currentLinkNumber === 8"
+                  (keydown.enter)="isRefsDropdownOpen = !isRefsDropdownOpen"
+                  (keydown.space)="isRefsDropdownOpen = !isRefsDropdownOpen">
+              {{ 'NAV.REFERENCES' | translate }}
+              <i class="pi pi-chevron-down dropdown-arrow" [class.rotated]="isRefsDropdownOpen"></i>
+            </span>
+            <div class="dropdown-panel"
+                 [class.open]="isRefsDropdownOpen"
+                 role="menu"
+                 (mouseenter)="openRefsDropdown()"
+                 (mouseleave)="closeRefsDropdown()">
+              <a (click)="setActiveLinkAndNavigate(8, 'certifications'); isRefsDropdownOpen = false"
+                 role="menuitem" tabindex="0">
+                <i class="pi pi-verified"></i>
+                {{ 'NAV.CERTIFICATIONS' | translate }}
+              </a>
+              <a (click)="setActiveLinkAndNavigate(6, 'galerie'); isRefsDropdownOpen = false"
+                 role="menuitem" tabindex="0">
+                <i class="pi pi-images"></i>
+                {{ 'NAV.GALLERY' | translate }}
+              </a>
+              <a (click)="setActiveLinkAndNavigate(7, 'temoignages'); isRefsDropdownOpen = false"
+                 role="menuitem" tabindex="0">
+                <i class="pi pi-star"></i>
+                {{ 'NAV.TESTIMONIALS' | translate }}
+              </a>
+            </div>
+          </li>
+
           <li>
             <a (click)="setActiveLinkAndNavigate(5, 'contact')" [class.active-link]="currentLinkNumber === 5" role="button" tabindex="0">
-              Contactez-moi
+              {{ 'NAV.CONTACT' | translate }}
+            </a>
+          </li>
+
+          <!-- Mobile : items individuels dans le burger menu (cachés sur desktop via CSS) -->
+          <li class="nav-secondary">
+            <a (click)="setActiveLinkAndNavigate(8, 'certifications')" [class.active-link]="currentLinkNumber === 8" role="button" tabindex="0">
+              {{ 'NAV.CERTIFICATIONS' | translate }}
             </a>
           </li>
           <li class="nav-secondary">
-            <a (click)="setActiveLinkAndNavigate(5, 'contact')" [class.active-link]="currentLinkNumber === 5" role="button" tabindex="0">
-              Témoignages
+            <a (click)="setActiveLinkAndNavigate(6, 'galerie')" [class.active-link]="currentLinkNumber === 6" role="button" tabindex="0">
+              {{ 'NAV.GALLERY' | translate }}
             </a>
           </li>
           <li class="nav-secondary">
-            <a (click)="setActiveLinkAndNavigate(5, 'contact')" [class.active-link]="currentLinkNumber === 5" role="button" tabindex="0">
-              Galerie
+            <a (click)="setActiveLinkAndNavigate(7, 'temoignages')" [class.active-link]="currentLinkNumber === 7" role="button" tabindex="0">
+              {{ 'NAV.TESTIMONIALS' | translate }}
             </a>
           </li>
         </ul>
@@ -64,6 +109,17 @@
         <img class="triangle-off" src="img/triangle-off.png" alt="Design triangle" />
         <img class="cross" src="img/cross.png" alt="Design cross" />
       </nav>
+
+      <!-- Bouton toggle langue FR / EN -->
+      <button
+        class="lang-toggle"
+        (click)="switchLanguage()"
+        [attr.aria-label]="'Langue : ' + (currentLang === 'fr' ? 'Passer en anglais' : 'Switch to French')"
+        title="{{ currentLang === 'fr' ? 'Switch to English' : 'Passer en Français' }}"
+      >
+        <span class="lang-flag">{{ currentLang === 'fr' ? '🇬🇧' : '🇫🇷' }}</span>
+        <span class="lang-label">{{ currentLang === 'fr' ? 'EN' : 'FR' }}</span>
+      </button>
 
       <div
         class="burger"

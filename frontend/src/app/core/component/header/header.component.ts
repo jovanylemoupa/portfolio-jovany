@@ -9,6 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 
 import {
   faHome,
@@ -31,7 +32,7 @@ import {
 
 @Component({
   selector: 'app-header',
-  imports: [FontAwesomeModule, CommonModule],
+  imports: [FontAwesomeModule, CommonModule, TranslatePipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -54,15 +55,37 @@ export class HeaderComponent implements OnInit, OnDestroy {
   faCode = faCode;
   faRocket = faRocket;
 
-  isBannerClosed: boolean = false; // Bannière visible par défaut
+  isBannerClosed: boolean = false;
   hasScrollBackground: boolean = false;
+
+  // Language state
+  currentLang: string = 'fr';
+
+  // Dropdown Références
+  isRefsDropdownOpen: boolean = false;
+  private refsDropdownTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  openRefsDropdown(): void {
+    if (this.refsDropdownTimeout !== null) {
+      clearTimeout(this.refsDropdownTimeout);
+      this.refsDropdownTimeout = null;
+    }
+    this.isRefsDropdownOpen = true;
+  }
+
+  closeRefsDropdown(): void {
+    this.refsDropdownTimeout = setTimeout(() => {
+      this.isRefsDropdownOpen = false;
+      this.refsDropdownTimeout = null;
+    }, 150);
+  }
 
   closeBanner(): void {
     this.isBannerClosed = true;
   }
 
   // Component state
-  screenWidth: number = 1024; // Valeur par défaut pour SSR
+  screenWidth: number = 1024;
   isBurgerMenuClicked: boolean = false;
   currentLinkNumber: number = 1;
   currentAnchorTag: string = 'accueil';
@@ -75,12 +98,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     { id: 'services', linkNumber: 3 },
     { id: 'projets', linkNumber: 4 },
     { id: 'contact', linkNumber: 5 },
+    { id: 'galerie', linkNumber: 6 },
+    { id: 'temoignages', linkNumber: 7 },
+    { id: 'certifications', linkNumber: 8 },
   ];
 
-  private scrollThreshold: number = 100; // Seuil pour déterminer la section active
+  private scrollThreshold: number = 100;
 
   constructor(
     private router: Router,
+    private translateService: TranslateService,
     @Inject(DOCUMENT) private document: Document,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
@@ -89,23 +116,36 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.isBrowser && typeof window !== 'undefined') {
       this.screenWidth = window.innerWidth;
     }
+
+    this.currentLang = 'fr';
   }
 
   ngOnInit(): void {
-    // Initialiser le premier lien comme actif
     this.setActiveLink(1);
-
-    // Vérifier l'état de la bannière
     this.checkBannerState();
 
-    // Initialiser la largeur d'écran si on est côté client
     if (this.isBrowser && typeof window !== 'undefined') {
       this.screenWidth = window.innerWidth;
     }
   }
 
   ngOnDestroy(): void {
-    // Cleanup si nécessaire
+    if (this.refsDropdownTimeout !== null) {
+      clearTimeout(this.refsDropdownTimeout);
+    }
+  }
+
+  /**
+   * Toggle entre FR et EN
+   */
+  switchLanguage(): void {
+    const newLang = this.currentLang === 'fr' ? 'en' : 'fr';
+    this.translateService.use(newLang);
+    this.currentLang = newLang;
+
+    if (this.isBrowser) {
+      localStorage.setItem('portfolio-lang', newLang);
+    }
   }
 
   /**
@@ -122,7 +162,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     if (this.isBurgerMenuClicked) {
       navSmallScreen?.classList.add('toggle-nav');
 
-      // Ajouter le background si on est en haut de page
       if (
         typeof window !== 'undefined' &&
         window.pageYOffset <= header?.clientHeight &&
@@ -133,7 +172,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       navSmallScreen?.classList.remove('toggle-nav');
 
-      // Retirer le background si on est en haut de page
       if (
         typeof window !== 'undefined' &&
         window.pageYOffset <= header?.clientHeight &&
@@ -156,10 +194,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const header = this.document.querySelector('header') as HTMLElement;
     const headerHeight = header?.clientHeight || 80;
 
-    // Gestion du background du header
     this.hasScrollBackground = window.pageYOffset > headerHeight;
 
-    // Détection de la section active
     this.updateActiveSection();
   }
 
@@ -172,7 +208,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.screenWidth = window.innerWidth;
 
-    // Fermer le menu burger si on passe en mode desktop
     if (this.screenWidth > 850 && this.isBurgerMenuClicked) {
       this.isBurgerMenuClicked = false;
       const nav = this.document.querySelector('nav') as HTMLElement;
@@ -186,18 +221,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   navigateToAnchor(targetAnchor: string): void {
     if (!this.isBrowser) return;
 
-    // Fermer le menu burger si ouvert
     if (this.isBurgerMenuClicked) {
       this.onBurgerMenu();
     }
 
-    // Attendre que le menu se ferme
     setTimeout(
       () => {
         const element = this.document.getElementById(targetAnchor);
         if (element && typeof window !== 'undefined') {
-          // Calculer l'offset pour tenir compte du header fixe
-          const headerHeight = this.isBannerClosed ? 80 : 136; // 80px header + 56px banner
+          const headerHeight = this.isBannerClosed ? 80 : 136;
           const elementPosition = element.offsetTop - headerHeight;
 
           window.scrollTo({
@@ -224,7 +256,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    * Définir le lien actif
    */
   setActiveLink(linkNumber: number): void {
-    if (linkNumber >= 1 && linkNumber <= 5) {
+    if (linkNumber >= 1 && linkNumber <= 8) {
       this.currentLinkNumber = linkNumber;
     }
   }
@@ -259,12 +291,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
    */
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
-    // Échapper pour fermer le menu burger
     if (event.key === 'Escape' && this.isBurgerMenuClicked) {
       this.onBurgerMenu();
     }
 
-    // Navigation avec les flèches (optionnel)
     if (event.altKey) {
       switch (event.key) {
         case 'ArrowUp':
@@ -284,7 +314,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    */
   private navigateToSection(direction: number): void {
     const newLinkNumber = this.currentLinkNumber + direction;
-    if (newLinkNumber >= 1 && newLinkNumber <= this.sections.length) {
+    if (newLinkNumber >= 1 && newLinkNumber <= 8) {
       const targetSection = this.sections.find(
         (s) => s.linkNumber === newLinkNumber
       );
@@ -306,6 +336,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     try {
       const bannerClosed = localStorage.getItem('alert-banner-closed');
       this.isBannerClosed = bannerClosed === 'true';
+
+      // Restaurer la langue sauvegardée
+      const savedLang = localStorage.getItem('portfolio-lang');
+      if (savedLang && (savedLang === 'fr' || savedLang === 'en')) {
+        this.currentLang = savedLang;
+        this.translateService.use(savedLang);
+      }
     } catch (error) {
       console.warn('localStorage not available');
       this.isBannerClosed = false;

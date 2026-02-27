@@ -6,7 +6,7 @@ export const portfolioConfig = {
     firstName: 'Jovany',
     lastName: 'Lemoupa',
     title: 'Développeur Full-Stack',
-    email: 'jovanylemoupa@gmail',
+    email: 'jovanylemoupa@gmail.com',
     phone: '+33 7 59 61 14 10',
     location: 'Grenoble, France',
     cvUrl:
@@ -178,15 +178,15 @@ export const portfolioConfig = {
     },
   ],
 
-  // Témoignages (pour une future section)
+  // Témoignages
   testimonials: [
     {
       name: 'Marie Dubois',
       role: 'CEO, TechStartup',
       content:
-        'Samuel a transformé notre vision en une application web exceptionnelle. Son professionnalisme et son expertise technique sont remarquables.',
+        'Jovany a transformé notre vision en une application web exceptionnelle. Son professionnalisme et son expertise technique sont remarquables. Un vrai talent !',
       rating: 5,
-      image: 'img/marie.jpg',
+      avatar: 'MD',
     },
     {
       name: 'Jean Martin',
@@ -194,7 +194,63 @@ export const portfolioConfig = {
       content:
         'Un développeur talentueux qui comprend parfaitement les besoins business. Notre site e-commerce a vu ses ventes augmenter de 40% après la refonte.',
       rating: 5,
-      image: 'img/jean.jpg',
+      avatar: 'JM',
+    },
+    {
+      name: 'Sophie Laurent',
+      role: 'Responsable Projet, Digital Agency',
+      content:
+        'Jovany est un développeur passionné et rigoureux. Sa capacité à apprendre rapidement et à s\'adapter aux nouvelles technologies est impressionnante.',
+      rating: 5,
+      avatar: 'SL',
+    },
+    {
+      name: 'Thomas Nguyen',
+      role: 'Lead Developer, FinTech Solutions',
+      content:
+        'Excellent travail d\'équipe, code propre et bien documenté. Jovany apporte toujours des solutions innovantes aux problèmes techniques complexes.',
+      rating: 5,
+      avatar: 'TN',
+    },
+  ],
+
+  // Galerie
+  gallery: [
+    {
+      title: 'Certification Web',
+      category: 'Certifications',
+      image: 'img/Certifications/certif.png',
+      description: 'Certification en développement web',
+    },
+    {
+      title: 'Certification Coaching School',
+      category: 'Certifications',
+      image: 'img/Certifications/certif_coahting_scholl.png',
+      description: 'Certification obtenue à la Coaching School',
+    },
+    {
+      title: 'Principes SOLID',
+      category: 'Certifications',
+      image: 'img/Certifications/Principes_solid.png',
+      description: 'Maîtrise des principes SOLID en développement logiciel',
+    },
+    {
+      title: 'Recommandation LinkedIn',
+      category: 'Recommandations',
+      image: 'img/Certifications/linkedin_recommendation1.png',
+      description: 'Recommandation professionnelle reçue de mon réseau, attestant de mes compétences et de mon sérieux.',
+    },
+    {
+      title: 'Recommandation — Valentine (1)',
+      category: 'Recommandations',
+      image: 'img/Certifications/valentine_1.png',
+      description: 'Recommandation de Valentine',
+    },
+    {
+      title: 'Recommandation — Valentine (2)',
+      category: 'Recommandations',
+      image: 'img/Certifications/valentine_2.png',
+      description: 'Valentine était ma tutrice de stage — voici sa fiche d\'évaluation.',
     },
   ],
 

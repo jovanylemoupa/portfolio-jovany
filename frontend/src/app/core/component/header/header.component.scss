@@ -81,16 +81,106 @@ header {
         list-style: none;
         @include flex-center;
         margin: 0;
-        gap: 8px;
+        gap: 4px;
+        white-space: nowrap;
+
+        li.nav-secondary { display: none; }
+
+        // --- Dropdown "Références" ---
+        li.nav-dropdown {
+          position: relative;
+          list-style: none;
+
+          .nav-dropdown-trigger {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-decoration: none;
+            padding: 8px 14px;
+            color: $colorBlue;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.88em;
+            user-select: none;
+            @include transition-smooth;
+
+            .dropdown-arrow {
+              font-size: 0.7em;
+              transition: transform 0.25s ease;
+              &.rotated { transform: rotate(180deg); }
+            }
+
+            &:hover {
+              color: $colorYellow;
+              font-weight: 600;
+              transform: translateY(-2px);
+              box-shadow: 0 4px 12px $shadow-light;
+            }
+
+            &.active-link {
+              background-color: $colorBlue;
+              color: $colorYellow;
+              box-shadow: 0 4px 15px $shadow-medium;
+              &:hover { transform: translateY(-1px); }
+            }
+          }
+
+          .dropdown-panel {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-6px);
+            min-width: 185px;
+            background: $background;
+            border: 1px solid rgba(0, 1, 31, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px $shadow-medium;
+            padding: 6px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 1000;
+
+            &.open {
+              opacity: 1;
+              pointer-events: auto;
+              transform: translateX(-50%) translateY(0);
+            }
+
+            a {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              text-decoration: none;
+              padding: 10px 14px;
+              color: $colorBlue;
+              border-radius: 8px;
+              cursor: pointer;
+              font-weight: 500;
+              font-size: 0.88em;
+              @include transition-smooth;
+
+              i.pi { font-size: 1em; color: $colorBlue; }
+
+              &:hover {
+                background: rgba(0, 1, 31, 0.06);
+                color: $colorYellow;
+                i.pi { color: $colorYellow; }
+              }
+            }
+          }
+        }
+        // ----------------------------
 
         li a {
           text-decoration: none;
-          padding: 10px 18px;
+          padding: 8px 14px;
           color: $colorBlue;
           border-radius: 25px;
           cursor: pointer;
           font-weight: 500;
-          font-size: 0.95em;
+          font-size: 0.88em;
           @include transition-smooth;
           @include flex-center;
 
@@ -144,6 +234,33 @@ header {
 
     nav img { display: none; }
     .burger { display: none; }
+
+    .lang-toggle {
+      @include flex-center;
+      gap: 5px;
+      background: transparent;
+      border: 2px solid $colorBlue;
+      border-radius: 20px;
+      padding: 5px 11px;
+      cursor: pointer;
+      color: $colorBlue;
+      font-weight: 600;
+      font-size: 0.82em;
+      margin-left: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      @include transition-smooth;
+
+      .lang-flag { font-size: 1em; }
+      .lang-label { letter-spacing: 0.5px; }
+
+      &:hover {
+        background: $colorBlue;
+        color: $colorYellow;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 1, 31, 0.2);
+      }
+    }
   }
 }
 
@@ -151,6 +268,13 @@ header {
   background-color: $background;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px $shadow-medium;
+}
+
+// Cacher les social links quand l'espace est limité
+@media all and (max-width: 1200px) {
+  header .header-right nav .social-links {
+    display: none;
+  }
 }
 
 // Responsive Tablet
@@ -164,11 +288,11 @@ header {
     }
 
     .header-right {
-      margin-left: 20px;
+      margin-left: 10px;
 
       nav ul li a {
-        padding: 8px 15px;
-        font-size: 0.9em;
+        padding: 7px 10px;
+        font-size: 0.82em;
       }
     }
   }
@@ -191,6 +315,15 @@ header {
 
     .header-right {
       margin-left: 0;
+
+      // Sur mobile, le bouton lang reste visible à côté du burger
+      .lang-toggle {
+        display: flex;
+        margin-left: 8px;
+        padding: 4px 9px;
+        font-size: 0.78em;
+        .lang-flag { display: none; } // Masquer le drapeau, garder juste "EN"/"FR"
+      }
 
       nav {
         overflow: hidden;
@@ -235,9 +368,11 @@ header {
           }
 
           li.nav-secondary { display: list-item; }
+          li.nav-dropdown { display: none; } // Remplacé par items individuels sur mobile
         }
 
         .social-links {
+          display: flex; // Ré-afficher dans le menu burger (masqué par la règle 1200px)
           margin-left: 0;
           margin-top: auto;
           padding-bottom: 40px;

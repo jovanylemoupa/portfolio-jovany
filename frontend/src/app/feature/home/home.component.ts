@@ -71,12 +71,19 @@ import {
   faCheckCircle,
   faExclamationTriangle,
   faCog,
+  faQuoteLeft,
+  faStar,
+  faTh,
+  faImages,
+  faFilter,
 } from '@fortawesome/free-solid-svg-icons';
 import { ProjectDetailComponent } from '../project-detail/project-detail.component';
 import { ToastModule } from 'primeng/toast';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -87,6 +94,7 @@ import { CommonModule } from '@angular/common';
     ProgressSpinnerModule,
     CommonModule,
     ReactiveFormsModule,
+    TranslatePipe,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -181,6 +189,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   private readonly dialogService = inject(DialogService);
   private readonly document = inject(DOCUMENT);
   private readonly platformId = inject(PLATFORM_ID);
+  private readonly translateService = inject(TranslateService);
+  private langSubscription?: Subscription;
 
   // 🆕 Angular 19 Signals pour une réactivité moderne
   emailServiceReady = signal<boolean>(false);
@@ -229,6 +239,12 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   faCheckCircle = faCheckCircle;
   faExclamationTriangle = faExclamationTriangle;
   faCog = faCog;
+  // Icônes témoignages & galerie
+  faQuoteLeft = faQuoteLeft;
+  faStar = faStar;
+  faTh = faTh;
+  faImages = faImages;
+  faFilter = faFilter;
 
   activeProfileTab = 0;
 
@@ -240,6 +256,11 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   services = portfolioConfig.services;
   education = portfolioConfig.education;
   navigation = portfolioConfig.navigation;
+  testimonials = portfolioConfig.testimonials;
+  gallery = portfolioConfig.gallery;
+  galleryCategories = ['Recommandations'];
+  activeGalleryCategory = 'Recommandations';
+  selectedGalleryItem: any = null;
 
   screenWidth: any;
   isBurgerMenuClicked: boolean = false;
@@ -307,10 +328,17 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Start typewriter effect et initialisation
     if (isPlatformBrowser(this.platformId)) {
+      // Écouter les changements de langue pour mettre à jour le typewriter
+      this.langSubscription = this.translateService.onLangChange.subscribe(() => {
+        this.updateTypewriterTexts();
+        this.restartTypewriter();
+      });
+
       setTimeout(() => {
+        this.updateTypewriterTexts();
         this.typeWriter();
         this.initScrollAnimations();
-        this.monitorConnection(); // 🆕 Surveillance de la connexion
+        this.monitorConnection();
       }, 100);
 
       // 🆕 Initialiser le service email amélioré Angular 19
@@ -520,22 +548,43 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     if (isPlatformBrowser(this.platformId)) {
       this.showScrollTop = window.pageYOffset > 300;
 
-      // 🆕 Parallax amélioré Angular 19
       const scrolled = window.pageYOffset;
-      const parallax = this.document.querySelector('.hero') as HTMLElement;
-      if (parallax) {
-        const yPos = -(scrolled * 0.3); // Parallax plus subtil
-        parallax.style.transform = `translateY(${yPos}px)`;
-      }
 
-      // 🆕 Effet de parallax sur d'autres éléments
-      const parallaxElements =
-        this.document.querySelectorAll('.parallax-element');
-      parallaxElements.forEach((element, index) => {
-        const speed = 0.2 + index * 0.1;
-        const yPos = -(scrolled * speed);
-        (element as HTMLElement).style.transform = `translateY(${yPos}px)`;
-      });
+      if (window.innerWidth <= 768) {
+        // Mobile : l'image compense le scroll pour rester fixe visuellement
+        const hero = this.document.querySelector('.hero') as HTMLElement;
+        if (hero) hero.style.transform = '';
+
+        const heroImage = this.document.querySelector(
+          '.hero .hero-image'
+        ) as HTMLElement;
+        if (hero && heroImage) {
+          // translateY(+scrolled) compense le scroll → image reste en haut du viewport
+          // On plafonne à (heroHeight - imageHeight) pour qu'elle reparte normalement après
+          const imageHeight = window.innerHeight * 0.55;
+          const maxTranslate = Math.max(0, hero.offsetHeight - imageHeight);
+          const translate = Math.min(scrolled, maxTranslate);
+          heroImage.style.transform = `translateY(${translate}px)`;
+        }
+      } else {
+        // Desktop : réinitialiser le transform de l'image, parallax sur toute la section
+        const heroImage = this.document.querySelector(
+          '.hero .hero-image'
+        ) as HTMLElement;
+        if (heroImage) heroImage.style.transform = '';
+
+        const parallax = this.document.querySelector('.hero') as HTMLElement;
+        if (parallax) {
+          parallax.style.transform = `translateY(${-(scrolled * 0.3)}px)`;
+        }
+
+        const parallaxElements =
+          this.document.querySelectorAll('.parallax-element');
+        parallaxElements.forEach((element, index) => {
+          const speed = 0.2 + index * 0.1;
+          (element as HTMLElement).style.transform = `translateY(${-(scrolled * speed)}px)`;
+        });
+      }
     }
   }
 
@@ -707,6 +756,52 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     type();
   }
 
+  private updateTypewriterTexts(): void {
+    this.translateService.get('TYPEWRITER').subscribe((texts: string[]) => {
+      if (Array.isArray(texts)) {
+        this.typewriterTexts = texts;
+      }
+    });
+  }
+
+  private restartTypewriter(): void {
+    if (this.typewriterInterval) {
+      clearTimeout(this.typewriterInterval);
+    }
+    this.currentTextIndex = 0;
+    this.currentCharIndex = 0;
+    this.isDeleting = false;
+    if (isPlatformBrowser(this.platformId)) {
+      const el = this.document.querySelector('#typewriter') as HTMLElement;
+      if (el) el.textContent = '';
+      setTimeout(() => this.typeWriter(), 200);
+    }
+  }
+
+  get filteredGallery() {
+    return this.gallery.filter(item => item.category === this.activeGalleryCategory);
+  }
+
+  get certificationItems() {
+    return this.gallery.filter(item => item.category === 'Certifications');
+  }
+
+  filterGallery(category: string) {
+    this.activeGalleryCategory = category;
+  }
+
+  openGalleryItem(item: any) {
+    this.selectedGalleryItem = item;
+  }
+
+  closeGalleryItem() {
+    this.selectedGalleryItem = null;
+  }
+
+  getStars(rating: number): number[] {
+    return Array(rating).fill(0);
+  }
+
   ngOnDestroy() {
     if (this.ref) {
       this.ref.close();
@@ -719,6 +814,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.observer) {
       this.observer.disconnect();
     }
+
+    this.langSubscription?.unsubscribe();
 
     // 🆕 Nettoyage des event listeners Angular 19
     if (isPlatformBrowser(this.platformId)) {
