@@ -1,50 +1,5 @@
-// Variables
-$colorBlue: #00011f;
-$colorRed: #FF3100;
-$background: #f3f3f3;
-$colorYellow: #FFCC00;
-$colorGreen: #28a745;
-$shadow-light: rgba(0, 0, 0, 0.1);
-$shadow-medium: rgba(0, 0, 0, 0.16);
-$shadow-dark: rgba(0, 0, 0, 0.23);
+@use 'variables' as *;
 
-// Animations
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-@keyframes slideDown {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes scrollText {
-  0% { 
-    transform: translateX(100%); 
-  }
-  100% { 
-    transform: translateX(-100%); 
-  }
-}
-
-// Animation alternative pour navigateurs qui ont des problèmes
-@keyframes scrollTextAlt {
-  from { 
-    transform: translate3d(100%, 0, 0); 
-  }
-  to { 
-    transform: translate3d(-100%, 0, 0); 
-  }
-}
-
-// Mixins
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -55,143 +10,57 @@ $shadow-dark: rgba(0, 0, 0, 0.23);
   transition: $property $duration ease-in-out;
 }
 
-@mixin hover-lift($translate: -2px) {
-  &:hover {
-    transform: translateY($translate);
-  }
-}
-
-// Bannière d'alerte (visible par défaut, fermable)
-.alert-banner {
-  background: linear-gradient(135deg, $colorGreen, #20c997);
-  color: white;
-  padding: 12px 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1001;
-  box-shadow: 0 2px 8px $shadow-light;
-  overflow: hidden;
-  transform: translateY(0);
-  @include transition-smooth(transform);
-
-  &.hidden {
-    transform: translateY(-100%);
-  }
-
-  .banner-content {
-    @include flex-center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 60px 0 20px; // Espace pour le bouton de fermeture
-    position: relative;
-    gap: 15px;
-    height: 100%;
-
-    .icon {
-      font-size: 1.2em;
-      animation: pulse 2s infinite;
-      flex-shrink: 0;
-      z-index: 2;
-    }
-
-    .scrolling-text {
-      flex: 1;
-      overflow: hidden;
-      white-space: nowrap;
-      position: relative;
-      width: 100%;
-      min-width: 0; // Important pour flexbox
-
-      .text {
-        display: inline-block;
-        font-size: 0.95em;
-        font-weight: 400;
-        line-height: 1.4;
-        white-space: nowrap;
-        animation: scrollText 25s linear infinite;
-        will-change: transform;
-        transform: translateX(100%); // Position de départ
-
-        strong {
-          font-weight: 600;
-        }
-      }
-    }
-  }
-
-  .close-banner {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    padding: 5px;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    @include flex-center;
-    @include transition-smooth(background-color, 0.2s);
-    z-index: 3;
-
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    &:focus {
-      outline: 2px solid $colorYellow;
-      outline-offset: 2px;
-    }
-  }
-}
-
-// Header principal
 header {
   @include flex-center;
   width: 100%;
   position: fixed;
-  height: 80px;
+  height: 90px;
   z-index: 999;
   @include transition-smooth;
-  animation: slideDown 0.5s ease-out;
 
   &.banner-closed {
-    top: 0; // Remonte en haut quand la bannière est fermée
+    top: 0;
   }
 
   .content {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     height: 100%;
     width: 100%;
-    max-width: 1200px;
     padding: 0 20px;
   }
 
   .logo {
-    height: 60px;
     cursor: pointer;
-    @include transition-smooth(transform, 0.2s);
+    margin-right: auto;
     @include flex-center;
+    gap: 10px;
+    @include transition-smooth(transform, 0.2s);
 
-    svg {
-      height: 100%;
-      width: auto;
-      max-width: 280px;
+    .logo-circle {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: $colorBlue;
+      color: white;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+      @include flex-center;
+      flex-shrink: 0;
     }
 
-    &:hover {
-      transform: scale(1.05);
+    .logo-text {
+      color: $colorBlue;
+      font-family: Arial, sans-serif;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: 1px;
     }
+
+    &:hover { transform: scale(1.05); }
 
     &:focus {
-      outline: 2px solid $colorYellow;
       outline-offset: 2px;
       border-radius: 4px;
     }
@@ -201,175 +70,238 @@ header {
     @include flex-center;
     color: $colorBlue;
     font-weight: 450;
+    margin-left: 30px;
 
     nav {
-      @include flex-center;
+      display: flex;
+      align-items: center;
 
       ul {
         display: flex;
         list-style: none;
         @include flex-center;
         margin: 0;
-        gap: 8px;
+        gap: 4px;
+        white-space: nowrap;
 
-        li {
-          a {
+        li.nav-secondary { display: none; }
+
+        // --- Dropdown "Références" ---
+        li.nav-dropdown {
+          position: relative;
+          list-style: none;
+
+          .nav-dropdown-trigger {
+            display: flex;
+            align-items: center;
+            gap: 5px;
             text-decoration: none;
-            padding: 10px 18px;
+            padding: 8px 14px;
             color: $colorBlue;
             border-radius: 25px;
             cursor: pointer;
             font-weight: 500;
-            font-size: 0.95em;
+            font-size: 0.88em;
+            user-select: none;
             @include transition-smooth;
-            position: relative;
-            overflow: hidden;
-            @include flex-center;
-            gap: 8px;
 
-            .nav-icon {
-              font-size: 0.9em;
-              opacity: 0.8;
-              @include transition-smooth(opacity, 0.2s);
-              // Optimisation pour les emojis
-              display: inline-block;
-              vertical-align: middle;
-              line-height: 1;
-            }
-
-            &::before {
-              content: '';
-              position: absolute;
-              top: 0;
-              left: -100%;
-              width: 100%;
-              height: 100%;
-              background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.3), transparent);
-              @include transition-smooth(left, 0.5s);
+            .dropdown-arrow {
+              font-size: 0.7em;
+              transition: transform 0.25s ease;
+              &.rotated { transform: rotate(180deg); }
             }
 
             &:hover {
               color: $colorYellow;
               font-weight: 600;
-              @include hover-lift;
+              transform: translateY(-2px);
               box-shadow: 0 4px 12px $shadow-light;
-
-              &::before {
-                left: 100%;
-              }
-
-              .nav-icon {
-                opacity: 1;
-              }
-            }
-
-            &:focus {
-              outline: 2px solid $colorYellow;
-              outline-offset: 2px;
             }
 
             &.active-link {
               background-color: $colorBlue;
               color: $colorYellow;
               box-shadow: 0 4px 15px $shadow-medium;
+              &:hover { transform: translateY(-1px); }
+            }
+          }
 
-              .nav-icon {
-                opacity: 1;
-              }
+          .dropdown-panel {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%) translateY(-6px);
+            min-width: 185px;
+            background: $background;
+            border: 1px solid rgba(0, 1, 31, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px $shadow-medium;
+            padding: 6px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 1000;
+
+            &.open {
+              opacity: 1;
+              pointer-events: auto;
+              transform: translateX(-50%) translateY(0);
+            }
+
+            a {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              text-decoration: none;
+              padding: 10px 14px;
+              color: $colorBlue;
+              border-radius: 8px;
+              cursor: pointer;
+              font-weight: 500;
+              font-size: 0.88em;
+              @include transition-smooth;
+
+              i.pi { font-size: 1em; color: $colorBlue; }
 
               &:hover {
-                transform: translateY(-1px);
+                background: rgba(0, 1, 31, 0.06);
+                color: $colorYellow;
+                i.pi { color: $colorYellow; }
               }
             }
           }
         }
+        // ----------------------------
+
+        li a {
+          text-decoration: none;
+          padding: 8px 14px;
+          color: $colorBlue;
+          border-radius: 25px;
+          cursor: pointer;
+          font-weight: 500;
+          font-size: 0.88em;
+          @include transition-smooth;
+          @include flex-center;
+
+          &:hover {
+            color: $colorYellow;
+            font-weight: 600;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px $shadow-light;
+          }
+
+          &:focus {
+            outline: 2px solid $colorYellow;
+            outline-offset: 2px;
+          }
+
+          &.active-link {
+            background-color: $colorBlue;
+            color: $colorYellow;
+            box-shadow: 0 4px 15px $shadow-medium;
+            &:hover { transform: translateY(-1px); }
+          }
+        }
       }
 
-      // Images décoratives cachées par défaut
-      img {
-        display: none;
+      .social-links {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-left: 15px;
+
+        a {
+          @include flex-center;
+          @include transition-smooth;
+          padding: 8px;
+          border-radius: 50%;
+          text-decoration: none;
+          cursor: pointer;
+
+          i.pi { font-size: 1.4em; }
+          i.pi-linkedin { color: #0A66C2; }
+          i.pi-github { color: #171515; }
+          i.pi-youtube { color: #FF0000; }
+
+          &:hover {
+            transform: translateY(-2px);
+            opacity: 0.7;
+          }
+        }
       }
     }
 
-    .burger {
-      display: none;
+    nav img { display: none; }
+    .burger { display: none; }
+
+    .lang-toggle {
+      @include flex-center;
+      gap: 5px;
+      background: transparent;
+      border: 2px solid $colorBlue;
+      border-radius: 20px;
+      padding: 5px 11px;
+      cursor: pointer;
+      color: $colorBlue;
+      font-weight: 600;
+      font-size: 0.82em;
+      margin-left: 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      @include transition-smooth;
+
+      .lang-flag { font-size: 1em; }
+      .lang-label { letter-spacing: 0.5px; }
+
+      &:hover {
+        background: $colorBlue;
+        color: $colorYellow;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 1, 31, 0.2);
+      }
     }
   }
 }
 
-// Background sur scroll
 .navbar-background-on-scroll {
   background-color: $background;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px $shadow-medium;
 }
 
-// Responsive Tablet (1024px et moins)
-@media all and (max-width: 1024px) {
-  .alert-banner {
-    .banner-content {
-      padding: 0 50px 0 15px; // Espace pour le bouton
-
-      .scrolling-text .text {
-        font-size: 0.9em;
-      }
-    }
+// Cacher les social links quand l'espace est limité
+@media all and (max-width: 1200px) {
+  header .header-right nav .social-links {
+    display: none;
   }
+}
 
+// Responsive Tablet
+@media all and (max-width: 1024px) {
   header {
-    height: 70px;
+    height: 75px;
 
     .logo {
-      height: 50px;
-
-      svg {
-        height: 100%;
-        max-width: 240px;
-      }
+      .logo-circle { width: 38px; height: 38px; font-size: 14px; }
+      .logo-text { font-size: 17px; }
     }
 
     .header-right {
-      font-size: 0.9em;
+      margin-left: 10px;
 
       nav ul li a {
-        padding: 8px 15px;
-        font-size: 0.9em;
-        gap: 6px;
-
-        .nav-icon {
-          font-size: 0.85em;
-        }
+        padding: 7px 10px;
+        font-size: 0.82em;
       }
     }
   }
 }
 
-// Responsive Mobile (850px et moins)
+// Responsive Mobile
 @media all and (max-width: 850px) {
-  .alert-banner {
-    .banner-content {
-      gap: 8px;
-      padding: 0 50px 0 15px; // Plus d'espace pour le bouton sur mobile
-
-      .icon {
-        font-size: 1.1em;
-      }
-
-      .scrolling-text .text {
-        font-size: 0.85em;
-      }
-    }
-
-    .close-banner {
-      right: 10px;
-      font-size: 18px;
-      width: 28px;
-      height: 28px;
-    }
-  }
-
   header {
-    height: 65px;
+    height: 70px;
 
     .content {
       position: relative;
@@ -377,26 +309,34 @@ header {
     }
 
     .logo {
-      height: 45px;
-
-      svg {
-        height: 100%;
-        max-width: 200px;
-      }
+      .logo-circle { width: 35px; height: 35px; font-size: 13px; }
+      .logo-text { font-size: 16px; }
     }
 
     .header-right {
+      margin-left: 0;
+
+      // Sur mobile, le bouton lang reste visible à côté du burger
+      .lang-toggle {
+        display: flex;
+        margin-left: 8px;
+        margin-right: 12px; // espace entre lang-toggle et burger
+        padding: 4px 9px;
+        font-size: 0.78em;
+        .lang-flag { display: none; } // Masquer le drapeau, garder juste "EN"/"FR"
+      }
+
       nav {
         overflow: hidden;
         position: absolute;
-        margin: 0;
         flex-direction: column;
-        align-items: flex-end;
-        justify-content: flex-start;
-        top: 65px;
+        align-items: center;
+        justify-content: center;
+        top: 70px;
         width: 100vw;
-        min-height: 100vh;
+        height: calc(100vh - 70px);
         left: -15px;
+        margin: 0;
         padding: 30px 15px;
         transform: translateX(100%);
         background: $background;
@@ -406,45 +346,46 @@ header {
 
         ul {
           flex-direction: column;
-          align-items: flex-end;
+          align-items: stretch;
           padding: 0;
-          gap: 15px;
-          margin-top: 20px;
+          gap: 0;
+          width: 100%;
 
           li {
-            margin: 0;
-            width: 100%;
-            text-align: right;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
             a {
               font-size: 1.1em;
-              padding: 12px 20px;
-              display: flex;
-              justify-content: flex-end;
-              border-radius: 15px;
-              background: rgba(255, 255, 255, 0.8);
-              backdrop-filter: blur(5px);
-              margin-bottom: 5px;
-              gap: 10px;
-
-              .nav-icon {
-                font-size: 1em;
-                display: inline-block;
-                vertical-align: middle;
-              }
+              padding: 15px 20px;
+              justify-content: center;
+              border-radius: 0;
+              box-shadow: none;
 
               &:hover {
-                background: $colorYellow;
-                color: $colorBlue;
-                transform: translateX(-5px);
+                color: $colorYellow;
+                box-shadow: none;
               }
             }
           }
+
+          li.nav-secondary { display: list-item; }
+          li.nav-dropdown { display: none; } // Remplacé par items individuels sur mobile
         }
 
-        &.toggle-nav {
-          transform: translateX(0);
+        .social-links {
+          display: flex; // Ré-afficher dans le menu burger (masqué par la règle 1200px)
+          margin-left: 0;
+          margin-top: auto;
+          padding-bottom: 40px;
+          gap: 20px;
+
+          a {
+            padding: 12px;
+            i.pi { font-size: 1.8em; }
+          }
         }
+
+        &.toggle-nav { transform: translateX(0); }
 
         .triangle-off,
         .cross {
@@ -455,15 +396,8 @@ header {
           opacity: 0.3;
         }
 
-        .triangle-off {
-          left: -20px;
-          bottom: 40%;
-        }
-
-        .cross {
-          right: -20px;
-          bottom: 20px;
-        }
+        .triangle-off { left: -20px; bottom: 40%; }
+        .cross { right: -20px; bottom: 20px; }
       }
 
       .burger {
@@ -480,9 +414,7 @@ header {
         @include transition-smooth;
         cursor: pointer;
 
-        &:hover {
-          background-color: rgba(255, 204, 0, 0.1);
-        }
+        &:hover { background-color: rgba(255, 204, 0, 0.1); }
 
         input {
           display: block;
@@ -494,10 +426,8 @@ header {
           cursor: pointer;
           opacity: 0;
           z-index: 2;
-          user-select: none;
 
           &:focus + span {
-            outline: 2px solid $colorYellow;
             outline-offset: 2px;
           }
         }
@@ -511,77 +441,41 @@ header {
           border-radius: 2px;
           z-index: 1;
           transform-origin: 0% 50%;
-          transition: transform 0.3s cubic-bezier(0.77,0.2,0.05,1.0),
+          transition: transform 0.3s cubic-bezier(0.77, 0.2, 0.05, 1),
                      opacity 0.3s ease,
                      background-color 0.3s ease;
         }
 
         input:checked ~ span {
           background: $colorRed;
-
-          &:nth-child(2) {
-            transform: rotate(45deg) translate(2px, 2px);
-          }
-
-          &:nth-child(3) {
-            opacity: 0;
-          }
-
-          &:nth-child(4) {
-            transform: rotate(-45deg) translate(2px, -2px);
-          }
+          &:nth-child(2) { transform: rotate(45deg) translate(2px, 2px); }
+          &:nth-child(3) { opacity: 0; }
+          &:nth-child(4) { transform: rotate(-45deg) translate(2px, -2px); }
         }
       }
     }
   }
 }
 
-// Très petits écrans (480px et moins)
+// Tres petits ecrans
 @media all and (max-width: 480px) {
-  .alert-banner {
-    .banner-content {
-      padding: 0 45px 0 10px; // Ajustement pour très petits écrans
-
-      .scrolling-text .text {
-        font-size: 0.8em;
-      }
-    }
-
-    .close-banner {
-      right: 8px;
-      font-size: 16px;
-      width: 26px;
-      height: 26px;
-    }
-  }
-
   header {
-    height: 60px;
+    height: 65px;
 
     .logo {
-      height: 40px;
-
-      svg {
-        height: 100%;
-        max-width: 180px;
-      }
+      .logo-circle { width: 32px; height: 32px; font-size: 12px; }
+      .logo-text { font-size: 14px; }
     }
 
     .header-right {
       nav {
-        top: 60px;
+        top: 65px;
+        height: calc(100vh - 65px);
         padding: 20px 10px;
 
         ul li a {
           font-size: 1em;
           padding: 10px 15px;
-          gap: 8px;
-
-          .nav-icon {
-            font-size: 0.9em;
-            display: inline-block;
-            vertical-align: middle;
-          }
         }
       }
 
@@ -589,41 +483,19 @@ header {
         height: 40px;
         width: 40px;
         padding: 6px;
-
-        input {
-          width: 35px;
-          height: 35px;
-        }
-
-        span {
-          width: 25px;
-          height: 2px;
-        }
+        input { width: 35px; height: 35px; }
+        span { width: 25px; height: 2px; }
       }
     }
   }
 }
 
-// Amélioration de l'accessibilité
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
 }
 
-// Mode sombre (optionnel)
-@media (prefers-color-scheme: dark) {
-  .navbar-background-on-scroll {
-    background-color: rgba(0, 1, 31, 0.95);
-  }
-
-  .alert-banner {
-    .banner-content .text {
-      color: rgba(255, 255, 255, 0.95);
-    }
-  }
-}
+// Note : pas de dark mode — le portfolio utilise des couleurs de marque fixes.
